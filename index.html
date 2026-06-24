@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netking Community</title>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         /* --- KHÓA CHẶT TRÀN MÀN HÌNH --- */
         * {
-            box-sizing: border-box; /* Ép padding không được đẩy rộng phần tử */
+            box-sizing: border-box; 
             margin: 0;
             padding: 0;
         }
@@ -18,7 +17,7 @@
             height: 100%;
             width: 100%;
             background-color: #05050a;
-            overflow-x: hidden; /* Cấm tuyệt đối không cho vuốt sang phải */
+            overflow-x: hidden; 
         }
 
         body {
@@ -37,7 +36,7 @@
 
         /* Cấu hình phần đầu trang */
         header {
-            min-height: 80vh;
+            min-height: 60vh; /* Giảm bớt chiều cao để đẩy nội dung lên sớm hơn */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -48,7 +47,7 @@
         }
 
         header h1 {
-            font-size: 2.5rem; /* Giảm nhẹ font trên mobile tránh tràn chữ */
+            font-size: 2.5rem; 
             font-weight: 800;
             letter-spacing: 2px;
             margin-bottom: 20px;
@@ -72,12 +71,12 @@
             flex: 1 0 auto;
         }
 
-        /* Hộp nội dung có viền Stroke Gradient đổi màu */
+        /* Hộp nội dung có viền Stroke Gradient đổ màu cố định (Không kẹt khung) */
         .gradient-box {
             position: relative;
             background: rgba(10, 10, 20, 0.8);
             border-radius: 16px;
-            padding: 25px; /* Giảm padding một chút trên mobile */
+            padding: 25px; 
             margin-bottom: 40px;
             backdrop-filter: blur(10px);
             z-index: 1;
@@ -137,7 +136,7 @@
             font-size: 1.3rem;
         }
 
-        /* Đẩy bảng vào hộp cuộn riêng biệt nếu màn hình quá nhỏ */
+        /* Hộp chống tràn màn hình cho bảng */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -149,7 +148,7 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            min-width: 500px; /* Giữ độ rộng tối thiểu cho bảng để không bị méo chữ */
+            min-width: 500px; 
         }
 
         .status-table th, .status-table td {
@@ -162,7 +161,7 @@
             color: #ff007f;
         }
 
-        /* Các nhãn trạng thái của chip */
+        /* Các nhãn trạng thái */
         .badge {
             padding: 4px 8px;
             border-radius: 4px;
@@ -173,7 +172,55 @@
         .badge-danger { background: #ff0055; color: white; }
         .badge-warning { background: #ffaa00; color: black; }
 
-        /* Khóa chân Footer ở đáy */
+        /* --- THIẾT KẾ NÚT GET APP STYLE NEON CYBERPUNK --- */
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .btn-get-app {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #ffffff;
+            padding: 15px 45px;
+            border-radius: 50px;
+            position: relative;
+            background: #05050a;
+            z-index: 1;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Viền chuyển màu nhấp nháy chạy quanh nút */
+        .btn-get-app::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #00f0ff, #7000ff, #ff007f, #00f0ff);
+            background-size: 400%;
+            z-index: -1;
+            animation: neonGlow 8s linear infinite;
+        }
+
+        /* Đổ bóng phát sáng Neon */
+        .btn-get-app:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(255, 0, 127, 0.4);
+        }
+
+        @keyframes neonGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Khóa chân Footer */
         footer {
             flex-shrink: 0;
             text-align: center;
@@ -185,7 +232,7 @@
             width: 100%;
         }
 
-        /* --- RESPONSIVE CHO MÀN HÌNH NGANG / PC / TABLET --- */
+        /* --- RESPONSIVE CHO MÀN HÌNH NGANG / PC --- */
         @media screen and (min-width: 768px) or (orientation: landscape) {
             header h1 { font-size: 4.2rem; }
             header p { font-size: 1.3rem; }
@@ -193,53 +240,45 @@
             .gradient-box { padding: 50px; margin-bottom: 60px; }
             .gradient-box h2 { font-size: 2.4rem; }
             .features { grid-template-columns: repeat(3, 1fr); gap: 25px; }
-            .status-table { min-width: 100%; } /* Màn hình lớn thì bảng tự giãn 100% */
+            .status-table { min-width: 100%; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 data-aos="zoom-in" data-aos-duration="1000">
-            Welcome to <span class="text-gradient">Netking</span>
-        </h1>
-        <p data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
-            The ultimate hub where elite talents converge and push the absolute limits of network performance.
-        </p>
+        <h1>Welcome to <span class="text-gradient">Netking</span></h1>
+        <p>The ultimate hub where elite talents converge and push the absolute limits of network performance.</p>
     </header>
 
     <div class="container">
 
-        <div class="gradient-box" data-aos="fade-right" data-aos-duration="1200">
+        <div class="gradient-box">
             <h2>About <span class="text-gradient">Our Community</span></h2>
-            <p>
-                Netking Community is not just a group; it is a gathering of elite tech minds, developers, and network enthusiasts. We share knowledge, break barriers, and explore the unseen potentials of modern technology.
-            </p>
+            <p>Netking Community is not just a group; it is a gathering of elite tech minds, developers, and network enthusiasts. We share knowledge, break barriers, and explore the unseen potentials of modern technology.</p>
         </div>
 
-        <div class="gradient-box" data-aos="fade-left" data-aos-duration="1200">
+        <div class="gradient-box">
             <h2>The Ultimate <span class="text-gradient">Device Stress Test</span></h2>
-            <p>
-                How much can your smartphone endure? Through our advanced, high-throughput VPN stress testing methods, we push your device's processing power and network chip to their absolute peak.
-            </p>
+            <p>How much can your smartphone endure? Through our advanced, high-throughput VPN stress testing methods, we push your device's processing power and network chip to their absolute peak.</p>
 
             <div class="features">
-                <div class="feature-card" data-aos="flip-up" data-aos-delay="100">
+                <div class="feature-card">
                     <h3>High-Load VPN</h3>
                     <p>Simulate massive parallel data streams to benchmark core stability.</p>
                 </div>
-                <div class="feature-card" data-aos="flip-up" data-aos-delay="200">
+                <div class="feature-card">
                     <h3>Thermal Limit</h3>
                     <p>Watch how your phone handles heat dissipation during extreme network encryption.</p>
                 </div>
-                <div class="feature-card" data-aos="flip-up" data-aos-delay="300">
+                <div class="feature-card">
                     <h3>Elite Talents</h3>
                     <p>Connect with experts who optimize protocols for a living.</p>
                 </div>
             </div>
         </div>
 
-        <div class="gradient-box" data-aos="fade-up" data-aos-duration="1200">
+        <div class="gradient-box">
             <h2>Device <span class="text-gradient">Endurance Tiers</span></h2>
             <p>Check out how different device tiers perform under our heavy VPN stress tests:</p>
             
@@ -273,19 +312,18 @@
             </div>
         </div>
 
+        <div class="btn-container">
+            <a href="https://discord.gg/wf4QnepsxS" target="_blank" class="btn-get-app">
+                GET APP
+            </a>
+        </div>
+
     </div>
 
     <footer>
         <p>&copy; 2026 Netking Community. All rights reserved. Powered by AIDE.</p>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            mirror: true,
-            once: false
-        });
-    </script>
     <script src="js/scripts.js"></script>
 </body>
 </html>
