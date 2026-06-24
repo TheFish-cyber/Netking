@@ -1,0 +1,35 @@
+/* 1. Sửa lại thẻ html và body để khóa chặt nền đen */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #05050a; /* Ép toàn bộ gốc rễ web phải là màu đen */
+}
+
+body {
+    color: #ffffff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Giữ nguyên container nhưng tối ưu margin */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1 0 auto; /* Đẩy nội dung tự giãn, ép footer xuống đáy */
+}
+
+/* 3. Khóa chân Footer ở đáy và phủ nền đen */
+footer {
+    flex-shrink: 0; /* Không cho footer bị co bóp */
+    text-align: center;
+    padding: 30px;
+    color: #4a4a6a;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: #05050a; /* Đảm bảo footer cũng màu đen */
+    width: 100%;
+}
