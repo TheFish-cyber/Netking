@@ -131,7 +131,7 @@
             line-height: 1.7;
         }
 
-        /* --- CẤU TRÚC SHOP NETKING (GIỐNG VIDEO 100%) --- */
+        /* --- CẤU TRÚC SHOP NETKING --- */
         .shop-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -355,6 +355,23 @@
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(255, 0, 127, 0.4);
         }
 
+        /* Nút Netking Shop hiệu ứng Neon tím xanh huyền ảo */
+        .btn-netking-shop::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #7000ff, #00f0ff, #ff007f, #7000ff);
+            background-size: 400%;
+            z-index: -1;
+            animation: neonGlow 8s linear infinite;
+        }
+
+        .btn-netking-shop:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(112, 0, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.4);
+        }
+
         .btn-support::before {
             content: '';
             position: absolute;
@@ -437,7 +454,7 @@
             .gradient-box { padding: 50px; margin-bottom: 60px; }
             .gradient-box h2 { font-size: 2.4rem; }
             .features { grid-template-columns: repeat(3, 1fr); gap: 25px; }
-            .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; } /* Shop chia đôi hàng trên PC */
+            .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
             .status-table { min-width: 100%; }
             .btn-container { flex-direction: row; gap: 30px; }
         }
@@ -576,9 +593,13 @@
             </div>
         </div>
 
+        <!-- KHU VỰC CHỨA NÚT LIÊN KẾT BOTTOM (ĐÃ THÊM NÚT NETKING SHOP) -->
         <div class="btn-container">
             <button onclick="triggerRedirect('discord')" class="btn-neon btn-get-app">
                 GET APP
+            </button>
+            <button onclick="triggerRedirect('netking_shop')" class="btn-neon btn-netking-shop">
+                NETKING SHOP
             </button>
             <button onclick="triggerRedirect('tiktok')" class="btn-neon btn-support">
                 SUPPORT US
@@ -596,24 +617,28 @@
             const screen = document.getElementById('loading-screen');
             const msg = document.getElementById('loading-msg');
             
-            // Đổi text loading tương ứng cho từng nút
+            // Cập nhật nội dung text loading tương ứng với từng nền t nền tảng
             if (platform === 'discord' || platform === 'discord_shop') {
                 msg.innerText = "CONNECTING TO NETKING HUB...";
+            } else if (platform === 'netking_shop') {
+                msg.innerText = "OPENING NETKING WEB STORE...";
             } else if (platform === 'tiktok') {
                 msg.innerText = "OPENING NETKING TIKTOK...";
             }
             
-            // Hiện màn hình loading
+            // Kích hoạt màn hình Loading Screen
             screen.classList.add('active');
 
-            // Đợi chạy 3 giây (3000ms)
+            // Thiết lập bộ đếm thời gian 3 giây (3000ms)
             setTimeout(() => {
-                // Ẩn frame loading đi
+                // Tắt màn hình Loading Screen
                 screen.classList.remove('active');
                 
-                // Mở link đích công khai
+                // Mở đường dẫn trang liên kết tương ứng công khai
                 if (platform === 'discord' || platform === 'discord_shop') {
                     window.location.href = "https://discord.gg/wf4QnepsxS";
+                } else if (platform === 'netking_shop') {
+                    window.open("https://msnetking-shop.vercel.app", "_blank");
                 } else if (platform === 'tiktok') {
                     window.location.href = "https://www.tiktok.com/@netking.com?_r=1&_t=ZS-97T6vHca8hh";
                 }
