@@ -45,10 +45,11 @@
 
         header h1 { animation-delay: 0.1s; }
         header p { animation-delay: 0.3s; }
-        .box-1 { animation-delay: 0.5s; }
-        .box-2 { animation-delay: 0.7s; }
-        .box-3 { animation-delay: 0.9s; }
-        .box-4 { animation-delay: 1.1s; }
+        .box-1 { animation-delay: 0.4s; }
+        .box-shop { animation-delay: 0.5s; }
+        .box-2 { animation-delay: 0.6s; }
+        .box-3 { animation-delay: 0.7s; }
+        .box-4 { animation-delay: 0.8s; }
 
         /* Chữ hiệu ứng Gradient đổ màu */
         .text-gradient {
@@ -59,7 +60,7 @@
 
         /* Cấu hình phần đầu trang */
         header {
-            min-height: 50vh;
+            min-height: 45vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -130,59 +131,70 @@
             line-height: 1.7;
         }
 
-        /* --- THANH ĐO THÔNG SỐ PIN & ĐIỆN THOẠI CYBERPUNK --- */
-        .stat-container {
+        /* --- CẤU TRÚC SHOP NETKING (GIỐNG VIDEO 100%) --- */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
             margin-top: 25px;
+            width: 100%;
+        }
+
+        .shop-card {
+            background: rgba(20, 20, 35, 0.6);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .stat-row {
-            width: 100%;
-        }
-
-        .stat-label {
-            display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
-            color: #b0b0d0;
-            margin-bottom: 5px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .stat-bar-bg {
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .shop-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff007f;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
         }
 
-        .stat-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            width: 0;
+        .shop-card h3 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
         }
 
-        @keyframes fillBar {
-            to { width: var(--target-width); }
+        .shop-card .price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #00f0ff;
+            margin: 15px 0;
         }
 
-        .fill-battery { 
-            background: linear-gradient(90deg, #ff007f, #ff0055); 
-            --target-width: 42%; 
-            animation: fillBar 1.5s 1s forwards cubic-bezier(0.1, 1, 0.1, 1);
+        .shop-card .price span {
+            font-size: 0.8rem;
+            color: #8a8ab0;
+            font-weight: normal;
+            margin-left: 5px;
         }
-        .fill-cpu { 
-            background: linear-gradient(90deg, #00f0ff, #7000ff); 
-            --target-width: 98%; 
-            animation: fillBar 1.5s 1.2s forwards cubic-bezier(0.1, 1, 0.1, 1);
+
+        /* Nút mua hàng bên trong Shop */
+        .btn-buy {
+            background: linear-gradient(45deg, #00f0ff, #ff007f);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.2s ease, transform 0.1s ease;
         }
-        .fill-temp { 
-            background: linear-gradient(90deg, #ffaa00, #ff0000); 
-            --target-width: 87%; 
-            animation: fillBar 1.5s 1.4s forwards cubic-bezier(0.1, 1, 0.1, 1);
+
+        .btn-buy:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
         }
 
         /* Grid hiển thị các tính năng */
@@ -211,6 +223,57 @@
             color: #00f0ff;
             margin-bottom: 10px;
             font-size: 1.3rem;
+        }
+
+        /* --- THANH ĐO THÔNG SỐ PIN & ĐIỆN THOẠI CYBERPUNK --- */
+        .stat-container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-row { width: 100%; }
+
+        .stat-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #b0b0d0;
+            margin-bottom: 5px;
+        }
+
+        .stat-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            width: 0;
+        }
+
+        @keyframes fillBar { to { width: var(--target-width); } }
+
+        .fill-battery { 
+            background: linear-gradient(90deg, #ff007f, #ff0055); 
+            --target-width: 42%; 
+            animation: fillBar 1.5s 1s forwards cubic-bezier(0.1, 1, 0.1, 1);
+        }
+        .fill-cpu { 
+            background: linear-gradient(90deg, #00f0ff, #7000ff); 
+            --target-width: 98%; 
+            animation: fillBar 1.5s 1.2s forwards cubic-bezier(0.1, 1, 0.1, 1);
+        }
+        .fill-temp { 
+            background: linear-gradient(90deg, #ffaa00, #ff0000); 
+            --target-width: 87%; 
+            animation: fillBar 1.5s 1.4s forwards cubic-bezier(0.1, 1, 0.1, 1);
         }
 
         /* Hộp chống tràn cho bảng */
@@ -245,7 +308,7 @@
         .badge-danger { background: #ff0055; color: white; }
         .badge-warning { background: #ffaa00; color: black; }
 
-        /* --- KHOẢNG CHỨA NÚT LIÊN KẾT (Hỗ trợ xếp hàng ngang trên PC, dọc trên Mobile) --- */
+        /* --- KHOẢNG CHỨA NÚT LIÊN KẾT BOTTOM --- */
         .btn-container {
             display: flex;
             flex-direction: column;
@@ -269,14 +332,13 @@
             position: relative;
             background: #05050a;
             z-index: 1;
-            transition: transform 0.2s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
-            width: 240px; /* Định kích thước cố định cho 2 nút bằng nhau */
+            width: 240px; 
             text-align: center;
         }
 
-        /* Nút 1: Get App (Xanh dương - Tím) */
         .btn-get-app::before {
             content: '';
             position: absolute;
@@ -293,7 +355,6 @@
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(255, 0, 127, 0.4);
         }
 
-        /* Nút 2: Support Us (Đỏ - Hồng - Cam) */
         .btn-support::before {
             content: '';
             position: absolute;
@@ -316,7 +377,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- SCREEN LOADING CYBERPUNK (ẨN/HIỆN MƯỢT MÀ) --- */
+        /* --- SCREEN LOADING CYBERPUNK --- */
         #loading-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -328,7 +389,7 @@
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease; /* Hiệu ứng mờ dần mượt mà */
+            transition: opacity 0.4s ease; 
         }
 
         #loading-screen.active {
@@ -355,9 +416,7 @@
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         footer {
             flex-shrink: 0;
@@ -370,7 +429,7 @@
             width: 100%;
         }
 
-        /* Trên PC hoặc màn hình lớn, xếp hai nút nằm ngang hàng */
+        /* RESPONSIVE CHO PC HOẶC MÀN HÌNH RỘNG */
         @media screen and (min-width: 768px) {
             header h1 { font-size: 4.2rem; }
             header p { font-size: 1.3rem; }
@@ -378,6 +437,7 @@
             .gradient-box { padding: 50px; margin-bottom: 60px; }
             .gradient-box h2 { font-size: 2.4rem; }
             .features { grid-template-columns: repeat(3, 1fr); gap: 25px; }
+            .shop-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; } /* Shop chia đôi hàng trên PC */
             .status-table { min-width: 100%; }
             .btn-container { flex-direction: row; gap: 30px; }
         }
@@ -400,6 +460,31 @@
         <div class="gradient-box box-1">
             <h2>About <span class="text-gradient">Our Community</span></h2>
             <p>Netking Community is not just a group; it is a gathering of elite tech minds, developers, and network enthusiasts. We share knowledge, break barriers, and explore the unseen potentials of modern technology.</p>
+        </div>
+
+        <div class="gradient-box box-shop">
+            <h2>Shop <span class="text-gradient">Netking</span></h2>
+            <p>Premium specialized solutions and tools designed to optimize and test performance limits:</p>
+            
+            <div class="shop-grid">
+                <div class="shop-card">
+                    <div>
+                        <h3>Android VPN Service Test</h3>
+                        <p style="color: #8a8ab0; font-size: 0.9rem;">High-speed secure protocol tuning simulator for power devices.</p>
+                    </div>
+                    <div class="price">Free</div>
+                    <button onclick="triggerRedirect('discord_shop')" class="btn-buy">Join Discord</button>
+                </div>
+
+                <div class="shop-card">
+                    <div>
+                        <h3>Netking Fake Lag OG</h3>
+                        <p style="color: #8a8ab0; font-size: 0.9rem;">Exclusive network optimization suite with absolute permanent access.</p>
+                    </div>
+                    <div class="price">100,000 VND <span>V.V</span></div>
+                    <button onclick="triggerRedirect('discord_shop')" class="btn-buy">Purchase</button>
+                </div>
+            </div>
         </div>
 
         <div class="gradient-box box-2">
@@ -495,7 +580,6 @@
             <button onclick="triggerRedirect('discord')" class="btn-neon btn-get-app">
                 GET APP
             </button>
-            
             <button onclick="triggerRedirect('tiktok')" class="btn-neon btn-support">
                 SUPPORT US
             </button>
@@ -512,23 +596,23 @@
             const screen = document.getElementById('loading-screen');
             const msg = document.getElementById('loading-msg');
             
-            // Thay đổi text loading dựa theo nút bấm cho pro
-            if (platform === 'discord') {
+            // Đổi text loading tương ứng cho từng nút
+            if (platform === 'discord' || platform === 'discord_shop') {
                 msg.innerText = "CONNECTING TO NETKING HUB...";
             } else if (platform === 'tiktok') {
                 msg.innerText = "OPENING NETKING TIKTOK...";
             }
             
-            // BẬT khung loading (Thêm class hoạt ảnh hiển thị)
+            // Hiện màn hình loading
             screen.classList.add('active');
 
-            // Chạy hiệu ứng đúng 3 giây (3000ms)
+            // Đợi chạy 3 giây (3000ms)
             setTimeout(() => {
-                // TẮT khung loading (Ẩn frame đi trước khi nhảy trang)
+                // Ẩn frame loading đi
                 screen.classList.remove('active');
                 
-                // Mở link chính thức tương ứng
-                if (platform === 'discord') {
+                // Mở link đích công khai
+                if (platform === 'discord' || platform === 'discord_shop') {
                     window.location.href = "https://discord.gg/wf4QnepsxS";
                 } else if (platform === 'tiktok') {
                     window.location.href = "https://www.tiktok.com/@netking.com?_r=1&_t=ZS-97T6vHca8hh";
