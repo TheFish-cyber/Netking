@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netking Community</title>
-    <!-- Thư viện hiệu ứng ẩn hiện khi cuộn trang -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
-        /* --- TOÀN BỘ CSS PHONG CÁCH MODERN NEON --- */
-        html, body {
-            height: 100%;
+        /* --- KHÓA CHẶT TRÀN MÀN HÌNH --- */
+        * {
+            box-sizing: border-box; /* Ép padding không được đẩy rộng phần tử */
             margin: 0;
             padding: 0;
-            background-color: #05050a; /* Khóa chặt nền đen toàn bộ trang */
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            background-color: #05050a;
+            overflow-x: hidden; /* Cấm tuyệt đối không cho vuốt sang phải */
         }
 
         body {
             color: #ffffff;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -34,6 +38,257 @@
         /* Cấu hình phần đầu trang */
         header {
             min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 2.5rem; /* Giảm nhẹ font trên mobile tránh tràn chữ */
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            max-width: 100%;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #8a8ab0;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* Container bao quanh nội dung chính */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1 0 auto;
+        }
+
+        /* Hộp nội dung có viền Stroke Gradient đổi màu */
+        .gradient-box {
+            position: relative;
+            background: rgba(10, 10, 20, 0.8);
+            border-radius: 16px;
+            padding: 25px; /* Giảm padding một chút trên mobile */
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            width: 100%;
+        }
+
+        .gradient-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, #00f0ff, #7000ff, #ff007f);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .gradient-box h2 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .gradient-box p {
+            color: #b0b0d0;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Grid hiển thị các tính năng */
+        .features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: rgba(20, 20, 35, 0.5);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #00f0ff;
+        }
+
+        .feature-card h3 {
+            color: #00f0ff;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Đẩy bảng vào hộp cuộn riêng biệt nếu màn hình quá nhỏ */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 500px; /* Giữ độ rộng tối thiểu cho bảng để không bị méo chữ */
+        }
+
+        .status-table th, .status-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .status-table th {
+            color: #ff007f;
+        }
+
+        /* Các nhãn trạng thái của chip */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .badge-danger { background: #ff0055; color: white; }
+        .badge-warning { background: #ffaa00; color: black; }
+
+        /* Khóa chân Footer ở đáy */
+        footer {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 30px 20px;
+            color: #4a4a6a;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #05050a;
+            width: 100%;
+        }
+
+        /* --- RESPONSIVE CHO MÀN HÌNH NGANG / PC / TABLET --- */
+        @media screen and (min-width: 768px) or (orientation: landscape) {
+            header h1 { font-size: 4.2rem; }
+            header p { font-size: 1.3rem; }
+            .container { padding: 40px; }
+            .gradient-box { padding: 50px; margin-bottom: 60px; }
+            .gradient-box h2 { font-size: 2.4rem; }
+            .features { grid-template-columns: repeat(3, 1fr); gap: 25px; }
+            .status-table { min-width: 100%; } /* Màn hình lớn thì bảng tự giãn 100% */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 data-aos="zoom-in" data-aos-duration="1000">
+            Welcome to <span class="text-gradient">Netking</span>
+        </h1>
+        <p data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+            The ultimate hub where elite talents converge and push the absolute limits of network performance.
+        </p>
+    </header>
+
+    <div class="container">
+
+        <div class="gradient-box" data-aos="fade-right" data-aos-duration="1200">
+            <h2>About <span class="text-gradient">Our Community</span></h2>
+            <p>
+                Netking Community is not just a group; it is a gathering of elite tech minds, developers, and network enthusiasts. We share knowledge, break barriers, and explore the unseen potentials of modern technology.
+            </p>
+        </div>
+
+        <div class="gradient-box" data-aos="fade-left" data-aos-duration="1200">
+            <h2>The Ultimate <span class="text-gradient">Device Stress Test</span></h2>
+            <p>
+                How much can your smartphone endure? Through our advanced, high-throughput VPN stress testing methods, we push your device's processing power and network chip to their absolute peak.
+            </p>
+
+            <div class="features">
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="100">
+                    <h3>High-Load VPN</h3>
+                    <p>Simulate massive parallel data streams to benchmark core stability.</p>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="200">
+                    <h3>Thermal Limit</h3>
+                    <p>Watch how your phone handles heat dissipation during extreme network encryption.</p>
+                </div>
+                <div class="feature-card" data-aos="flip-up" data-aos-delay="300">
+                    <h3>Elite Talents</h3>
+                    <p>Connect with experts who optimize protocols for a living.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="gradient-box" data-aos="fade-up" data-aos-duration="1200">
+            <h2>Device <span class="text-gradient">Endurance Tiers</span></h2>
+            <p>Check out how different device tiers perform under our heavy VPN stress tests:</p>
+            
+            <div class="table-responsive">
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Device Tier</th>
+                            <th>Encryption Load</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Flagship Chips (Snapdragon 8 Gen 3)</td>
+                            <td>10 Gbps / 256-bit AES</td>
+                            <td><span class="badge badge-warning">Heating up</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mid-range Chips (Snapdragon 7 Gen 1)</td>
+                            <td>5 Gbps / 256-bit AES</td>
+                            <td><span class="badge badge-danger">Thermal Throttling</span></td>
+                        </tr>
+                        <tr>
+                            <td>Low-end Devices</td>
+                            <td>1 Gbps / 128-bit AES</td>
+                            <td><span class="badge badge-danger">Crash / Reboot</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Netking Community. All rights reserved. Powered by AIDE.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            mirror: true,
+            once: false
+        });
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
             display: flex;
             flex-direction: column;
             justify-content: center;
