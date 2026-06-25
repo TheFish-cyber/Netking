@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netking Website</title>
     
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png">
+    <link class="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png">
+    
     <style>
         /* --- RESET & CHỐNG TRÀN MÀN HÌNH --- */
         * {
@@ -39,11 +42,11 @@
             pointer-events: none;
         }
 
-        /* --- HIỆU ỨNG BLUR FADE IN / FADE OUT KHI LUỘT (NÂNG CẤP) --- */
+        /* --- HIỆU ỨNG BLUR FADE IN / FADE OUT KHI LUỘT --- */
         .reveal {
             opacity: 0;
-            filter: blur(12px); /* Tạo trạng thái mờ ban đầu */
-            transform: translateY(35px) scale(0.98); /* Kết hợp đẩy nhẹ tọa độ và thu nhỏ */
+            filter: blur(12px); 
+            transform: translateY(35px) scale(0.98); 
             transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
                         filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
                         transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
@@ -52,7 +55,7 @@
 
         .reveal.active {
             opacity: 1;
-            filter: blur(0px); /* Loại bỏ mờ khi phần tử hiện hình */
+            filter: blur(0px); 
             transform: translateY(0) scale(1);
         }
 
@@ -63,7 +66,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Cấu hình phần đầu trang */
+        /* Cấu hình phần đầu trang & Icon Header */
         header {
             min-height: 45vh;
             display: flex;
@@ -74,6 +77,21 @@
             padding: 40px 20px;
             width: 100%;
             z-index: 1;
+        }
+
+        .header-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.5)); }
+            100% { transform: scale(1.04); filter: drop-shadow(0 0 14px rgba(255, 0, 127, 0.7)); }
         }
 
         header h1 {
@@ -398,6 +416,7 @@
         @media screen and (min-width: 768px) {
             header h1 { font-size: 4.2rem; }
             header p { font-size: 1.3rem; }
+            .header-logo { width: 90px; height: 90px; margin-bottom: 22px; }
             .container { padding: 40px; }
             .gradient-box { padding: 50px; margin-bottom: 60px; }
             .gradient-box h2 { font-size: 2.4rem; }
@@ -417,6 +436,7 @@
     </div>
 
     <header class="reveal">
+        <img class="header-logo" src="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png" alt="Netking Logo">
         <h1>Welcome to <span class="text-gradient">Netking</span></h1>
         <p>The ultimate hub where elite talents converge and push the absolute limits of network performance.</p>
     </header>
@@ -548,7 +568,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Tạo danh sách các ngôi sao ngẫu nhiên
         const starsCount = 120;
         for (let i = 0; i < starsCount; i++) {
             stars.push({
@@ -581,12 +600,12 @@
         animateStars();
 
 
-        // --- 2. HIỆU ỨNG INTERSECTION OBSERVER (FADE IN/OUT + BLUR KHI LUỘT) ---
+        // --- 2. HIỆU ỨNG INTERSECTION OBSERVER ---
         const revealElements = document.querySelectorAll('.reveal');
         
         const observerOptions = {
             root: null, 
-            threshold: 0.05, // Kích hoạt sớm hơn một chút để mượt mà
+            threshold: 0.05, 
             rootMargin: "0px 0px -20px 0px"
         };
 
@@ -595,7 +614,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 } else {
-                    // Khi lướt ra khỏi màn hình: tự động mờ và biến mất (Fade Out)
                     entry.target.classList.remove('active');
                 }
             });
