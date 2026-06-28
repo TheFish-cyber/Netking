@@ -1,74 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netking Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Netking Hub - One UI 8.5 Edition</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png">
     <link class="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png">
     
     <style>
-        /* --- RESET & CHỐNG TRÀN MÀN HÌNH --- */
+        /* --- RESET & ONE UI STYLING CORE --- */
         * {
             box-sizing: border-box; 
             margin: 0;
             padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         html, body {
             height: 100%;
             width: 100%;
-            background-color: #05050a;
+            background-color: #f4f6fa;
             overflow-x: hidden; 
         }
 
         body {
-            color: #ffffff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* --- BACKGROUND STARS PARTICLE CANVAS --- */
-        #stars-canvas {
+        /* --- HIGH-END ONE UI 8.5 DYNAMIC AMBIENT BACKGROUND --- */
+        .ambient-glow {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
+            overflow: hidden;
             pointer-events: none;
+            background: #f4f6fa;
         }
+        .glow-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.45;
+        }
+        .glow-1 { top: -10%; left: -10%; width: 350px; height: 350px; background: #8ca5ff; }
+        .glow-2 { top: 15%; right: -5%; width: 280px; height: 280px; background: #ffb6c1; opacity: 0.3; }
+        .glow-3 { top: -20%; left: 40%; width: 400px; height: 400px; background: #c3a6ff; opacity: 0.35; }
 
-        /* --- HIỆU ỨNG BLUR FADE IN / FADE OUT KHI LUỘT --- */
+        /* --- REVEAL SCROLL ANIMATION --- */
         .reveal {
             opacity: 0;
-            filter: blur(12px); 
-            transform: translateY(35px) scale(0.98); 
-            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
-                        filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
-                        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            filter: blur(8px); 
+            transform: translateY(24px); 
+            transition: opacity 0.6s cubic-bezier(0.1, 0.9, 0.2, 1), 
+                        filter 0.6s cubic-bezier(0.1, 0.9, 0.2, 1), 
+                        transform 0.6s cubic-bezier(0.1, 0.9, 0.2, 1);
             will-change: opacity, filter, transform;
         }
 
         .reveal.active {
             opacity: 1;
             filter: blur(0px); 
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
-        /* Chữ hiệu ứng Gradient đổ màu */
         .text-gradient {
-            background: linear-gradient(45deg, #00f0ff, #ff007f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #0381fe;
         }
 
-        /* Cấu hình phần đầu trang & Icon Header */
+        /* ONE UI LARGE TITLE HEADER BAR */
         header {
-            min-height: 45vh;
+            min-height: 38vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -80,115 +88,100 @@
         }
 
         .header-logo {
-            width: 70px;
-            height: 70px;
+            width: 72px;
+            height: 72px;
             object-fit: contain;
-            border-radius: 14px;
+            border-radius: 18px;
             margin-bottom: 16px;
-            filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
-            animation: pulseGlow 2s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.5)); }
-            100% { transform: scale(1.04); filter: drop-shadow(0 0 14px rgba(255, 0, 127, 0.7)); }
+            box-shadow: 0 8px 24px rgba(3, 129, 254, 0.15);
         }
 
         header h1 {
-            font-size: 2.5rem; 
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            font-size: 2.2rem; 
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
             line-height: 1.2;
         }
 
         header p {
-            font-size: 1.1rem;
-            color: #8a8ab0;
-            max-width: 600px;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #6e737a;
+            max-width: 500px;
+            line-height: 1.5;
         }
 
         /* Container bao quanh nội dung chính */
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 580px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 16px;
             flex: 1 0 auto;
             z-index: 1;
         }
 
-        /* Hộp nội dung viền Neon */
-        .gradient-box {
-            position: relative;
-            background: rgba(10, 10, 20, 0.85);
-            border-radius: 16px;
-            padding: 25px; 
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
+        /* ONE UI PREMIUM WHITEOUT CARD */
+        .oneui-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             width: 100%;
         }
 
-        .gradient-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 16px;
-            padding: 2px;
-            background: linear-gradient(135deg, #00f0ff, #7000ff, #ff007f);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            z-index: -1;
+        .oneui-card h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #7a7e85;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .gradient-box h2 {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-        }
-
-        .gradient-box p {
-            color: #b0b0d0;
-            font-size: 1rem;
-            line-height: 1.7;
+        .oneui-card p {
+            color: #333333;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         /* Grid hiển thị các tính năng */
         .features {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
             width: 100%;
         }
 
         .feature-card {
-            background: rgba(20, 20, 35, 0.5);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: #00f0ff;
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.01);
         }
 
         .feature-card h3 {
-            color: #00f0ff;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
+            color: #000000;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
         }
 
-        /* --- THANH ĐO THÔNG SỐ PIN & ĐIỆN THOẠI CYBERPUNK --- */
+        .feature-card p {
+            color: #6e737a;
+            font-size: 0.82rem;
+        }
+
+        /* --- ONE UI SMOOTH SPEC BAR --- */
         .stat-container {
-            margin-top: 25px;
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 14px;
         }
 
         .stat-row { width: 100%; }
@@ -196,18 +189,18 @@
         .stat-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
-            color: #b0b0d0;
-            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: #4a4a4a;
+            margin-bottom: 6px;
+            font-weight: 500;
         }
 
         .stat-bar-bg {
             width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.05);
+            height: 12px;
+            background: #eeeef4;
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-bar-fill {
@@ -219,151 +212,108 @@
         @keyframes fillBar { to { width: var(--target-width); } }
 
         .reveal.active .fill-battery { 
-            background: linear-gradient(90deg, #ff007f, #ff0055); 
+            background: #ff5c5c; 
             --target-width: 42%; 
-            animation: fillBar 1.5s 0.2s forwards cubic-bezier(0.1, 1, 0.1, 1);
+            animation: fillBar 1.2s forwards cubic-bezier(0.1, 0.9, 0.2, 1);
         }
         .reveal.active .fill-cpu { 
-            background: linear-gradient(90deg, #00f0ff, #7000ff); 
+            background: #0381fe; 
             --target-width: 98%; 
-            animation: fillBar 1.5s 0.4s forwards cubic-bezier(0.1, 1, 0.1, 1);
+            animation: fillBar 1.2s forwards cubic-bezier(0.1, 1, 0.1, 1);
         }
         .reveal.active .fill-temp { 
-            background: linear-gradient(90deg, #ffaa00, #ff0000); 
+            background: #ff9800; 
             --target-width: 87%; 
-            animation: fillBar 1.5s 0.6s forwards cubic-bezier(0.1, 1, 0.1, 1);
+            animation: fillBar 1.2s forwards cubic-bezier(0.1, 1, 0.1, 1);
         }
 
         /* Hộp chống tràn cho bảng */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .status-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            min-width: 500px; 
+            min-width: 400px; 
         }
 
         .status-table th, .status-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
+            padding: 12px 10px;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 0.85rem;
         }
 
-        .status-table th { color: #ff007f; }
+        .status-table th { color: #7a7e85; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; }
+        .status-table td { color: #000000; font-weight: 500; }
 
         .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
             display: inline-block;
         }
-        .badge-danger { background: #ff0055; color: white; }
-        .badge-warning { background: #ffaa00; color: black; }
+        .badge-danger { background: rgba(244, 67, 54, 0.1); color: #d32f2f; }
+        .badge-warning { background: rgba(255, 152, 0, 0.1); color: #e65100; }
 
-        /* --- KHOẢNG CHỨA NÚT LIÊN KẾT BOTTOM --- */
+        /* --- ONE UI SQUIRCLE PILL BUTTONS CONTAINER --- */
         .btn-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-top: 24px;
+            margin-bottom: 10px;
             width: 100%;
         }
 
-        .btn-neon {
-            display: inline-block;
+        .btn-oneui {
+            display: block;
             text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            color: #ffffff;
-            padding: 15px 40px;
-            border-radius: 50px;
-            position: relative;
-            background: #05050a;
-            z-index: 1;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-            cursor: pointer;
-            border: none;
-            width: 240px; 
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 20px;
+            width: 100%; 
             text-align: center;
             outline: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.2s;
         }
 
-        /* --- HIỆU ỨNG POP-UP KHI NHẤN VÀO BUTTONS --- */
-        .btn-neon:active {
-            transform: scale(0.92) !important;
+        .btn-oneui:active {
+            transform: scale(0.97);
         }
 
-        /* Nút Files hiệu ứng Neon Cyan tinh tế */
-        .btn-files::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 50px;
-            background: linear-gradient(45deg, #00f0ff, #0077ff, #ff007f, #00f0ff);
-            background-size: 400%;
-            z-index: -1;
-            animation: neonGlow 8s linear infinite;
+        .btn-files {
+            background: #0381fe;
+            color: #ffffff;
         }
+        .btn-files:hover { opacity: 0.9; }
 
-        .btn-files:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 119, 255, 0.4);
+        .btn-netking-shop {
+            background: #e3e5ee;
+            color: #222222;
         }
+        .btn-netking-shop:hover { background: #d8dae5; }
 
-        /* Nút Netking Shop hiệu ứng Neon tím xanh huyền ảo */
-        .btn-netking-shop::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 50px;
-            background: linear-gradient(45deg, #7000ff, #00f0ff, #ff007f, #7000ff);
-            background-size: 400%;
-            z-index: -1;
-            animation: neonGlow 8s linear infinite;
+        .btn-support {
+            background: #000000;
+            color: #ffffff;
         }
+        .btn-support:hover { opacity: 0.85; }
 
-        .btn-netking-shop:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(112, 0, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.4);
-        }
-
-        .btn-support::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 50px;
-            background: linear-gradient(45deg, #ff0055, #ff5500, #ff007f, #ff0055);
-            background-size: 400%;
-            z-index: -1;
-            animation: neonGlow 8s linear infinite;
-        }
-
-        .btn-support:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6), 0 0 40px rgba(255, 85, 0, 0.4);
-        }
-
-        @keyframes neonGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- SCREEN LOADING CYBERPUNK --- */
+        /* --- SYSTEM LOADING SCREEN SQUIRCLE --- */
         #loading-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #05050a;
+            background-color: rgba(244, 246, 250, 0.95);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -371,7 +321,7 @@
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease; 
+            transition: opacity 0.3s ease; 
         }
 
         #loading-screen.active {
@@ -380,22 +330,19 @@
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 240, 255, 0.1);
-            border-left-color: #00f0ff;
-            border-right-color: #ff007f;
+            width: 40px;
+            height: 40px;
+            border: 3.5px solid #e3e5ee;
+            border-left-color: #0381fe;
             border-radius: 50%;
-            animation: spin 1s infinite linear;
+            animation: spin 0.8s infinite linear;
         }
 
         .loading-text {
-            margin-top: 20px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-size: 1.1rem;
-            color: #00f0ff;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            margin-top: 14px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0381fe;
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -403,60 +350,51 @@
         footer {
             flex-shrink: 0;
             text-align: center;
-            padding: 30px 20px;
-            color: #4a4a6a;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background-color: #05050a;
+            padding: 24px 20px;
+            color: #9aa0a6;
+            font-size: 0.78rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            background-color: transparent;
             width: 100%;
             z-index: 1;
-        }
-
-        /* RESPONSIVE CHO PC HOẶC MÀN HÌNH RỘNG */
-        @media screen and (min-width: 768px) {
-            header h1 { font-size: 4.2rem; }
-            header p { font-size: 1.3rem; }
-            .header-logo { width: 90px; height: 90px; margin-bottom: 22px; }
-            .container { padding: 40px; }
-            .gradient-box { padding: 50px; margin-bottom: 60px; }
-            .gradient-box h2 { font-size: 2.4rem; }
-            .features { grid-template-columns: repeat(3, 1fr); gap: 25px; }
-            .status-table { min-width: 100%; }
-            .btn-container { flex-direction: row; gap: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="stars-canvas"></canvas>
+    <div class="ambient-glow">
+        <div class="glow-circle glow-1"></div>
+        <div class="glow-circle glow-2"></div>
+        <div class="glow-circle glow-3"></div>
+    </div>
 
     <div id="loading-screen">
         <div class="spinner"></div>
-        <div class="loading-text" id="loading-msg">CONNECTING TO NETKING HUB...</div>
+        <div class="loading-text" id="loading-msg">ĐANG KẾT NỐI ĐẾN NETKING HUB...</div>
     </div>
 
     <header class="reveal">
         <img class="header-logo" src="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png" alt="Netking Logo">
         <h1>Welcome to <span class="text-gradient">Netking</span></h1>
-        <p>The ultimate hub where elite talents converge and push the absolute limits of network performance.</p>
+        <p>Trung tâm lưu trữ tối ưu, thử nghiệm hiệu năng và thiết lập giao thức mạng nâng cao.</p>
     </header>
 
     <div class="container">
 
-        <div class="gradient-box reveal">
-            <h2>About <span class="text-gradient">Our Community</span></h2>
-            <p>Netking là một nhóm phát triển tối tân chuyên thiết kế và xây dựng các nền tảng website có cơ chế ràng buộc đặc biệt về hệ thống dịch vụ <strong>Fake Lag VPN service dành riêng cho nền tảng Android</strong>. Chúng tôi mang đến giải pháp giả lập, tinh chỉnh độ trễ và tối ưu hóa giao thức mạng chuyên sâu.</p>
+        <div class="oneui-card reveal">
+            <h2>About Our Community</h2>
+            <p>Netking là một nhóm phát triển chuyên thiết kế và xây dựng các nền t خار chuyên biệt về hệ thống dịch vụ <strong>Fake Lag VPN service dành riêng cho nền tảng Android</strong>. Chúng tôi mang đến giải pháp giả lập, tinh chỉnh độ trễ và tối ưu hóa giao thức hệ thống chuyên sâu.</p>
         </div>
 
-        <div class="gradient-box reveal">
-            <h2>System <span class="text-gradient">Diagnostics</span></h2>
-            <p>X-ray view of a standard device health during a high-load simulation test:</p>
+        <div class="oneui-card reveal">
+            <h2>System Diagnostics</h2>
+            <p style="color: #6e737a; margin-bottom: 10px;">Cấu hình trạng thái thiết bị tiêu chuẩn trong quá trình giả lập tải cao:</p>
             
             <div class="stat-container">
                 <div class="stat-row">
                     <div class="stat-label">
-                        <span>Battery Health (Chai Pin)</span>
-                        <span style="color: #ff0055;">42% (Degraded)</span>
+                        <span>Sức khỏe Pin (Chai Pin)</span>
+                        <span style="color: #d32f2f;">42% (Xuống cấp)</span>
                     </div>
                     <div class="stat-bar-bg">
                         <div class="stat-bar-fill fill-battery"></div>
@@ -464,8 +402,8 @@
                 </div>
                 <div class="stat-row">
                     <div class="stat-label">
-                        <span>CPU Core Performance</span>
-                        <span style="color: #00f0ff;">98% (Max Throttle)</span>
+                        <span>Hiệu suất lõi CPU</span>
+                        <span style="color: #0381fe;">98% (Tối đa công suất)</span>
                     </div>
                     <div class="stat-bar-bg">
                         <div class="stat-bar-fill fill-cpu"></div>
@@ -473,8 +411,8 @@
                 </div>
                 <div class="stat-row">
                     <div class="stat-label">
-                        <span>Thermal Temperature</span>
-                        <span style="color: #ffaa00;">87°C (Critical Heat)</span>
+                        <span>Nhiệt độ phần cứng</span>
+                        <span style="color: #e65100;">87°C (Quá nhiệt)</span>
                     </div>
                     <div class="stat-bar-bg">
                         <div class="stat-bar-fill fill-temp"></div>
@@ -483,29 +421,29 @@
             </div>
         </div>
 
-        <div class="gradient-box reveal">
-            <h2>The Ultimate <span class="text-gradient">Device Stress Test</span></h2>
-            <p>How much can your smartphone endure? Through our advanced, high-throughput VPN stress testing methods, we push your device's processing power and network chip to their absolute peak.</p>
+        <div class="oneui-card reveal">
+            <h2>The Ultimate Device Stress Test</h2>
+            <p style="color: #6e737a; margin-bottom: 10px;">Phương pháp kiểm thử mạng băng thông lớn của chúng tôi đẩy bộ xử lý và chip mạng di động lên giới hạn cực đại.</p>
 
             <div class="features">
                 <div class="feature-card">
                     <h3>High-Load VPN</h3>
-                    <p>Simulate massive parallel data streams to benchmark core stability.</p>
+                    <p>Mô phỏng các luồng dữ liệu song song cực lớn để đánh giá độ ổn định của lõi.</p>
                 </div>
                 <div class="feature-card">
                     <h3>Thermal Limit</h3>
-                    <p>Watch how your phone handles heat dissipation during extreme network encryption.</p>
+                    <p>Theo dõi khả năng tản nhiệt của điện thoại khi mã hóa mạng nâng cao.</p>
                 </div>
                 <div class="feature-card">
                     <h3>Elite Talents</h3>
-                    <p>Connect with experts who optimize protocols for a living.</p>
+                    <p>Kết nối và chia sẻ tối ưu hóa giao thức cùng các chuyên gia.</p>
                 </div>
             </div>
         </div>
 
-        <div class="gradient-box reveal">
-            <h2>Device <span class="text-gradient">Endurance Tiers</span></h2>
-            <p>Check out how different device tiers perform under our heavy VPN stress tests:</p>
+        <div class="oneui-card reveal">
+            <h2>Device Endurance Tiers</h2>
+            <p style="color: #6e737a; margin-bottom: 10px;">Phân cấp khả năng chịu đựng của thiết bị khi chạy stress test:</p>
             
             <div class="table-responsive">
                 <table class="status-table">
@@ -520,17 +458,17 @@
                         <tr>
                             <td>Flagship Chips (Snapdragon 8 Gen 3)</td>
                             <td>10 Gbps / 256-bit AES</td>
-                            <td><span class="badge badge-warning">Heating up</span></td>
+                            <td><span class="badge badge-warning">Tăng nhiệt</span></td>
                         </tr>
                         <tr>
                             <td>Mid-range Chips (Snapdragon 7 Gen 1)</td>
                             <td>5 Gbps / 256-bit AES</td>
-                            <td><span class="badge badge-danger">Thermal Throttling</span></td>
+                            <td><span class="badge badge-danger">Giảm xung nhiệt</span></td>
                         </tr>
                         <tr>
                             <td>Low-end Devices</td>
                             <td>1 Gbps / 128-bit AES</td>
-                            <td><span class="badge badge-danger">Crash / Reboot</span></td>
+                            <td><span class="badge badge-danger">Crash / Khởi động lại</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -538,13 +476,13 @@
         </div>
 
         <div class="btn-container reveal">
-            <button onclick="triggerRedirect('files')" class="btn-neon btn-files">
-                FILES
+            <button onclick="triggerRedirect('files')" class="btn-oneui btn-files">
+                KHO TỆP TIN
             </button>
-            <button onclick="triggerRedirect('netking_shop')" class="btn-neon btn-netking-shop">
-                NETKING SHOP
+            <button onclick="triggerRedirect('netking_shop')" class="btn-oneui btn-netking-shop">
+                NETKING STORE
             </button>
-            <button onclick="triggerRedirect('tiktok')" class="btn-neon btn-support">
+            <button onclick="triggerRedirect('tiktok')" class="btn-oneui btn-support">
                 SUPPORT US
             </button>
         </div>
@@ -556,57 +494,13 @@
     </footer>
 
     <script>
-        // --- 1. HIỆU ỨNG STARS CHỚP TẮT TRÊN CANVAS BACKGROUND ---
-        const canvas = document.getElementById('stars-canvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const starsCount = 120;
-        for (let i = 0; i < starsCount; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2,
-                twinkleSpeed: 0.01 + Math.random() * 0.03,
-                opacity: Math.random()
-            });
-        }
-
-        function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ffffff';
-
-            stars.forEach(star => {
-                star.opacity += star.twinkleSpeed;
-                if (star.opacity > 1 || star.opacity < 0) {
-                    star.twinkleSpeed = -star.twinkleSpeed;
-                }
-                
-                ctx.globalAlpha = Math.max(0, star.opacity);
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            requestAnimationFrame(animateStars);
-        }
-        animateStars();
-
-
-        // --- 2. HIỆU ỨNG INTERSECTION OBSERVER ---
+        // --- 1. HIỆU ỨNG INTERSECTION OBSERVER CUỘN MƯỢT ---
         const revealElements = document.querySelectorAll('.reveal');
         
         const observerOptions = {
             root: null, 
             threshold: 0.05, 
-            rootMargin: "0px 0px -20px 0px"
+            rootMargin: "0px 0px -10px 0px"
         };
 
         const pageObserver = new IntersectionObserver((entries) => {
@@ -623,18 +517,17 @@
             pageObserver.observe(element);
         });
 
-
-        // --- 3. ĐIỀU HƯỚNG LINK VÀ TRẠNG THÁI LOADING SCREEN ---
+        // --- 2. ĐIỀU HƯỚNG LINK VÀ TRẠNG THÁI LOADING DIALOG ---
         function triggerRedirect(platform) {
             const screen = document.getElementById('loading-screen');
             const msg = document.getElementById('loading-msg');
             
             if (platform === 'files') {
-                msg.innerText = "CONNECTING TO NETKING CLOUD REPOSITORY...";
+                msg.innerText = "ĐANG KẾT NỐI ĐẾN KHO LƯU TRỮ ĐÁM MÂY...";
             } else if (platform === 'netking_shop') {
-                msg.innerText = "OPENING NETKING WEB STORE...";
+                msg.innerText = "ĐANG MỞ CỬA HÀNG WEB STORE...";
             } else if (platform === 'tiktok') {
-                msg.innerText = "OPENING NETKING TIKTOK...";
+                msg.innerText = "ĐANG MỞ KÊNH TIKTOK NETKING...";
             }
             
             screen.classList.add('active');
@@ -649,7 +542,7 @@
                 } else if (platform === 'tiktok') {
                     window.location.href = "https://www.tiktok.com/@netking.com?_r=1&_t=ZS-97T6vHca8hh";
                 }
-            }, 2000);
+            }, 1200); // Tốc độ phản hồi tải nhanh kiểu One UI
         }
     </script>
 </body>
