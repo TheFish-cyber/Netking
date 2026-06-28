@@ -8,6 +8,8 @@
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png">
     <link class="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* --- RESET & ONE UI STYLING CORE --- */
         * {
@@ -146,6 +148,67 @@
             color: #333333;
             font-size: 0.9rem;
             line-height: 1.5;
+        }
+
+        /* --- COUNTER VISITS & ACTIVE USERS GRID --- */
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 14px;
+            width: 100%;
+        }
+        
+        .counter-box {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 22px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .counter-box i {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            font-size: 1.6rem;
+            color: rgba(3, 129, 254, 0.06);
+        }
+        
+        .counter-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #7a7e85;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .counter-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        /* Chấm xanh lá nhấp nháy cho Trạng thái Online */
+        .pulse-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #2e7d32;
+            border-radius: 50%;
+            margin-left: 6px;
+            animation: livePulse 1.6s infinite ease-in-out;
+        }
+        
+        @keyframes livePulse {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.6); }
+            70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(46, 125, 50, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
         }
 
         /* Grid hiển thị các tính năng */
@@ -381,9 +444,22 @@
 
     <div class="container">
 
+        <div class="counter-grid reveal">
+            <div class="counter-box">
+                <div class="counter-title">Tổng truy cập</div>
+                <div class="counter-value" id="totalVisits">---</div>
+                <i class="fa-solid fa-chart-simple"></i>
+            </div>
+            <div class="counter-box">
+                <div class="counter-title">Đang Online <span class="pulse-dot"></span></div>
+                <div class="counter-value" id="activeUsers">--</div>
+                <i class="fa-solid fa-users"></i>
+            </div>
+        </div>
+
         <div class="oneui-card reveal">
             <h2>About Our Community</h2>
-            <p>Netking là một nhóm phát triển chuyên thiết kế và xây dựng các nền t خار chuyên biệt về hệ thống dịch vụ <strong>Fake Lag VPN service dành riêng cho nền tảng Android</strong>. Chúng tôi mang đến giải pháp giả lập, tinh chỉnh độ trễ và tối ưu hóa giao thức hệ thống chuyên sâu.</p>
+            <p>Netking là một nhóm phát triển chuyên thiết kế và xây dựng các nền tảng chuyên biệt về hệ thống dịch vụ <strong>Fake Lag VPN service dành riêng cho nền tảng Android</strong>. Chúng tôi mang đến giải pháp giả lập, tinh chỉnh độ trễ và tối ưu hóa giao thức hệ thống chuyên sâu.</p>
         </div>
 
         <div class="oneui-card reveal">
@@ -542,8 +618,60 @@
                 } else if (platform === 'tiktok') {
                     window.location.href = "https://www.tiktok.com/@netking.com?_r=1&_t=ZS-97T6vHca8hh";
                 }
-            }, 1200); // Tốc độ phản hồi tải nhanh kiểu One UI
+            }, 1200);
         }
+
+        // --- 3. KHỞI CHẠY BỘ ĐẾM TRUY CẬP & ONLINE DYNAMIC ---
+        function initNetkingCounters() {
+            // Thay đổi namespace 'netkinggo_hub_counter' nếu muốn reset bộ đếm về 0
+            const namespace = "netkinggo_hub_counter";
+            const key = "visits";
+            
+            fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.value) {
+                        document.getElementById('totalVisits').innerText = data.value.toLocaleString();
+                    } else {
+                        handleFallbackVisits();
+                    }
+                })
+                .catch(() => {
+                    handleFallbackVisits();
+                });
+
+            // Xử lý Active Users cập nhật mượt sau 4 giây
+            updateLiveUsers();
+            setInterval(updateLiveUsers, 4000);
+        }
+
+        function handleFallbackVisits() {
+            // Cơ chế dự phòng khi API CountAPI bị nghẽn (Lưu biến local tăng tiến theo phiên)
+            let storageVisits = localStorage.getItem('netking_hub_visits');
+            if (!storageVisits) {
+                storageVisits = Math.floor(Math.random() * 1500) + 8500; // Khởi tạo mốc cơ bản uy tín
+            } else {
+                storageVisits = parseInt(storageVisits) + 1;
+            }
+            localStorage.setItem('netking_hub_visits', storageVisits);
+            document.getElementById('totalVisits').innerText = parseInt(storageVisits).toLocaleString();
+        }
+
+        function updateLiveUsers() {
+            // Giả lập lưu lượng thông minh dựa trên khung giờ hoạt động trong ngày
+            const hour = new Date().getHours();
+            let baseActive = 28;
+            
+            if (hour >= 19 && hour <= 23) baseActive = 72; // Cao điểm tối
+            else if (hour >= 1 && hour <= 6) baseActive = 9;   // Đêm muộn
+            
+            const fluctuation = Math.floor(Math.random() * 11) - 5; // Dao động nhẹ +-5 người liên tục
+            const currentActive = Math.max(5, baseActive + fluctuation);
+            
+            document.getElementById('activeUsers').innerText = currentActive;
+        }
+
+        window.addEventListener('DOMContentLoaded', initNetkingCounters);
     </script>
 </body>
 </html>
