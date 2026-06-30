@@ -14,6 +14,20 @@
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: rgba(0, 102, 255, 0.2); 
+            
+            /* SỬA LỖI 2: Chặn nhấn giữ bôi đen copy text trên thiết bị di động */
+            -webkit-user-select: none; /* Safari/Chrome Mobile */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE/Edge */
+            user-select: none;         /* Chuẩn chung */
+        }
+
+        /* Cho phép nhập liệu bình thường trong các ô input và textarea */
+        input, textarea, select {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
 
         html, body {
@@ -264,18 +278,18 @@
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
         }
 
-        /* Khung Frame Live ẩn hiện mượt mà dãn từ trái sang phải kèm slow blur */
+        /* SỬA LỖI 3: Khung Frame Live ẩn hiện mượt mà không bị tràn màn hình mobile */
         .header-live-frame {
             position: absolute;
             right: 0; 
             top: 50%;
             transform: translateY(-50%) scaleX(0);
-            transform-origin: left center; /* Dãn dần từ trái qua phải */
+            transform-origin: right center; /* Dãn dần từ phải qua trái để tránh tràn viền */
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid rgba(239, 68, 68, 0.5);
             box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
             border-radius: 20px;
-            padding: 6px 20px;
+            padding: 6px 16px;
             display: flex;
             align-items: center;
             white-space: nowrap;
@@ -286,7 +300,9 @@
                         filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 101;
             pointer-events: none;
-            max-width: 450px;
+            width: 270px; /* Giới hạn cứng chiều rộng phù hợp mobile */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Trạng thái kích hoạt khi mở Live */
@@ -335,7 +351,8 @@
             align-items: center;
             gap: 10px;
             min-height: 38px;
-            max-width: 90%;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .live-badge {
@@ -350,6 +367,7 @@
             align-items: center;
             gap: 4px;
             animation: pulse 1.5s infinite;
+            flex-shrink: 0;
         }
 
         .live-badge::before {
@@ -365,6 +383,9 @@
             display: inline-block;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         @keyframes pulse {
@@ -502,11 +523,14 @@
         .pop-badge { background: #3b82f6; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4); }
         .supp-badge { background: #a855f7; box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4); }
         
-        .tier-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; text-align: left; }
+        .tier-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; text-align: left; display: flex; align-items: center; gap: 6px; }
         .tier-price { font-size: 1.4rem; font-weight: 800; color: #3b82f6; margin-bottom: 16px; text-align: left; }
         .tier-price span { font-size: 0.75rem; color: #64748b; font-weight: 400; }
         .tier-features { list-style: none; text-align: left; font-size: 0.78rem; color: #94a3b8; margin-bottom: 24px; flex-grow: 1;}
         .tier-features li { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+
+        /* Chỉnh style SVG icon cho bảng giá */
+        .tier-name svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
 
         /* --- APPS GRID --- */
         .apps-section { margin-bottom: 50px; }
@@ -515,7 +539,7 @@
         .app-card:hover { transform: translateY(-6px); border-color: rgba(0, 102, 255, 0.7); box-shadow: 0 12px 40px rgba(0, 102, 255, 0.35); }
         .app-icon-wrapper { width: 64px; height: 64px; margin: 0 auto 16px auto; position: relative; }
         
-        /* Custom Vector Style thay thế cho Emoji Text cũ */
+        /* SỬA LỖI 1: Custom Vector Style thay thế cho Emoji Text cũ hoàn toàn */
         .app-icon-vector { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
         .app-icon-vector svg { width: 38px; height: 38px; filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8)); }
 
@@ -530,11 +554,11 @@
         .app-desc { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; text-align: left; }
         .app-card-footer { border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 16px; display: flex; flex-direction: column; gap: 8px; }
 
-        .btn-download { background: #0052cc; color: #fff; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(0, 102, 255, 0.3); box-shadow: 0 4px 10px rgba(0, 82, 204, 0.2); }
+        .btn-download { background: #0052cc; color: #fff; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(0, 102, 255, 0.3); box-shadow: 0 4px 10px rgba(0, 82, 204, 0.2); display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-download svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
         .btn-download:hover:not(:disabled) { background: #0066ff; box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5); transform: translateY(-2px); }
         .btn-download.risk-style { background: rgba(234, 88, 12, 0.08); color: #ea580c; border: 1px solid rgba(234, 88, 12, 0.25); box-shadow: none; }
         .btn-download.risk-style:hover { background: #ea580c; color: #fff; box-shadow: 0 6px 15px rgba(234, 88, 12, 0.4); }
-        .btn-download.js-icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
         .btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); box-shadow: none; }
         .btn-key-style:hover { background: rgba(255, 255, 255, 0.08); color: #fff; border-color: rgba(255,255,255,0.2); }
 
@@ -620,6 +644,7 @@
             .apps-grid, .features-showcase-grid, .consulting-grid, .reviews-grid, .tutorial-steps-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .dashboard-row { grid-template-columns: 1fr; gap: 16px; }
             nav { display: none; }
+            .header-live-frame { right: 0; } /* Tối ưu lại điểm neo của live panel trên mobile */
         }
         @media (max-width: 520px) {
             .apps-grid, .features-showcase-grid, .consulting-grid, .pricing-grid, .reviews-grid, .tutorial-steps-grid { grid-template-columns: 1fr; }
@@ -776,7 +801,7 @@
                 <div class="price-tier-card neon-box popular scroll-anim">
                     <div class="pop-badge">KHUYÊN DÙNG</div>
                     <div>
-                        <div class="tier-name">Premium VIP</div>
+                        <div class="tier-name"><svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/></svg> Premium VIP</div>
                         <div class="tier-price">55.000đ <span>/ tháng</span></div>
                         <ul class="tier-features">
                             <li>⚡ Link trực tiếp (No Ads)</li>
@@ -790,7 +815,7 @@
                 <div class="price-tier-card neon-box supporter-tier scroll-anim">
                     <div class="supp-badge">💥 SALE</div>
                     <div>
-                        <div class="tier-name">Supporter VIP Pack</div>
+                        <div class="tier-name"><svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/></svg> Supporter VIP Pack</div>
                         <div class="tier-price"><span style="text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;">300k</span> 200.000đ <span>/ vĩnh viễn</span></div>
                         <ul class="tier-features">
                             <li>💎 Trọn đời Premium Đặc quyền</li>
@@ -827,7 +852,7 @@
                 </div>
                 <div class="step-card neon-box scroll-anim">
                     <div class="step-num-badge">02</div>
-                    <h4>🛡️ Bước 2: Bật Cấu Hình VPN cục bộ</h4>
+                    <h4>🛡️ Bước 2: Bật Cấu Định VPN cục bộ</h4>
                     <p>Khi mở ứng dụng Fake Lag, hệ thống sẽ yêu cầu cấp quyền cấu hình VPN cục bộ. Hãy chọn "Đồng ý/Cho phép". Điều này không làm lộ dữ liệu cá nhân của bạn.</p>
                 </div>
                 <div class="step-card neon-box scroll-anim">
@@ -1004,7 +1029,7 @@
     </footer>
 
     <script>
-        // --- ENGINE 1: SOUND EFFECT (HỆ THỐNG PHÁT ÂM THANH NATIVE TO/RÕ) ---
+        // --- ENGINE 1: SOUND EFFECT (SỬA LỖI 1: BỔ SUNG SOUND EFFECT CLICK NATIVE) ---
         let audioCtx = null;
         function playHeavyClickSound() {
             try {
@@ -1023,7 +1048,7 @@
                 osc.frequency.setValueAtTime(160, audioCtx.currentTime); // Tần số trầm lực (160Hz)
                 osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.12); 
                 
-                // Cấu hình Volume To rõ ràng
+                // Cấu hình Volume To rõ ràng khi tương tác
                 gainNode.gain.setValueAtTime(0.8, audioCtx.currentTime); 
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
                 
@@ -1055,7 +1080,7 @@
             }
         });
 
-        // --- ENGINE 2: LIVE PANEL CONTROLLER (NÚT DỊCH TRÁI + FRAME DÃN TRÁI QUA PHẢI) ---
+        // --- ENGINE 2: LIVE PANEL CONTROLLER (SỬA LỖI 3: NÚT DỊCH TRÁI + FRAME DÃN SANG TRÁI HỢP LÝ) ---
         let isLiveActive = false;
         function toggleLiveInteractionView() {
             const liveBtn = document.getElementById('live-control-btn');
@@ -1065,10 +1090,10 @@
             if (!isLiveActive) {
                 isLiveActive = true;
                 
-                // Dịch chuyển nút Live sang bên trái 280 pixel mượt mà
-                liveBtn.style.transform = 'translateX(-280px)';
+                // Dịch chuyển nút Live sang bên trái để nhường chỗ cho text hiển thị mượt mà
+                liveBtn.style.transform = 'translateX(-285px)';
                 
-                // Đồng thời bật active cho Frame Live dãn rộng từ Trái sang Phải
+                // Đồng thời bật active cho Frame Live dãn rộng từ Phải sang Trái một cách gọn gàng
                 liveFrame.classList.add('active');
                 
                 // Lấy mẫu tin ngẫu nhiên vinh danh
@@ -1077,7 +1102,7 @@
             } else {
                 isLiveActive = false;
                 
-                // Đưa nút live về vị trí cũ ban phải ban đầu
+                // Đưa nút live về vị trí cũ ban đầu
                 liveBtn.style.transform = 'translateX(0)';
                 
                 // Thu hẹp góc, ẩn mờ frame live
@@ -1086,17 +1111,17 @@
         }
 
         const liveMembersPool = [
-            { name: "Kha_Gamer_2K", tier: "Sponsor", msg: "vừa gia hạn gói Tài Trợ phát triển hệ thống!" },
-            { name: "Hoang_Sniper", tier: "Supporter VIP", msg: "đã mua gói Supporter Pack Flash Sale thành công." },
-            { name: "Alex_NetRunner", tier: "Premium VIP", msg: "just upgraded to Premium VIP membership!" },
+            { name: "Kha_Gamer_2K", tier: "Sponsor", msg: "vừa gia hạn gói Tài Trợ hệ thống!" },
+            { name: "Hoang_Sniper", tier: "Supporter VIP", msg: "đã mua gói Supporter Pack." },
+            { name: "Alex_NetRunner", tier: "Premium VIP", msg: "upgraded to Premium VIP membership!" },
             { name: "Kaito_Smali", tier: "Supporter VIP", msg: "がサポーターVIPパックを購入しました！" },
             { name: "Dmitry_Reverse", tier: "Premium VIP", msg: "оформил подписку Premium VIP!" },
             { name: "Kim_Hyun_Ji", tier: "Supporter VIP", msg: "님이 서포터 VIP 팩을 queue하셨습니다!" },
-            { name: "Shadow_Modder", tier: "Premium VIP", msg: "has successfully bypassed the system key gate." },
-            { name: "Gamer_Hanoi2026", tier: "Supporter VIP", msg: "đã tham gia hàng ngũ Supporter trọn đời." }
+            { name: "Shadow_Modder", tier: "Premium VIP", msg: "has bypassed the system key gate." },
+            { name: "Gamer_Hanoi2026", tier: "Supporter VIP", msg: "đã tham gia Supporter trọn đời." }
         ];
 
-        // --- ENGINE 3: CUSTOM VECTOR ARTWORK IMMERSIVE APPS DATABASE ---
+        // --- ENGINE 3: SỬA LỖI 1: TÍCH HỢP SVG VECTOR CHO KHO DOWNLOAD APPS (XÓA EMOJI TEXT) ---
         const appsDatabase = [
             {
                 name: "Netking Launcher",
@@ -1105,7 +1130,7 @@
                 badgeText: "INSANITY!!",
                 hot: true,
                 desc: "Finding good launcher apk? NL will give you best enjoy. Hide your apps from others people to find it.<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                // Custom lại bằng mã vẽ SVG Vector thay thế cho Kí tự text Emoji lỗi thời
+                // Vẽ cấu trúc SVG cho app Launcher gọn đẹp
                 iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
                 downloadUrl: "https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file",
                 keyUrl: null
@@ -1117,6 +1142,7 @@
                 badgeText: "HOT 🔥",
                 hot: false,
                 desc: "2 option antiband 88% - 90%:<br>1. Freeze<br>2. Ghost<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
+                // Vẽ cấu trúc SVG cho app NetPlus
                 iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#EF4444" fill-opacity="0.2" stroke="#EF4444" stroke-width="2"/><path d="M12 7V13M12 17H12.01" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
                 downloadUrl: "https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file",
                 keyUrl: "https://link4m.net/go/eb8Na3"
@@ -1128,6 +1154,7 @@
                 badgeText: "An toàn",
                 hot: false,
                 desc: "Fake Lag Modern, 3 Options:<br>1. Freeze Infinity<br>2. Invisible<br>3. Teleporter",
+                // Vẽ cấu trúc SVG tia sét chuyên nghiệp cho Fake Lag
                 iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#EAB308" fill-opacity="0.2" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
                 downloadUrl: "https://www.mediafire.com/file/b566kfjwhsewl98/Netking_%25281%2529.apk/file",
                 keyUrl: null
@@ -1140,7 +1167,7 @@
         function renderAppsSystem() {
             const container = document.getElementById('apps-list-dom');
             container.innerHTML = appsDatabase.map(app => {
-                let keyBtn = app.keyUrl ? `<div onclick="triggerKeyGate('${app.keyUrl}')" class="btn-download btn-key-style">🔑 Lấy Key</div>` : '';
+                let keyBtn = app.keyUrl ? `<div onclick="triggerKeyGate('${app.keyUrl}')" class="btn-download btn-key-style"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5M14 6l3 3"/></svg> Lấy Key</div>` : '';
                 return `
                     <div class="app-card neon-box scroll-anim">
                         <div>
@@ -1157,7 +1184,7 @@
                             <p class="app-desc">${app.desc}</p>
                         </div>
                         <div class="app-card-footer">
-                            <div onclick="triggerDownload('${app.downloadUrl}')" class="btn-download">📥 Tải tập tin</div>
+                            <div onclick="triggerDownload('${app.downloadUrl}')" class="btn-download"><svg viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg> Tải tập tin</div>
                             ${keyBtn}
                         </div>
                     </div>
@@ -1220,10 +1247,8 @@
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Khi lọt vào khung hình, thêm class show để bật Fade + Unblur mượt mà
                     entry.target.classList.add('show');
                 } else {
-                    // YÊU CẦU MỞ RỘNG: Khi trượt khuất màn hình, tự ẩn đi để lần sau cuộn lại vẫn chạy tiếp
                     entry.target.classList.remove('show');
                 }
             });
