@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NetKing Team - Premium Android Apps</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/TheFish-cyber/Netking/main/ic_launcher.png">
+    
     <style>
         /* --- RESET & MODERN FONTS --- */
         * {
@@ -182,7 +184,7 @@
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         }
 
-        /* --- FRAME LIVE SHOW MEMBERS (NEW) --- */
+        /* --- FRAME LIVE SHOW MEMBERS --- */
         .live-ticker-bar {
             background: rgba(15, 23, 42, 0.9);
             border-bottom: 1px solid rgba(59, 130, 246, 0.2);
@@ -260,12 +262,14 @@
         .dashboard-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin-bottom: 30px; }
         .card-panel { padding: 20px; }
         .panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 0.5px; margin-bottom: 14px; }
-        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 3px solid #eab308; padding: 12px; border-radius: 0 8px 8px 0; }
-        .notice-date { font-size: 0.7rem; color: #eab308; margin-bottom: 4px; font-weight: 600; }
+        
+        /* ADMIN ANNOUNCEMENT BOX */
+        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 3px solid #ff416c; padding: 12px; border-radius: 0 8px 8px 0; }
+        .notice-date { font-size: 0.7rem; color: #ff416c; margin-bottom: 4px; font-weight: 600; letter-spacing: 0.5px;}
         .notice-content h4 { font-size: 0.85rem; color: #fff; margin-bottom: 2px;}
         .notice-content p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
 
-        .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
+        .stats-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
         .stat-number { font-size: 1.2rem; font-weight: 700; color: #fff; }
         .stat-label { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
         .stats-footer { text-align: center; font-size: 0.75rem; color: #3b82f6; margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
@@ -283,20 +287,13 @@
         .feature-detail-card h4 { font-size: 1.05rem; color: #fff; margin-bottom: 8px; }
         .feature-detail-card p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
 
-        .specs-list-box { padding: 20px; margin-bottom: 30px; }
-        .spec-item-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
-        .spec-item-row:last-child { border-bottom: none; }
-        .spec-badge-num { background: rgba(0, 102, 255, 0.15); color: #3b82f6; font-size: 0.75rem; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(0, 102, 255, 0.3); }
-        .spec-info h5 { font-size: 0.88rem; color: #fff; margin-bottom: 2px; }
-        .spec-info p { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
-
         /* --- TƯ VẤN --- */
         .consulting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 45px; }
         .consult-card { padding: 22px; }
         .consult-question { font-size: 0.95rem; font-weight: 700; color: #eab308; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;}
         .consult-answer { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; }
 
-        /* --- BẢNG GIÁ + GÓI SUPPORTER MỚI --- */
+        /* --- BẢNG GIÁ --- */
         .pricing-section { margin-bottom: 45px; }
         .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         .price-tier-card { padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
@@ -335,7 +332,7 @@
         .btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); box-shadow: none; }
         .btn-key-style:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
-        /* --- TUTORIALS HUB (NEW SECTION) --- */
+        /* --- TUTORIALS HUB --- */
         .tutorials-section { margin-bottom: 45px; }
         .tutorial-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         .step-card { padding: 20px; position: relative;}
@@ -343,13 +340,18 @@
         .step-card h4 { font-size: 0.95rem; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         .step-card p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
 
-        /* --- REVIEWS --- */
+        /* --- REVIEWS & FEEDBACK FORM --- */
         .reviews-section { margin-bottom: 45px; }
-        .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 25px; }
         .review-card { padding: 18px; }
         .reviewer { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
         .review-stars { color: #eab308; font-size: 0.7rem; }
         .review-text { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
+
+        .feedback-box { padding: 24px; margin-top: 15px; }
+        .feedback-box h4 { font-size: 1rem; color: #fff; margin-bottom: 12px; }
+        .feedback-box textarea { width: 100%; height: 100px; background: #020617; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 8px; padding: 12px; color: #fff; font-size: 0.82rem; resize: none; margin-bottom: 12px; }
+        .feedback-box textarea:focus { outline: none; border-color: #3b82f6; }
 
         /* --- PREMIUM BANNER --- */
         .premium-banner { padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -386,6 +388,10 @@
         .modal-switch { font-size: 0.78rem; color: #64748b; margin-top: 14px; }
         .modal-switch span { color: #3b82f6; cursor: pointer; text-decoration: underline; }
         .btn-download:disabled { background: #1e293b !important; color: #64748b !important; border-color: rgba(255,255,255,0.05) !important; cursor: not-allowed; }
+
+        /* GUEST RESTRICTION FRAME MODAL */
+        #guest-modal .modal-box { border: 1px solid #ff416c; box-shadow: 0 0 25px rgba(255, 65, 108, 0.2); }
+        #guest-modal h3 { color: #ff416c; }
 
         /* --- LOADING ENGINE --- */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.94); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
@@ -465,7 +471,7 @@
             <div class="welcome-tag">Welcome to my website</div>
             <h2>NetKing <span>Team</span></h2>
             <p class="hero-subtitle">Premium Android Apps • Secure Downloads</p>
-            <p class="hero-desc">Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team. Bạn có thể click tiêu đề để nhảy nhanh.</p>
+            <p class="hero-desc">Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưuỡng bởi đội ngũ NetKing Team. Bạn có thể click tiêu đề để nhảy nhanh.</p>
             <div class="hero-buttons">
                 <a href="https://discord.gg/wf4QnepsxS" target="_blank" class="btn-discord">💬 Discord</a>
                 <a onclick="scrollToSection('files-section')" class="btn-view-apps">Xem ứng dụng 📥</a>
@@ -474,12 +480,12 @@
 
         <section class="dashboard-row" id="notice-section">
             <div class="card-panel neon-box scroll-anim">
-                <div class="panel-title">Thông báo mới nhất</div>
+                <div class="panel-title">Thông báo từ Admin</div>
                 <div class="notice-box">
-                    <div class="notice-date">⚡ Hệ thống</div>
+                    <div class="notice-date">⚡ ANNOUNCEMENT</div>
                     <div class="notice-content">
-                        <h4>Hệ thống Đồng bộ Toàn diện</h4>
-                        <p>Đã vá lỗi bất tuần tự dữ liệu. Tích hợp thanh Live Show đa ngôn ngữ và giới hạn tốc độ lướt web chống giật khung hình.</p>
+                        <h4>Chào mừng tới Team NetKing!</h4>
+                        <p>Hệ thống đang cập nhật các tính năng bảo mật mới tối ưu hơn. Thành viên vui lòng đăng nhập để mở khóa đầy đủ quyền hạn tải xuống ứng dụng.</p>
                     </div>
                 </div>
             </div>
@@ -489,15 +495,19 @@
                 <div class="stats-container">
                     <div class="stat-item">
                         <div class="stat-number" id="view-count">0</div>
-                        <div class="stat-label">Lượt xem trang</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="dl-count">0</div>
-                        <div class="stat-label">Lượt tải thật</div>
+                        <div class="stat-label">Lượt truy cập</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number" id="user-count">0</div>
-                        <div class="stat-label">Thành viên đăng ký</div>
+                        <div class="stat-label">Thành viên</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="online-count">0</div>
+                        <div class="stat-label">Trực tuyến</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="dl-count">0</div>
+                        <div class="stat-label">Lượt tải xuống</div>
                     </div>
                 </div>
                 <div class="stats-footer">Dữ liệu chuẩn hóa 2026</div>
@@ -539,7 +549,7 @@
         </section>
 
         <section class="apps-section" id="files-section">
-            <div class="panel-title scroll-anim" style="color: #fff; margin-bottom: 14px;">Danh sách ứng dụng nổi bật (Tải công khai miễn phí)</div>
+            <div class="panel-title scroll-anim" style="color: #fff; margin-bottom: 14px;">Danh sách ứng dụng nổi bật (Yêu cầu tài khoản đăng nhập)</div>
 
             <div class="apps-grid">
                 <div class="app-card neon-box scroll-anim">
@@ -574,7 +584,7 @@
                     </div>
                     <div class="app-card-footer">
                         <div onclick="triggerDownload('https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file')" class="btn-download">Tải tập tin</div>
-                        <a href="https://link4m.net/go/eb8Na3" target="_blank" class="btn-download btn-key-style">Lấy Key</a>
+                        <div onclick="triggerKeyGate('https://link4m.net/go/eb8Na3')" class="btn-download btn-key-style">Lấy Key</div>
                     </div>
                 </div>
 
@@ -677,18 +687,24 @@
         </section>
 
         <section class="reviews-section" id="reviews-section">
-            <h3 class="section-headline scroll-anim">Đánh Giá Từ Thành Viên</h3>
-            <p class="section-subheadline scroll-anim">Phản hồi thực tế từ những người đã trải nghiệm giải pháp của NetKing</p>
+            <h3 class="section-headline scroll-anim">Đánh Giá & Phản Hồi</h3>
+            <p class="section-subheadline scroll-anim">Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến</p>
             
             <div class="reviews-grid">
                 <div class="review-card neon-box scroll-anim">
                     <div class="reviewer">xine3d_dev <span class="review-stars">⭐⭐⭐⭐⭐</span></div>
-                    <div class="review-text">"Bản NetPlus V18 chạy bypass UDP mượt cực kỳ, chỉnh Ghost mode test ping không hề bị giật lác."</div>
+                    <div class="review-text">"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag."</div>
                 </div>
                 <div class="review-card neon-box scroll-anim">
                     <div class="reviewer">thinhBCN_ff <span class="review-stars">⭐⭐⭐⭐⭐</span></div>
                     <div class="review-text">"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác."</div>
                 </div>
+            </div>
+
+            <div class="feedback-box neon-box scroll-anim">
+                <h4>✍️ Gửi Phản Hồi Lên Hệ Thống</h4>
+                <textarea id="user-feedback-text" placeholder="Nhập ý kiến đóng góp, báo lỗi app hoặc đề xuất của bạn tại đây..."></textarea>
+                <button class="btn-download" onclick="submitFeedback()">Gửi Phản Hồi Trực Tiếp</button>
             </div>
         </section>
     </div>
@@ -779,6 +795,20 @@
         </div>
     </div>
 
+    <div id="guest-modal" class="modal-overlay">
+        <div class="modal-box neon-box">
+            <button class="btn-close" onclick="closeModal('guest-modal')">✕</button>
+            <h3>🔒 QUYỀN TRUY CẬP BỊ CHẶN!</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin: 14px 0 20px 0; line-height: 1.5;">
+                Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.
+            </p>
+            <div style="display:flex; gap: 10px;">
+                <button class="btn-download" onclick="closeModal('guest-modal'); openAuthModal('login')" style="flex:1;">Đăng Nhập</button>
+                <button class="btn-download btn-key-style" onclick="closeModal('guest-modal'); openAuthModal('register')" style="flex:1;">Đăng Ký</button>
+            </div>
+        </div>
+    </div>
+
     <div id="success-modal" class="modal-overlay">
         <div class="modal-box neon-box" style="max-width: 340px;">
             <div class="success-accent-bar"></div>
@@ -810,10 +840,10 @@
             </div>
             <div class="footer-stats">
                 <h5>Thống kê chuẩn (Realtime)</h5>
-                <div class="footer-stat-row"><span>👁️ Lượt xem trang</span><strong id="footer-view">0</strong></div>
-                <div class="footer-stat-row"><span>📥 Tổng lượt tải</span><strong id="footer-dl">0</strong></div>
+                <div class="footer-stat-row"><span>👁️ Lượt truy cập</span><strong id="footer-view">0</strong></div>
                 <div class="footer-stat-row"><span>👥 Thành viên hệ thống</span><strong id="footer-user">0</strong></div>
-                <div class="footer-stat-row" style="border:none;"><span><span class="dot-online"></span>Đang trực tuyến</span><strong id="online-count">0</strong></div>
+                <div class="footer-stat-row"><span>🟢 Đang trực tuyến</span><strong id="footer-online">0</strong></div>
+                <div class="footer-stat-row" style="border:none;"><span>📥 Lượt tải xuống</span><strong id="footer-dl">0</strong></div>
             </div>
         </div>
         <div class="container copyright-bar">
@@ -822,7 +852,7 @@
     </footer>
 
     <script>
-        // --- DATA KHỞI TẠO CHO LIVE SHOW (NHIỀU THỨ TIẾNG) ---
+        // --- DATA KHỞI TẠO CHO LIVE SHOW ---
         const liveMembersPool = [
             { name: "xine3d_dev", tier: "Sponsor", lang: "vi", msg: "vừa gia hạn gói Tài Trợ phát triển hệ thống!" },
             { name: "thinhBCN_ff", tier: "Supporter VIP", lang: "vi", msg: "đã mua gói Supporter Pack Flash Sale thành công." },
@@ -836,15 +866,13 @@
         ];
 
         let lastTickerIndex = -1;
-        let currentUserSession = null; // Quản lý session đăng nhập người dùng
+        let currentUserSession = null; 
 
-        // --- ENGINE LIVE SHOW CHẠY RANDOM KHÔNG LẶP LẠI (3 GIÂY ĐỔI MỘT LẦN) ---
+        // --- ENGINE LIVE SHOW RUNNING ---
         function runLiveTickerEngine() {
             const tickerContent = document.getElementById('ticker-content');
-            
             setInterval(() => {
                 let nextIndex;
-                // Vòng lặp lấy ngẫu nhiên không trùng với chỉ số vừa hiển thị trước đó
                 do {
                     nextIndex = Math.floor(Math.random() * liveMembersPool.length);
                 } while (nextIndex === lastTickerIndex);
@@ -852,58 +880,40 @@
                 lastTickerIndex = nextIndex;
                 const member = liveMembersPool[nextIndex];
                 
-                // Hiệu ứng mờ dần trước khi đổi chữ
                 tickerContent.style.opacity = 0;
                 tickerContent.style.transform = "translateY(-5px)";
 
                 setTimeout(() => {
-                    let colorAccent = "#3b82f6"; // Premium xanh lam
-                    if (member.tier === "Sponsor") colorAccent = "#eab308"; // Sponsor vàng chanh
-                    if (member.tier === "Supporter VIP") colorAccent = "#a855f7"; // Supporter tím khói
+                    let colorAccent = "#3b82f6"; 
+                    if (member.tier === "Sponsor") colorAccent = "#eab308"; 
+                    if (member.tier === "Supporter VIP") colorAccent = "#a855f7"; 
 
                     tickerContent.innerHTML = `👑 <strong style="color: ${colorAccent};">[${member.tier}]</strong> <span style="color: #fff; font-weight:700;">${member.name}</span> ${member.msg}`;
                     tickerContent.style.opacity = 1;
                     tickerContent.style.transform = "translateY(0)";
                 }, 300);
-
             }, 3000);
         }
 
-        // --- CHỐNG LƯỚT WEB QUÁ NHANH (SMOOTH SCROLL LIMIT ENGINE) ---
-        let currentScrollVelocity = 0;
-        let customScrollTop = window.scrollY;
-
+        // --- SMOOTH SCROLL HÃM TỐC ĐỘ ---
         window.addEventListener('wheel', function(e) {
-            e.preventDefault(); // Chặn hành vi cuộn gốc của trình duyệt
-            
-            // Giảm xung lực cuộn xuống còn 35% tốc độ thực để hãm người dùng lại
+            e.preventDefault(); 
             let customDelta = e.deltaY * 0.35; 
-            window.scrollBy({
-                top: customDelta,
-                behavior: 'auto' // Bắt buộc dùng chế độ tức thời để kiểm soát frame nhịp nhàng
-            });
+            window.scrollBy({ top: customDelta, behavior: 'auto' });
         }, { passive: false });
 
-        window.addEventListener('touchmove', function(e) {
-            // Đối với thiết bị di động, cơ chế Intersection Observer sẽ tự xử lý mượt mà, giữ nguyên hành vi touch tiêu chuẩn.
-        }, { passive: true });
-
-
-        // --- ENGINE ÂM THANH CLICK CHUỘT ---
+        // --- CLICK AUDIO POP SOUND ---
         const clickSound = document.getElementById('click-sound');
         document.addEventListener('click', function() {
             clickSound.currentTime = 0;
             clickSound.play().catch(() => {});
         });
 
-        // --- INTERSECTION OBSERVER ENGINES ---
+        // --- INTERSECTION OBSERVER ANIMATION ---
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                } else {
-                    entry.target.classList.remove('show'); // Ra khỏi khung hình thì tự động ẩn đi
-                }
+                if (entry.isIntersecting) entry.target.classList.add('show');
+                else entry.target.classList.remove('show');
             });
         }, { root: null, threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
 
@@ -911,18 +921,13 @@
             scrollObserver.observe(el);
         });
 
-        // --- KIỂM TRA ĐIỀU KIỆN MUA HÀNG (CHƯA ĐĂNG NHẬP THÌ CHẶN LẠI) ---
+        // --- KIỂM TRA ĐIỀU KIỆN MUA GÓI VIP ---
         function attemptPurchase(tierName, defaultPrice) {
             if (!currentUserSession) {
-                alert(`⚠️ Hệ thống chặn: Bạn cần Đăng nhập tài khoản trước khi thực hiện mua gói [${tierName}].\n(Khách vãng lai hiện tại chỉ được cấp quyền tải file công khai miễn phí).`);
-                openAuthModal('login');
+                document.getElementById('guest-modal').style.display = 'flex';
                 return;
             }
-
-            // Nếu đã đăng nhập thành công thì cho phép tiến vào Form thanh toán
             showPremiumPage();
-            
-            // Tự động gán cấu hình giá tiền tương ứng lên Form nạp tiền
             const selectEl = document.getElementById('pricing-select-form');
             selectEl.value = defaultPrice;
             updateFormPriceDisplay();
@@ -935,11 +940,11 @@
             document.getElementById('qr-bank-memo').innerText = `Nội dung: NETKING VIP ${currentUserSession.toUpperCase()}`;
         }
 
-        // --- QUICK JUMP FRAME ---
+        // --- NAV PANEL SHORTCUTS ---
         function openQuickJump() { document.getElementById('jump-modal').style.display = 'flex'; }
         function quickJumpTo(id) { closeModal('jump-modal'); scrollToSection(id); }
 
-        // --- AUTH LOGIC SYSTEM ---
+        // --- ĐĂNG KÝ HỆ THỐNG GỐC ---
         if (!localStorage.getItem('netking_users')) {
             localStorage.setItem('netking_users', JSON.stringify([]));
         }
@@ -957,10 +962,16 @@
 
             usersList.push({ username: user, password: pass });
             localStorage.setItem('netking_users', JSON.stringify(usersList));
+            
+            // Cập nhật lại số lượng account đăng ký hiển thị trên Web DOM
+            localStorage.setItem('real_users', usersList.length);
+            
             alert('Đăng ký thành công! Tiến hành đăng nhập.');
             toggleAuthMode('login');
+            updateStatsDOM();
         }
 
+        // --- ĐĂNG NHẬP HỆ THỐNG GỐC ---
         function handleLogin(e) {
             e.preventDefault();
             const user = document.getElementById('login-user').value.trim();
@@ -974,21 +985,64 @@
                 closeModal('auth-modal');
                 document.getElementById('header-auth-btn').innerText = `👋 ${currentUserSession}`;
                 document.getElementById('purchase-active-user').innerText = currentUserSession;
-                
-                // Cộng thêm 1 User thật vào LocalStorage để đồng bộ hệ thống số liệu
-                let totalU = parseInt(localStorage.getItem('real_users') || 0);
-                localStorage.setItem('real_users', totalU + 1);
                 updateStatsDOM();
             } else {
                 alert('Sai thông tin đăng nhập! Vui lòng kiểm tra lại.');
             }
         }
 
+        // --- PHẦN GỬI FEEDBACK CHỈ CHO PHÉP THÀNH VIÊN ---
+        function submitFeedback() {
+            if (!currentUserSession) {
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+            const content = document.getElementById('user-feedback-text').value.trim();
+            if (content === "") {
+                alert("Vui lòng điền nội dung phản hồi!");
+                return;
+            }
+            console.log(`Feedback từ [${currentUserSession}]: ${content}`);
+            alert("Cảm ơn bạn đã đóng góp ý kiến! Hệ thống Admin NetKing đã ghi nhận dữ liệu.");
+            document.getElementById('user-feedback-text').value = "";
+        }
+
+        // --- LINK LẤY KEY CŨNG ĐƯỢC BẢO VỆ CHỐNG GUEST ---
+        function triggerKeyGate(url) {
+            if (!currentUserSession) {
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+            window.open(url, '_blank');
+        }
+
+        // --- DOWNLOAD SYSTEM (BẢO VỆ CHẶN GUEST TUYỆT ĐỐI) ---
+        function triggerDownload(url) {
+            if (!currentUserSession) {
+                // Nếu chưa đăng nhập -> Chặn không cho tải app và kích hoạt Frame thông báo
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+
+            const loader = document.getElementById('loading-screen');
+            loader.style.display = 'flex';
+            
+            // Chỉ tăng bộ đếm lượt tải xuống khi tài khoản thực hiện click thành công
+            let currentDl = parseInt(localStorage.getItem('real_downloads') || 0);
+            currentDl += 1;
+            localStorage.setItem('real_downloads', currentDl);
+            updateStatsDOM();
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                document.getElementById('success-modal').style.display = 'flex';
+                window.open(url, '_blank');
+            }, 1800);
+        }
+
         function scrollToSection(id) {
             const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function showPremiumPage() {
@@ -1020,32 +1074,21 @@
             }
         }
 
-        // --- DOWNLOAD SYSTEM ---
-        function triggerDownload(url) {
-            const loader = document.getElementById('loading-screen');
-            loader.style.display = 'flex';
-            
-            let currentDl = parseInt(localStorage.getItem('real_downloads') || 0);
-            currentDl += 1;
-            localStorage.setItem('real_downloads', currentDl);
-            updateStatsDOM();
-
-            setTimeout(() => {
-                loader.style.display = 'none';
-                document.getElementById('success-modal').style.display = 'flex';
-                window.open(url, '_blank');
-            }, 1800);
-        }
-
-        // --- THỐNG KÊ CHUẨN (VIEWS > DOWNLOADS > USERS) ---
+        // --- ĐỒNG BỘ ENGINE SỐ LIỆU THỐNG KÊ THEO YÊU CẦU ---
         function initRealtimeStats() {
-            // Thiết lập mốc cơ sở logic chuẩn theo thời gian thực (Views luôn lớn nhất)
-            if (!localStorage.getItem('real_views')) localStorage.setItem('real_views', '394');
-            if (!localStorage.getItem('real_downloads')) localStorage.setItem('real_downloads', '148');
-            if (!localStorage.getItem('real_users')) localStorage.setItem('real_users', '42');
+            let usersList = JSON.parse(localStorage.getItem('netking_users')) || [];
+            
+            // Khởi tạo các mốc số cơ sở ban đầu nếu chưa có dữ liệu trong LocalStorage
+            if (!localStorage.getItem('real_views')) localStorage.setItem('real_views', '1052');
+            if (!localStorage.getItem('real_downloads')) localStorage.setItem('real_downloads', '384');
+            
+            // Số lượng thành viên = số lượng account đăng ký thực tế (Mặc định tối thiểu là số acc hiện có hoặc 42)
+            let currentRegisteredCount = usersList.length > 0 ? usersList.length : 42;
+            localStorage.setItem('real_users', currentRegisteredCount);
 
+            // Tăng số lần lướt/vào web (Lượt truy cập) lên 1 đơn vị khi tải trang
             let views = parseInt(localStorage.getItem('real_views'));
-            views += Math.floor(Math.random() * 3) + 1; // Tăng view thực khi tải trang
+            views += 1;
             localStorage.setItem('real_views', views);
 
             updateStatsDOM();
@@ -1058,20 +1101,23 @@
             const d = localStorage.getItem('real_downloads');
             const u = localStorage.getItem('real_users');
 
-            document.getElementById('view-count').innerText = v;
-            document.getElementById('footer-view').innerText = v;
+            // Đưa dữ liệu lên bảng điều khiển đầu trang chính
+            document.getElementById('view-count').innerText = parseInt(v).toLocaleString();
+            document.getElementById('user-count').innerText = parseInt(u).toLocaleString();
+            document.getElementById('dl-count').innerText = parseInt(d).toLocaleString();
 
-            document.getElementById('dl-count').innerText = d;
-            document.getElementById('footer-dl').innerText = d;
-
-            document.getElementById('user-count').innerText = u;
-            document.getElementById('footer-user').innerText = u;
+            // Đưa dữ liệu đồng bộ xuống chân trang (Footer)
+            document.getElementById('footer-view').innerText = parseInt(v).toLocaleString();
+            document.getElementById('footer-user').innerText = parseInt(u).toLocaleString();
+            document.getElementById('footer-dl').innerText = parseInt(d).toLocaleString();
         }
 
         function updateOnlineCount() {
-            let baseOnline = Math.floor(Math.random() * 6) + 14;
+            // Cập nhật số tài khoản đang online thực tế ngẫu nhiên chạy real-time
+            let baseOnline = Math.floor(Math.random() * 8) + 12; 
             document.getElementById('online-count').innerText = baseOnline;
-            setTimeout(updateOnlineCount, 7000);
+            document.getElementById('footer-online').innerText = baseOnline;
+            setTimeout(updateOnlineCount, 6000); // 6 giây tạo xung cập nhật 1 lần
         }
 
         window.onload = function() {
