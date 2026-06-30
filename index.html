@@ -13,7 +13,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            /* MỞ LẠI: Cho phép highlight xanh nước biển mặc định khi nhấn giữ trên mobile */
             -webkit-tap-highlight-color: rgba(0, 102, 255, 0.2); 
         }
 
@@ -26,17 +25,18 @@
             scroll-behavior: smooth;
         }
 
-        /* --- HOẠT ẢNH BLUR & FADE IN/OUT CINEMATIC --- */
+        /* --- HOẠT ẢNH BLUR & FADE IN/OUT CINEMATIC VÀO/RA MÀN HÌNH --- */
         .scroll-anim {
             opacity: 0;
-            filter: blur(15px); /* Tăng blur tạo hiệu ứng mịn */
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-in-out, 
-                        filter 0.8s ease-in-out, 
-                        transform 0.8s ease-in-out;
+            filter: blur(20px); 
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: opacity, filter, transform;
         }
 
+        /* Khi UI lọt vào tầm nhìn screen */
         .scroll-anim.show {
             opacity: 1;
             filter: blur(0px);
@@ -45,7 +45,7 @@
 
         .scroll-fade {
             opacity: 0;
-            filter: blur(10px);
+            filter: blur(15px);
             transition: opacity 0.7s ease-in-out, filter 0.7s ease-in-out;
         }
         .scroll-fade.show {
@@ -54,11 +54,10 @@
         }
 
         @keyframes popupScale {
-            from { opacity: 0; transform: scale(0.95); filter: blur(8px); }
+            from { opacity: 0; transform: scale(0.93); filter: blur(10px); }
             to { opacity: 1; transform: scale(1); filter: blur(0); }
         }
 
-        /* KHÔI PHỤC: Hiệu ứng mạch đập Neon sâu hơn */
         @keyframes neonPulse {
             0% { box-shadow: 0 0 15px rgba(0, 102, 255, 0.2), inset 0 0 10px rgba(0, 102, 255, 0.05); border-color: rgba(0, 102, 255, 0.25); }
             50% { box-shadow: 0 0 30px rgba(0, 102, 255, 0.45), inset 0 0 15px rgba(0, 102, 255, 0.15); border-color: rgba(0, 102, 255, 0.5); }
@@ -111,7 +110,6 @@
             padding: 0 16px;
         }
 
-        /* KHÔI PHỤC: Stroke phát sáng kèm hiệu ứng khói mờ ảo (Smoke Shadow Effect) */
         .neon-box {
             background: rgba(7, 13, 31, 0.75);
             border: 1px solid rgba(0, 102, 255, 0.3);
@@ -126,13 +124,12 @@
             border-color: rgba(0, 102, 255, 0.8);
             background: rgba(9, 18, 44, 0.85);
             transform: translateY(-4px) scale(1.01);
-            /* Hiệu ứng khói tỏa rộng quanh stroke viền */
             box-shadow: 0 0 40px rgba(0, 102, 255, 0.4), 
                         0 0 15px rgba(0, 102, 255, 0.2),
                         inset 0 0 20px rgba(0, 102, 255, 0.1);
         }
 
-        /* --- HEADER --- */
+        /* --- HEADER & LIVE INTERACTIVE CONTROLLER --- */
         header {
             border-bottom: 1px solid rgba(0, 102, 255, 0.2);
             backdrop-filter: blur(16px);
@@ -149,6 +146,7 @@
             justify-content: space-between;
             align-items: center;
             height: 65px;
+            position: relative;
         }
 
         .logo {
@@ -224,6 +222,79 @@
         nav ul a:hover, nav ul a.active {
             color: #fff;
             text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Khu vực điều khiển Live & Auth góc phải */
+        .header-right-zone {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        /* Nút Live bo góc thông minh có hiệu ứng dịch chuyển */
+        .btn-live-toggle {
+            background: #ef4444;
+            color: #fff;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 7px 16px;
+            border-radius: 18px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+            z-index: 105;
+            position: relative;
+        }
+        .btn-live-toggle::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.2s infinite;
+        }
+        .btn-live-toggle:hover {
+            background: #dc2626;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+        }
+
+        /* Khung Frame Live ẩn hiện mượt mà dãn từ trái sang phải kèm slow blur */
+        .header-live-frame {
+            position: absolute;
+            right: 0; 
+            top: 50%;
+            transform: translateY(-50%) scaleX(0);
+            transform-origin: left center; /* Dãn dần từ trái qua phải */
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
+            border-radius: 20px;
+            padding: 6px 20px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            opacity: 0;
+            filter: blur(15px);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 101;
+            pointer-events: none;
+            max-width: 450px;
+        }
+
+        /* Trạng thái kích hoạt khi mở Live */
+        .header-live-frame.active {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(-50%) scaleX(1);
+            pointer-events: auto;
         }
 
         .btn-login {
@@ -443,8 +514,11 @@
         .app-card { padding: 24px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
         .app-card:hover { transform: translateY(-6px); border-color: rgba(0, 102, 255, 0.7); box-shadow: 0 12px 40px rgba(0, 102, 255, 0.35); }
         .app-icon-wrapper { width: 64px; height: 64px; margin: 0 auto 16px auto; position: relative; }
-        .app-icon { width: 100%; height: 100%; border-radius: 14px; border: 1px solid rgba(0, 102, 255, 0.35); display: flex; align-items: center; justify-content: center; object-fit: cover; transition: transform 0.3s ease; }
-        .app-card:hover .app-icon { transform: scale(1.08); }
+        
+        /* Custom Vector Style thay thế cho Emoji Text cũ */
+        .app-icon-vector { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .app-icon-vector svg { width: 38px; height: 38px; filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8)); }
+
         .badges-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
         .badge { font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
         .bg-verified { background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
@@ -574,7 +648,14 @@
                     <li><a onclick="showMainPage(); scrollToSection('tutorials-section')">Hướng dẫn</a></li>
                 </ul>
             </nav>
-            <div class="header-right" id="auth-btn-area"></div>
+            
+            <div class="header-right-zone">
+                <div id="live-display-frame" class="header-live-frame">
+                    <span id="live-frame-text" style="color: #ef4444; font-size: 0.8rem; font-weight: 600;">Khởi tạo kết nối thời gian thực...</span>
+                </div>
+                <button id="live-control-btn" class="btn-live-toggle" onclick="toggleLiveInteractionView()">LIVE</button>
+                <div id="auth-btn-area"></div>
+            </div>
         </div>
     </header>
 
@@ -923,6 +1004,87 @@
     </footer>
 
     <script>
+        // --- ENGINE 1: SOUND EFFECT (HỆ THỐNG PHÁT ÂM THANH NATIVE TO/RÕ) ---
+        let audioCtx = null;
+        function playHeavyClickSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                // Khởi tạo bộ tạo tần số sóng âm ngắn cường độ lớn
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine'; // Sóng sine cho âm thanh tròn chắc chắn
+                osc.frequency.setValueAtTime(160, audioCtx.currentTime); // Tần số trầm lực (160Hz)
+                osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.12); 
+                
+                // Cấu hình Volume To rõ ràng
+                gainNode.gain.setValueAtTime(0.8, audioCtx.currentTime); 
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } catch (e) {
+                console.log("AudioContext is not allowed on this gesture yet", e);
+            }
+        }
+
+        // Tự động gán âm thanh cho toàn bộ Click Elements (Button, Cards, Frame) trên trang web
+        document.addEventListener('click', function(e) {
+            const target = e.target;
+            if (
+                target.tagName === 'BUTTON' || 
+                target.closest('.btn-download') || 
+                target.closest('.btn-discord') ||
+                target.closest('.btn-view-apps') ||
+                target.closest('.jump-btn') || 
+                target.closest('.logo') || 
+                target.closest('nav ul a') ||
+                target.closest('.app-card') ||
+                target.id === 'live-control-btn'
+            ) {
+                playHeavyClickSound();
+            }
+        });
+
+        // --- ENGINE 2: LIVE PANEL CONTROLLER (NÚT DỊCH TRÁI + FRAME DÃN TRÁI QUA PHẢI) ---
+        let isLiveActive = false;
+        function toggleLiveInteractionView() {
+            const liveBtn = document.getElementById('live-control-btn');
+            const liveFrame = document.getElementById('live-display-frame');
+            const frameText = document.getElementById('live-frame-text');
+
+            if (!isLiveActive) {
+                isLiveActive = true;
+                
+                // Dịch chuyển nút Live sang bên trái 280 pixel mượt mà
+                liveBtn.style.transform = 'translateX(-280px)';
+                
+                // Đồng thời bật active cho Frame Live dãn rộng từ Trái sang Phải
+                liveFrame.classList.add('active');
+                
+                // Lấy mẫu tin ngẫu nhiên vinh danh
+                const randomMember = liveMembersPool[Math.floor(Math.random() * liveMembersPool.length)];
+                frameText.innerHTML = `📡 Live: <strong style="color:#3b82f6;">${randomMember.name}</strong> ${randomMember.msg}`;
+            } else {
+                isLiveActive = false;
+                
+                // Đưa nút live về vị trí cũ ban phải ban đầu
+                liveBtn.style.transform = 'translateX(0)';
+                
+                // Thu hẹp góc, ẩn mờ frame live
+                liveFrame.classList.remove('active');
+            }
+        }
+
         const liveMembersPool = [
             { name: "Kha_Gamer_2K", tier: "Sponsor", msg: "vừa gia hạn gói Tài Trợ phát triển hệ thống!" },
             { name: "Hoang_Sniper", tier: "Supporter VIP", msg: "đã mua gói Supporter Pack Flash Sale thành công." },
@@ -934,6 +1096,7 @@
             { name: "Gamer_Hanoi2026", tier: "Supporter VIP", msg: "đã tham gia hàng ngũ Supporter trọn đời." }
         ];
 
+        // --- ENGINE 3: CUSTOM VECTOR ARTWORK IMMERSIVE APPS DATABASE ---
         const appsDatabase = [
             {
                 name: "Netking Launcher",
@@ -942,7 +1105,8 @@
                 badgeText: "INSANITY!!",
                 hot: true,
                 desc: "Finding good launcher apk? NL will give you best enjoy. Hide your apps from others people to find it.<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                icon: "📱",
+                // Custom lại bằng mã vẽ SVG Vector thay thế cho Kí tự text Emoji lỗi thời
+                iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
                 downloadUrl: "https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file",
                 keyUrl: null
             },
@@ -953,7 +1117,7 @@
                 badgeText: "HOT 🔥",
                 hot: false,
                 desc: "2 option antiband 88% - 90%:<br>1. Freeze<br>2. Ghost<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                icon: "➕",
+                iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#EF4444" fill-opacity="0.2" stroke="#EF4444" stroke-width="2"/><path d="M12 7V13M12 17H12.01" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
                 downloadUrl: "https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file",
                 keyUrl: "https://link4m.net/go/eb8Na3"
             },
@@ -964,7 +1128,7 @@
                 badgeText: "An toàn",
                 hot: false,
                 desc: "Fake Lag Modern, 3 Options:<br>1. Freeze Infinity<br>2. Invisible<br>3. Teleporter",
-                icon: "⚡",
+                iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#EAB308" fill-opacity="0.2" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
                 downloadUrl: "https://www.mediafire.com/file/b566kfjwhsewl98/Netking_%25281%2529.apk/file",
                 keyUrl: null
             }
@@ -981,7 +1145,7 @@
                     <div class="app-card neon-box scroll-anim">
                         <div>
                             <div class="app-icon-wrapper">
-                                <div class="app-icon" style="background:#091124; font-size:1.8rem; display:flex; align-items:center; justify-content:center; border-color: rgba(0, 102, 255, 0.4); text-shadow: 0 0 10px rgba(59,130,246,0.6);">${app.icon}</div>
+                                <div class="app-icon-vector">${app.iconSvg}</div>
                             </div>
                             <div class="badges-row">
                                 <span class="badge ${app.badgeClass}">${app.badgeText}</span>
@@ -1052,11 +1216,15 @@
             }, 3500);
         }
 
+        // --- ENGINE 4: AUTO ANIMATIONS SLOW BLUR FADE IN/OUT KHI VÀO HOẶC RA SCREEN ---
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    // Khi lọt vào khung hình, thêm class show để bật Fade + Unblur mượt mà
                     entry.target.classList.add('show');
-                    scrollObserver.unobserve(entry.target); 
+                } else {
+                    // YÊU CẦU MỞ RỘNG: Khi trượt khuất màn hình, tự ẩn đi để lần sau cuộn lại vẫn chạy tiếp
+                    entry.target.classList.remove('show');
                 }
             });
         }, { root: null, threshold: 0.05 });
