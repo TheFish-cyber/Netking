@@ -307,27 +307,6 @@
         .theme-opt.active { background: #0052cc; color: #fff; }
         .theme-opt svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
 
-        /* --- FIXED LIVE TEXT VIEW (KHÔNG CÓ ANIMATION FADE/BLUR) --- */
-        .header-live-frame-fixed {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 20px;
-            padding: 6px 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 320px;
-            overflow: hidden;
-        }
-        .live-dot-fixed {
-            width: 6px;
-            height: 6px;
-            background: #ef4444;
-            border-radius: 50%;
-            flex-shrink: 0;
-            animation: pulse 1.2s infinite;
-        }
-
         .btn-login {
             background: rgba(59, 130, 246, 0.12);
             border: 1px solid rgba(59, 130, 246, 0.35);
@@ -675,11 +654,6 @@
             </nav>
             
             <div class="header-right-zone">
-                <div class="header-live-frame-fixed">
-                    <span class="live-dot-fixed"></span>
-                    <span id="live-frame-text" style="color: #ef4444; font-size: 0.75rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">Đang thiết lập kết nối nền...</span>
-                </div>
-
                 <div class="theme-select-wrapper">
                     <button class="theme-select-btn" onclick="toggleThemeDropdown(event)">
                         <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg> Giao diện
@@ -1101,8 +1075,7 @@
                 target.closest('.logo') || 
                 target.closest('nav ul a') ||
                 target.closest('.app-card') ||
-                target.closest('.theme-opt') ||
-                target.closest('.header-live-frame-fixed')
+                target.closest('.theme-opt')
             ) {
                 playCustomPopSound();
             }
@@ -1212,7 +1185,7 @@
             document.getElementById('theme-dropdown-menu').classList.remove('show');
         });
 
-        // --- ENGINE 3: LIVE REFRESH ENGINE WITHOUT FADE/BLUR ---
+        // --- ENGINE 3: LIVE REFRESH ENGINE ---
         const liveMembersPool = [
             { name: "Kha_Gamer_2K", tier: "Sponsor", msg: "vừa gia hạn gói Tài Trợ hệ thống!" },
             { name: "Hoang_Sniper", tier: "Supporter VIP", msg: "đã mua gói Supporter Pack." },
@@ -1223,15 +1196,6 @@
             { name: "Shadow_Modder", tier: "Premium VIP", msg: "has bypassed the system key gate." },
             { name: "Gamer_Hanoi2026", tier: "Supporter VIP", msg: "đã tham gia Supporter trọn đời." }
         ];
-
-        function runFixedLiveFrameEngine() {
-            const frameText = document.getElementById('live-frame-text');
-            setInterval(() => {
-                const randomMember = liveMembersPool[Math.floor(Math.random() * liveMembersPool.length)];
-                // Thay đổi text trực tiếp không dùng hiệu ứng biến mất/xuất hiện gây xao nhãng nhấp nháy
-                frameText.innerHTML = `${randomMember.name} ${randomMember.msg}`;
-            }, 4000);
-        }
 
         // --- ENGINE 4: APPS SYSTEM WITH SVG VECTOR ICONS ---
         const appsDatabase = [
@@ -1483,6 +1447,7 @@
             }, 1500);
         }
 
+        // --- CORE SMOOTH SCROLL MECHANIC ---
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1532,7 +1497,6 @@
             updateStatsDOM();
             updateOnlineCount();
             runLiveTickerEngine();
-            runFixedLiveFrameEngine();
         }
 
         function updateStatsDOM() {
