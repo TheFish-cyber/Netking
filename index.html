@@ -563,7 +563,7 @@
 
         /* --- SUBSCRIPTION --- */
         #premium-page { display: none; padding: 40px 0; }
-        .premium-form-card { max-width: 520px; margin: 0 auto; padding: 30px; text-align: center; }
+        .premium-form-card neon-box { max-width: 520px; margin: 0 auto; padding: 30px; text-align: center; }
         .flash-sale-badge { background: #ef4444; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 14px; letter-spacing: 0.5px; animation: pulse 2s infinite; }
         .price-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0; }
         .new-price { color: #ef4444; font-size: 1.8rem; font-weight: 800; }
@@ -647,11 +647,11 @@
             </a>
             <nav>
                 <ul>
-                    <li><a onclick="showMainPage(); scrollToSection('body')" class="active" data-lang-key="nav_home">Trang chủ</a></li>
-                    <li><a onclick="showMainPage(); scrollToSection('files-section')" data-lang-key="nav_download">Tải xuống</a></li>
-                    <li><a onclick="showMainPage(); scrollToSection('consulting-section')" data-lang-key="nav_consult">Tư vấn</a></li>
-                    <li><a onclick="showMainPage(); scrollToSection('pricing-section')" data-lang-key="nav_pricing">Bảng giá</a></li>
-                    <li><a onclick="showMainPage(); scrollToSection('tutorials-section')" data-lang-key="nav_guide">Hướng dẫn</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('body'); })" class="active" data-lang-key="nav_home">Trang chủ</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('files-section'); })" data-lang-key="nav_download">Tải xuống</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('consulting-section'); })" data-lang-key="nav_consult">Tư vấn</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('pricing-section'); })" data-lang-key="nav_pricing">Bảng giá</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('tutorials-section'); })" data-lang-key="nav_guide">Hướng dẫn</a></li>
                 </ul>
             </nav>
             
@@ -661,14 +661,14 @@
                         <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg> <span data-lang-key="theme_btn">Giao diện</span>
                     </button>
                     <div class="theme-dropdown" id="theme-dropdown-menu">
-                        <button class="theme-opt active" data-theme="aurora" onclick="selectTheme('aurora')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>Aurora</button>
-                        <button class="theme-opt" data-theme="galaxy" onclick="selectTheme('galaxy')"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>Galaxy</button>
-                        <button class="theme-opt" data-theme="stars" onclick="selectTheme('stars')"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Stars</button>
-                        <button class="theme-opt" data-theme="snowflakes" onclick="selectTheme('snowflakes')"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Snowflakes</button>
+                        <button class="theme-opt active" data-theme="aurora" onclick="withLoading(() => selectTheme('aurora'))"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>Aurora</button>
+                        <button class="theme-opt" data-theme="galaxy" onclick="withLoading(() => selectTheme('galaxy'))"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>Galaxy</button>
+                        <button class="theme-opt" data-theme="stars" onclick="withLoading(() => selectTheme('stars'))"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Stars</button>
+                        <button class="theme-opt" data-theme="snowflakes" onclick="withLoading(() => selectTheme('snowflakes'))"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Snowflakes</button>
                     </div>
                 </div>
 
-                <button class="theme-select-btn" onclick="document.getElementById('lang-modal').style.display='flex'">
+                <button class="theme-select-btn" onclick="withLoading(() => { document.getElementById('lang-modal').style.display='flex'; })">
                     🌐 <span id="current-lang-label">EN</span>
                 </button>
 
@@ -679,8 +679,8 @@
 
     <div class="live-ticker-container">
         <div class="live-ticker-bar">
-            <span class="live-badge">Live</span>
-            <div id="ticker-content">Đang khởi tạo danh sách vinh danh toàn cầu...</div>
+            <span class="live-badge" data-lang-key="live_badge">Live</span>
+            <div id="ticker-content" data-lang-key="ticker_init">Đang khởi tạo danh sách vinh danh toàn cầu...</div>
         </div>
     </div>
 
@@ -690,14 +690,14 @@
         <section class="hero scroll-anim">
             <div class="welcome-tag" data-lang-key="welcome_tag">Welcome to my website</div>
             <h2>NetKing <span data-lang-key="hero_team">Team</span></h2>
-            <p class="hero-subtitle">Premium Android Apps • Secure Downloads</p>
+            <p class="hero-subtitle" data-lang-key="hero_subtitle">Premium Android Apps • Secure Downloads</p>
             <p class="hero-desc" data-lang-key="hero_desc">Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team.</p>
             <div class="hero-buttons">
                 <a href="https://discord.gg/wf4QnepsxS" target="_blank" class="btn-discord">
                     <svg viewBox="0 0 127.14 96.36"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.73-10.93,68.42,68.42,0,0,1-10.64-5.12c.91-.67,1.81-1.37,2.66-2.1a75.22,75.22,0,0,0,72.76,0c.85.73,1.75,1.43,2.66,2.1a68.86,68.86,0,0,1-10.64,5.12,74.74,74.74,0,0,0,6.73,10.93,105.54,105.54,0,0,0,31.05-18.83C129.93,49.88,124.06,27,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
                     Discord
                 </a>
-                <a onclick="scrollToSection('files-section')" class="btn-view-apps" data-lang-key="btn_view_apps">
+                <a onclick="withLoading(() => scrollToSection('files-section'))" class="btn-view-apps" data-lang-key="btn_view_apps">
                     <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
                     Xem ứng dụng
                 </a>
@@ -804,7 +804,7 @@
                 <div class="price-tier-card neon-box scroll-anim">
                     <div>
                         <div class="tier-name" data-lang-key="tier_free">Thành Viên Thường</div>
-                        <div class="tier-price">0đ <span>/ vĩnh viễn</span></div>
+                        <div class="tier-price" data-lang-key="tier_free_price">0đ <span>/ vĩnh viễn</span></div>
                         <ul class="tier-features">
                             <li data-lang-key="tier_free_f1">Tải full kho công khai</li>
                             <li data-lang-key="tier_free_f2">Tốc độ giới hạn chuẩn</li>
@@ -818,40 +818,40 @@
                     <div class="pop-badge" data-lang-key="badge_recommended">KHUYÊN DÙNG</div>
                     <div>
                         <div class="tier-name"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg> Premium VIP</div>
-                        <div class="tier-price">55.000đ <span>/ tháng</span></div>
+                        <div class="tier-price" data-lang-key="tier_vip_price">55.000đ <span>/ tháng</span></div>
                         <ul class="tier-features">
                             <li data-lang-key="tier_vip_f1">Link trực tiếp (No Ads)</li>
                             <li data-lang-key="tier_vip_f2">Không cần vượt cổng lấy Key</li>
                             <li data-lang-key="tier_vip_f3">Cập nhật file sớm Beta</li>
                         </ul>
                     </div>
-                    <button id="btn-pay-tier-1" class="btn-download" style="width:100%;" onclick="attemptPurchase('Premium VIP', 55000)" data-lang-key="btn_upgrade">Nâng Cấp</button>
+                    <button id="btn-pay-tier-1" class="btn-download" style="width:100%;" onclick="withLoading(() => attemptPurchase('Premium VIP', 55000))" data-lang-key="btn_upgrade">Nâng Cấp</button>
                 </div>
 
                 <div class="price-tier-card neon-box supporter-tier scroll-anim">
                     <div class="supp-badge">SALE</div>
                     <div>
                         <div class="tier-name"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg> Supporter VIP Pack</div>
-                        <div class="tier-price"><span style="text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;">300k</span> 200.000đ <span>/ vĩnh viễn</span></div>
+                        <div class="tier-price" data-lang-key="tier_sup_price"><span style="text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;">300k</span> 200.000đ <span>/ vĩnh viễn</span></div>
                         <ul class="tier-features">
                             <li data-lang-key="tier_sup_f1">Trọn đời Premium Đặc quyền</li>
                             <li data-lang-key="tier_sup_f2">Vinh danh Tên lên Live Show</li>
                             <li data-lang-key="tier_sup_f3">Ưu tiên Support riêng 1-1</li>
                         </ul>
                     </div>
-                    <button id="btn-pay-tier-2" class="btn-download" style="width:100%; background:#a855f7; border-color:rgba(168,85,247,0.4);" onclick="attemptPurchase('Supporter VIP Pack', 200000)" data-lang-key="btn_buy_pack">Mua Gói Gốc</button>
+                    <button id="btn-pay-tier-2" class="btn-download" style="width:100%; background:#a855f7; border-color:rgba(168,85,247,0.4);" onclick="withLoading(() => attemptPurchase('Supporter VIP Pack', 200000))" data-lang-key="btn_buy_pack">Mua Gói Gốc</button>
                 </div>
 
                 <div class="price-tier-card neon-box scroll-anim">
                     <div>
                         <div class="tier-name" data-lang-key="tier_sponsor">Sponsor - Đối Tác</div>
-                        <div class="tier-price">150.000đ <span>/ vĩnh viễn</span></div>
+                        <div class="tier-price" data-lang-key="tier_sponsor_price">150.000đ <span>/ vĩnh viễn</span></div>
                         <ul class="tier-features">
                             <li data-lang-key="tier_spo_f1">Treo logo vinh danh chân trang</li>
                             <li data-lang-key="tier_spo_f2">Yêu cầu bẻ khóa/Mod app riêng</li>
                         </ul>
                     </div>
-                    <button id="btn-pay-tier-3" class="btn-download risk-style" style="width:100%;" onclick="attemptPurchase('Sponsor - Đối Tác', 150000)" data-lang-key="btn_sponsor">Tài Trợ</button>
+                    <button id="btn-pay-tier-3" class="btn-download risk-style" style="width:100%;" onclick="withLoading(() => attemptPurchase('Sponsor - Đối Tác', 150000))" data-lang-key="btn_sponsor">Tài Trợ</button>
                 </div>
             </div>
         </section>
@@ -894,7 +894,7 @@
                             <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </span>
                     </div>
-                    <div class="review-text">"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag."</div>
+                    <div class="review-text" data-lang-key="rev1_text">"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag."</div>
                 </div>
                 <div class="review-card neon-box scroll-anim">
                     <div class="reviewer">Hoang_Sniper 
@@ -906,44 +906,44 @@
                             <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </span>
                     </div>
-                    <div class="review-text">"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác."</div>
+                    <div class="review-text" data-lang-key="rev2_text">"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác."</div>
                 </div>
             </div>
 
             <div class="feedback-box neon-box scroll-anim">
                 <h4 data-lang-key="feedback_title">Gửi Phản Hồi Lên Hệ Thống</h4>
                 <textarea id="user-feedback-text" placeholder="Nhập ý kiến đóng góp, báo lỗi app hoặc đề xuất của bạn tại đây..."></textarea>
-                <button class="btn-download js-icon-btn" onclick="submitFeedback()" data-lang-key="btn_send_feedback">Gửi Phản Hồi Trực Tiếp</button>
+                <button class="btn-download js-icon-btn" onclick="withLoading(() => submitFeedback())" data-lang-key="btn_send_feedback">Gửi Phản Hồi Trực Tiếp</button>
             </div>
         </section>
     </div>
 
     <div id="premium-page" class="container">
         <div class="premium-form-card neon-box">
-            <div class="flash-sale-badge">CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT</div>
-            <h2 style="color: #fff; margin-bottom: 6px;">Cổng Thanh Toán Hóa Đơn VIP</h2>
-            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 14px;">Tài khoản đang thực hiện: <span id="purchase-active-user" style="color:#3b82f6; font-weight:700;">Chưa xác định</span></p>
+            <div class="flash-sale-badge" data-lang-key="flash_sale_badge">CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT</div>
+            <h2 style="color: #fff; margin-bottom: 6px;" data-lang-key="billing_title">Cổng Thanh Toán Hóa Đơn VIP</h2>
+            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 14px;"><span data-lang-key="billing_user">Tài khoản đang thực hiện:</span> <span id="purchase-active-user" style="color:#3b82f6; font-weight:700;">Chưa xác định</span></p>
             <div class="form-group">
-                <label>Gói dịch vụ đã chọn</label>
+                <label data-lang-key="billing_select_lbl">Gói dịch vụ đã chọn</label>
                 <select id="pricing-select-form" onchange="updateFormPriceDisplay()">
-                    <option value="55000">Gói Premium VIP — 55.000đ / Tháng</option>
-                    <option value="200000" selected>Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)</option>
-                    <option value="150000">Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn</option>
+                    <option value="55000" data-lang-key="opt_vip">Gói Premium VIP — 55.000đ / Tháng</option>
+                    <option value="200000" selected data-lang-key="opt_sup">Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)</option>
+                    <option value="150000" data-lang-key="opt_spo">Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn</option>
                 </select>
             </div>
             <div class="price-row"><span class="new-price" id="form-price-render">200.000đ</span></div>
             <div class="qr-placeholder">
-                <p style="font-size:0.8rem; color:#0f172a; margin-bottom:4px;">QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN</p>
+                <p style="font-size:0.8rem; color:#0f172a; margin-bottom:4px;" data-lang-key="qr_title">QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN</p>
                 <div style="width:130px; height:130px; background:#475569; margin: 8px auto; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.75rem;">[QR MOMO/BANK]</div>
-                <p style="font-size:0.75rem; color:#ef4444;" id="qr-bank-memo">Nội dung: NETKING VIP [Tên tài khoản]</p>
+                <p style="font-size:0.75rem; color:#ef4444;" id="qr-bank-memo" data-lang-key="qr_memo">Nội dung: NETKING VIP [Tên tài khoản]</p>
             </div>
-            <form onsubmit="event.preventDefault(); alert('Hệ thống đang xử lý xác thực hóa đơn đóng góp của bạn!'); showMainPage();">
+            <form onsubmit="event.preventDefault(); withLoading(() => { alert(localStorage.getItem('netking_lang') === 'en' ? 'The system is verifying your donation invoice!' : 'Hệ thống đang xử lý xác thực hóa đơn đóng góp của bạn!'); showMainPage(); });">
                 <div class="form-group">
-                    <label>Mã giao dịch ngân hàng / Ví điện tử</label>
-                    <input type="text" placeholder="Nhập mã TransID hoặc mã tham chiếu bưu điện" required>
+                    <label data-lang-key="trans_id_lbl">Mã giao dịch ngân hàng / Ví điện tử</label>
+                    <input type="text" placeholder="..." required>
                 </div>
-                <button type="submit" class="btn-download" style="width:100%; border:none; margin-top:10px;">Xác nhận hoàn tất giao dịch</button>
-                <div onclick="showMainPage()" style="text-align:center; margin-top:14px; font-size:0.8rem; color:#3b82f6; cursor:pointer;">➔ Hủy bỏ, quay lại Trang Chủ</div>
+                <button type="submit" class="btn-download" style="width:100%; border:none; margin-top:10px;" data-lang-key="btn_confirm_billing">Xác nhận hoàn tất giao dịch</button>
+                <div onclick="withLoading(() => showMainPage())" style="text-align:center; margin-top:14px; font-size:0.8rem; color:#3b82f6; cursor:pointer;" data-lang-key="btn_cancel_billing">➔ Hủy bỏ, quay lại Trang Chủ</div>
             </form>
         </div>
     </div>
@@ -953,76 +953,76 @@
             <h3 style="color:#3b82f6; margin-bottom: 8px;">🌐 Select Language</h3>
             <p style="color:#64748b; font-size:0.8rem; margin-bottom:15px;">Please choose your preferred language to continue.</p>
             <div class="lang-grid">
-                <button class="lang-btn" onclick="changeLanguage('en')">
+                <button class="lang-btn" onclick="withLoading(() => changeLanguage('en'))">
                     <span>English (Default)</span> <span class="flag">🇺🇸</span>
                 </button>
-                <button class="lang-btn" onclick="changeLanguage('vi')">
+                <button class="lang-btn" onclick="withLoading(() => changeLanguage('vi'))">
                     <span>Tiếng Việt</span> <span class="flag">🇻🇳</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="jump-modal" class="modal-overlay" onclick="closeModal('jump-modal')">
+    <div id="jump-modal" class="modal-overlay" onclick="withLoading(() => closeModal('jump-modal'))">
         <div class="modal-box neon-box" onclick="event.stopPropagation()">
-            <button class="btn-close" onclick="closeModal('jump-modal')">✕</button>
-            <h3 style="color:#3b82f6;">🧭 Bảng Điều Hướng Nhanh Website</h3>
+            <button class="btn-close" onclick="withLoading(() => closeModal('jump-modal'))">✕</button>
+            <h3 style="color:#3b82f6;" data-lang-key="jump_title">🧭 Bảng Điều Hướng Nhanh Website</h3>
             <div class="jump-grid">
-                <div class="jump-btn" onclick="quickJumpTo('body')">🏠 Trang Chủ <span>Đầu trang</span></div>
-                <div class="jump-btn" onclick="quickJumpTo('notice-section')">⚡ Bảng Thông Báo <span>Số liệu thực</span></div>
-                <div class="jump-btn" onclick="quickJumpTo('files-section')">📥 Kho Tải Ứng Dụng <span>Download APK</span></div>
-                <div class="jump-btn" onclick="quickJumpTo('pricing-section')">💎 Bảng Giá Thành Viên <span>Gói Supporter</span></div>
-                <div class="jump-btn" onclick="quickJumpTo('tutorials-section')">📚 Hướng Dẫn Sử Dụng <span>Dành cho Newbie</span></div>
+                <div class="jump-btn" onclick="withLoading(() => quickJumpTo('body'))"><span data-lang-key="j1">🏠 Trang Chủ</span> <span data-lang-key="j1_sub">Đầu trang</span></div>
+                <div class="jump-btn" onclick="withLoading(() => quickJumpTo('notice-section'))"><span data-lang-key="j2">⚡ Bảng Thông Báo</span> <span data-lang-key="j2_sub">Số liệu thực</span></div>
+                <div class="jump-btn" onclick="withLoading(() => quickJumpTo('files-section'))"><span data-lang-key="j3">📥 Kho Tải Ứng Dụng</span> <span data-lang-key="j3_sub">Download APK</span></div>
+                <div class="jump-btn" onclick="withLoading(() => quickJumpTo('pricing-section'))"><span data-lang-key="j4">💎 Bảng Giá Thành Viên</span> <span data-lang-key="j4_sub">Gói Supporter</span></div>
+                <div class="jump-btn" onclick="withLoading(() => quickJumpTo('tutorials-section'))"><span data-lang-key="j5">📚 Hướng Dẫn Sử Dụng</span> <span data-lang-key="j5_sub">Dành cho Newbie</span></div>
             </div>
         </div>
     </div>
 
     <div id="auth-modal" class="modal-overlay">
         <div class="modal-box neon-box" id="login-form-box">
-            <button class="btn-close" onclick="closeModal('auth-modal')">✕</button>
+            <button class="btn-close" onclick="withLoading(() => closeModal('auth-modal'))">✕</button>
             <h3 data-lang-key="login_title">Đăng Nhập Hệ Thống</h3>
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label data-lang-key="login_user_lbl">Tài khoản</label>
-                    <input type="text" id="login-user" placeholder="Nhập tài khoản" required>
+                    <input type="text" id="login-user" placeholder="..." required>
                 </div>
                 <div class="form-group">
                     <label data-lang-key="login_pass_lbl">Mật khẩu</label>
-                    <input type="password" id="login-pass" placeholder="Nhập mật khẩu" required>
+                    <input type="password" id="login-pass" placeholder="..." required>
                 </div>
                 <button type="submit" class="btn-download js-icon-btn" style="width:100%;" data-lang-key="btn_login_submit">Vào Hệ Thống</button>
             </form>
-            <div class="modal-switch"><span data-lang-key="no_account">Chưa có tài khoản?</span> <span onclick="toggleAuthMode('register')" data-lang-key="reg_now">Đăng ký ngay</span></div>
+            <div class="modal-switch"><span data-lang-key="no_account">Chưa có tài khoản?</span> <span onclick="withLoading(() => toggleAuthMode('register'))" data-lang-key="reg_now">Đăng ký ngay</span></div>
         </div>
 
         <div class="modal-box neon-box" id="register-form-box" style="display:none;">
-            <button class="btn-close" onclick="closeModal('auth-modal')">✕</button>
+            <button class="btn-close" onclick="withLoading(() => closeModal('auth-modal'))">✕</button>
             <h3 data-lang-key="reg_title">Đăng Ký Thành Viên</h3>
             <form onsubmit="handleRegister(event)">
                 <div class="form-group">
                     <label data-lang-key="reg_user_lbl">Tài khoản mới</label>
-                    <input type="text" id="reg-user" placeholder="Tạo tên tài khoản" required>
+                    <input type="text" id="reg-user" placeholder="..." required>
                 </div>
                 <div class="form-group">
                     <label data-lang-key="login_pass_lbl">Mật khẩu</label>
-                    <input type="password" id="reg-pass" placeholder="Tạo mật khẩu" required>
+                    <input type="password" id="reg-pass" placeholder="..." required>
                 </div>
                 <button type="submit" class="btn-download js-icon-btn" style="width:100%; background:#10b981;" data-lang-key="btn_reg_submit">Xác Nhận Đăng Ký</button>
             </form>
-            <div class="modal-switch"><span data-lang-key="has_account">Đã có tài khoản?</span> <span onclick="toggleAuthMode('login')" data-lang-key="login_back">Quay lại Đăng nhập</span></div>
+            <div class="modal-switch"><span data-lang-key="has_account">Đã có tài khoản?</span> <span onclick="withLoading(() => toggleAuthMode('login'))" data-lang-key="login_back">Quay lại Đăng nhập</span></div>
         </div>
     </div>
 
     <div id="guest-modal" class="modal-overlay">
         <div class="modal-box neon-box">
-            <button class="btn-close" onclick="closeModal('guest-modal')">✕</button>
-            <h3>🔒 QUYỀN TRUY CẬP BỊ CHẶN!</h3>
-            <p style="color: #94a3b8; font-size: 0.8rem; margin: 14px 0 20px 0; line-height: 1.5;">
+            <button class="btn-close" onclick="withLoading(() => closeModal('guest-modal'))">✕</button>
+            <h3 data-lang-key="blocked_title">🔒 QUYỀN TRUY CẬP BỊ CHẶN!</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin: 14px 0 20px 0; line-height: 1.5;" data-lang-key="blocked_desc">
                 Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.
             </p>
             <div style="display:flex; gap: 10px;">
-                <button class="btn-download js-icon-btn" onclick="closeModal('guest-modal'); openAuthModal('login')" style="flex:1;">Đăng Nhập</button>
-                <button class="btn-download btn-key-style js-icon-btn" onclick="closeModal('guest-modal'); openAuthModal('register')" style="flex:1;">Đăng Ký</button>
+                <button class="btn-download js-icon-btn" onclick="withLoading(() => { closeModal('guest-modal'); openAuthModal('login'); })" style="flex:1;" data-lang-key="nav_login_action">Đăng Nhập</button>
+                <button class="btn-download btn-key-style js-icon-btn" onclick="withLoading(() => { closeModal('guest-modal'); openAuthModal('register'); })" style="flex:1;" data-lang-key="reg_now">Đăng ký</button>
             </div>
         </div>
     </div>
@@ -1031,15 +1031,15 @@
         <div class="modal-box neon-box" style="max-width: 340px;">
             <div class="success-accent-bar"></div>
             <div class="success-icon-circle">✓</div>
-            <h3>Tải Xuống Thành Công</h3>
-            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 16px;">Đường dẫn tải tệp tin an toàn đã được khởi tạo.</p>
-            <button class="btn-download js-icon-btn" onclick="closeModal('success-modal')" style="width: 100%; background: #10b981;">Hoàn tất</button>
+            <h3 data-lang-key="dl_success_title">Tải Xuống Thành Công</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 16px;" data-lang-key="dl_success_desc">Đường dẫn tải tệp tin an toàn đã được khởi tạo.</p>
+            <button class="btn-download js-icon-btn" onclick="withLoading(() => closeModal('success-modal'))" style="width: 100%; background: #10b981;" data-lang-key="btn_done">Hoàn tất</button>
         </div>
     </div>
 
     <div id="loading-screen">
         <div class="spinner"></div>
-        <p style="color: #fff; font-size: 0.85rem;">Đang kiểm tra tệp tin độc hại...</p>
+        <p style="color: #fff; font-size: 0.85rem;" id="loading-screen-text">Loading...</p>
     </div>
 
     <footer class="scroll-fade">
@@ -1051,9 +1051,9 @@
             <div class="footer-links">
                 <h5 data-lang-key="footer_quick_links">Liên kết nhanh</h5>
                 <ul>
-                    <li><a onclick="showMainPage(); scrollToSection('body')" data-lang-key="nav_home">Trang chủ</a></li>
-                    <li><a onclick="showMainPage(); scrollToSection('files-section')" data-lang-key="nav_download">Tải xuống file</a></li>
-                    <li><a onclick="showMainPage(); scrollToSection('tutorials-section')" data-lang-key="nav_guide">Hướng dẫn sử dụng</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('body'); })" data-lang-key="nav_home">Trang chủ</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('files-section'); })" data-lang-key="nav_download">Tải xuống file</a></li>
+                    <li><a onclick="withLoading(() => { showMainPage(); scrollToSection('tutorials-section'); })" data-lang-key="nav_guide">Hướng dẫn sử dụng</a></li>
                 </ul>
             </div>
             <div class="footer-stats">
@@ -1070,7 +1070,7 @@
     </footer>
 
     <script>
-        // --- DATA DICTIONARY MULTI-LANGUAGE (Tự động chuyển đổi text) ---
+        // --- DATA DICTIONARY MULTI-LANGUAGE (Tất cả mọi chữ trên web) ---
         const translations = {
             en: {
                 nav_home: "Home",
@@ -1081,6 +1081,7 @@
                 theme_btn: "Themes",
                 welcome_tag: "Welcome to my website",
                 hero_team: "Team",
+                hero_subtitle: "Premium Android Apps • Secure Downloads",
                 hero_desc: "Sharing high quality, secure, and 100% free premium Android apps reviewed by NetKing development team.",
                 btn_view_apps: "View Applications",
                 admin_notice_title: "Admin Announcement",
@@ -1106,6 +1107,7 @@
                 pricing_headline: "VIP Tiers & Strategic Sponsorships",
                 pricing_subheadline: "Establish a system session before initializing upgrade transactions",
                 tier_free: "Standard Member",
+                tier_free_price: "0 USD / lifetime",
                 tier_free_f1: "Access public repositories",
                 tier_free_f2: "Standard rate-limited bandwidth",
                 tier_free_f3: "Daily ad-link bypass for session key",
@@ -1113,7 +1115,16 @@
                 badge_recommended: "RECOMMENDED",
                 btn_upgrade: "Upgrade Tier",
                 btn_buy_pack: "Acquire Base Pack",
+                tier_vip_price: "2.5 USD / month",
+                tier_vip_f1: "Direct link (No Ads)",
+                tier_vip_f2: "No bypass or dynamic key needed",
+                tier_vip_f3: "Early access to Beta files",
+                tier_sup_price: "9 USD / lifetime",
+                tier_sup_f1: "Lifetime Premium Privileges",
+                tier_sup_f2: "Global name showcase on Live Ticker",
+                tier_sup_f3: "Priority 1-1 technical support",
                 tier_sponsor: "Corporate Sponsor",
+                tier_sponsor_price: "6.5 USD / lifetime",
                 tier_spo_f1: "Logo placement in footer grid",
                 tier_spo_f2: "Dedicated on-demand reversing pipelines",
                 btn_sponsor: "Fund Project",
@@ -1127,6 +1138,8 @@
                 step3_desc: "Navigate to Android Settings -> Apps -> NetKing -> Battery -> Toggle to 'Unrestricted' to prevent aggressive OS garbage collection routines.",
                 review_headline: "End-User Verification & Feedback",
                 review_subheadline: "Live testimonial data arrays and decentralized reporting forms",
+                rev1_text: "\"NetPlus V18 runs extremely smooth bypass, ghost mode optimization reacts instantly with zero lag.\"",
+                rev2_text: "\"Clean system UI interface design, free of malicious malware or dirty pop-up banners.\"",
                 feedback_title: "Dispatch System Feedback telemetry",
                 btn_send_feedback: "Submit Feedback",
                 login_title: "System Authentication",
@@ -1141,7 +1154,35 @@
                 has_account: "Already registered?",
                 login_back: "Return to Login",
                 footer_quick_links: "Quick Navigation Links",
-                footer_stats_title: "Realtime Analytics Core"
+                footer_stats_title: "Realtime Analytics Core",
+                live_badge: "Live",
+                ticker_init: "Initializing global honor list...",
+                blocked_title: "🔒 ACCESS DENIED!",
+                blocked_desc: "You are currently in Guest mode. You only have permission to view info and cannot download files or submit feedback. Please Log In.",
+                nav_login_action: "Log In",
+                dl_success_title: "Download Initiated",
+                dl_success_desc: "The secure file package distribution pipeline has been established successfully.",
+                btn_done: "Done",
+                j1: "🏠 Home", j1_sub: "Top of Page",
+                j2: "⚡ Notification", j2_sub: "Realtime Statistics",
+                j3: "📥 Application Hub", j3_sub: "Download APK",
+                j4: "💎 Membership Pricing", j4_sub: "Supporter Packs",
+                j5: "📚 User Guide", j5_sub: "For Newbies",
+                jump_title: "🧭 Quick Navigation Matrix",
+                flash_sale_badge: "FLASH SALE PRICE SUBSIDY PROGRAM ACTIVE",
+                billing_title: "VIP Invoice Payment Portal",
+                billing_user: "Active Operator Session:",
+                billing_select_lbl: "Selected Service Tier",
+                opt_vip: "Premium VIP Pack — 55.000đ / Month",
+                opt_sup: "Supporter VIP Pack — 200.000đ / Lifetime",
+                opt_spo: "Sponsor Partner — 150.000đ / Lifetime",
+                qr_title: "SCAN QR CODE FOR AUTOMATIC BANK TRANSFER",
+                qr_memo: "Memo Content: NETKING VIP [Username]",
+                trans_id_lbl: "Bank / E-Wallet Reference TransID",
+                btn_confirm_billing: "Confirm Completion of Transaction",
+                btn_cancel_billing: "➔ Cancel, Return to Dashboard",
+                guest_notice_head: "🔒 GUEST SESSION DETECTED",
+                guest_notice_body: "You are surfing anonymously. Download features are restricted. Please click here to authorize your account profile."
             },
             vi: {
                 nav_home: "Trang chủ",
@@ -1152,6 +1193,7 @@
                 theme_btn: "Giao diện",
                 welcome_tag: "Welcome to my website",
                 hero_team: "Team",
+                hero_subtitle: "Premium Android Apps • Secure Downloads",
                 hero_desc: "Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team.",
                 btn_view_apps: "Xem ứng dụng",
                 admin_notice_title: "Thông báo từ Admin",
@@ -1177,6 +1219,7 @@
                 pricing_headline: "Gói Thành Viên VIP & Tài Trợ",
                 pricing_subheadline: "Yêu cầu Đăng nhập hệ thống trước khi thực hiện giao dịch nâng cấp",
                 tier_free: "Thành Viên Thường",
+                tier_free_price: "0đ / vĩnh viễn",
                 tier_free_f1: "Tải full kho công khai",
                 tier_free_f2: "Tốc độ giới hạn chuẩn",
                 tier_free_f3: "Vượt link lấy key hàng ngày",
@@ -1184,7 +1227,16 @@
                 badge_recommended: "KHUYÊN DÙNG",
                 btn_upgrade: "Nâng Cấp",
                 btn_buy_pack: "Mua Gói Gốc",
+                tier_vip_price: "55.000đ / tháng",
+                tier_vip_f1: "Link trực tiếp (No Ads)",
+                tier_vip_f2: "Không cần vượt cổng lấy Key",
+                tier_vip_f3: "Cập nhật file sớm Beta",
+                tier_sup_price: "300k 200.000đ / vĩnh viễn",
+                tier_sup_f1: "Trọn đời Premium Đặc quyền",
+                tier_sup_f2: "Vinh danh Tên lên Live Show",
+                tier_sup_f3: "Ưu tiên Support riêng 1-1",
                 tier_sponsor: "Sponsor - Đối Tác",
+                tier_sponsor_price: "150.000đ / vĩnh viễn",
                 tier_spo_f1: "Treo logo vinh danh chân trang",
                 tier_spo_f2: "Yêu cầu bẻ khóa/Mod app riêng",
                 btn_sponsor: "Tài Trợ",
@@ -1198,6 +1250,8 @@
                 step3_desc: "Vào Cài đặt Android -> Ứng dụng -> Chọn NetKing -> Pin -> Chuyển từ \"Tối ưu hóa\" sang \"Không giới hạn\" để tránh bị hệ thống ép đóng ứng dụng chạy ngầm khi đang chơi game.",
                 review_headline: "Đánh Giá & Phản Hồi",
                 review_subheadline: "Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến",
+                rev1_text: " \"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag.\"",
+                rev2_text: "\"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác.\"",
                 feedback_title: "Gửi Phản Hồi Lên Hệ Thống",
                 btn_send_feedback: "Gửi Phản Hồi Trực Tiếp",
                 login_title: "Đăng Nhập Hệ Thống",
@@ -1212,16 +1266,58 @@
                 has_account: "Đã có tài khoản?",
                 login_back: "Quay lại Đăng nhập",
                 footer_quick_links: "Liên kết nhanh",
-                footer_stats_title: "Thống kê chuẩn (Realtime)"
+                footer_stats_title: "Thống kê chuẩn (Realtime)",
+                live_badge: "Live",
+                ticker_init: "Đang khởi tạo danh sách vinh danh toàn cầu...",
+                blocked_title: "🔒 QUYỀN TRUY CẬP BỊ CHẶN!",
+                blocked_desc: "Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.",
+                nav_login_action: "Đăng Nhập",
+                dl_success_title: "Tải Xuống Thành Công",
+                dl_success_desc: "Đường dẫn tải tệp tin an toàn đã được khởi tạo.",
+                btn_done: "Hoàn tất",
+                j1: "🏠 Trang Chủ", j1_sub: "Đầu trang",
+                j2: "⚡ Bảng Thông Báo", j2_sub: "Số liệu thực",
+                j3: "📥 Kho Tải Ứng Dụng", j3_sub: "Download APK",
+                j4: "💎 Bảng Giá Thành Viên", j4_sub: "Gói Supporter",
+                j5: "📚 Hướng Dẫn Sử Dụng", j5_sub: "Dành cho Newbie",
+                jump_title: "Compass Bảng Điều Hướng Nhanh Website",
+                flash_sale_badge: "CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT",
+                billing_title: "Cổng Thanh Toán Hóa Đơn VIP",
+                billing_user: "Tài khoản đang thực hiện:",
+                billing_select_lbl: "Gói dịch vụ đã chọn",
+                opt_vip: "Gói Premium VIP — 55.000đ / Tháng",
+                opt_sup: "Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)",
+                opt_spo: "Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn",
+                qr_title: "QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN",
+                qr_memo: "Nội dung: NETKING VIP [Tên tài khoản]",
+                trans_id_lbl: "Mã giao dịch ngân hàng / Ví điện tử",
+                btn_confirm_billing: "Xác nhận hoàn tất giao dịch",
+                btn_cancel_billing: "➔ Hủy bỏ, quay lại Trang Chủ",
+                guest_notice_head: "🔒 BẠN ĐANG TRUY CẬP VỚI TƯ CÁCH KHÁCH",
+                guest_notice_body: "Bạn chưa đăng nhập. Tính năng tải xuống bị khóa. Bấm vào đây để đăng nhập hệ thống ngay."
             }
         };
+
+        // --- ENGINE HOÃN 3 GIÂY CHO MỌI HÀNH ĐỘNG (LOADING TRG 3S) ---
+        function withLoading(actionFunction, customMessage = "Loading...") {
+            const screen = document.getElementById('loading-screen');
+            const text = document.getElementById('loading-screen-text');
+            text.innerText = customMessage;
+            screen.style.display = 'flex';
+            
+            setTimeout(() => {
+                screen.style.display = 'none';
+                if (typeof actionFunction === 'function') {
+                    actionFunction();
+                }
+            }, 3000); // Trì hoãn chuẩn 3 giây
+        }
 
         // Hàm đổi ngôn ngữ toàn web
         function changeLanguage(lang) {
             localStorage.setItem('netking_lang', lang);
             document.getElementById('current-lang-label').innerText = lang.toUpperCase();
             
-            // Duyệt toàn bộ các thành phần có attribute data-lang-key để gán lại text
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.getAttribute('data-lang-key');
                 if (translations[lang] && translations[lang][key]) {
@@ -1229,7 +1325,15 @@
                 }
             });
             
-            closeModal('lang-modal');
+            // Cập nhật placeholders của inputs & textareas
+            const feedbackText = document.getElementById('user-feedback-text');
+            if(feedbackText) {
+                feedbackText.placeholder = lang === 'en' ? 'Enter feedback or app bugs here...' : 'Nhập ý kiến đóng góp, báo lỗi app tại đây...';
+            }
+
+            renderAppsSystem(); 
+            renderGuestNotificationBox();
+            closeModalDirect('lang-modal');
         }
 
         // --- AUDIO SOUND ENGINE ---
@@ -1365,14 +1469,10 @@
 
         // --- APP ENGINE ---
         const liveMembersPool = [
-            { name: "Kha_Gamer_2K", tier: "Sponsor", msg: "vừa gia hạn gói Tài Trợ hệ thống!" },
-            { name: "Hoang_Sniper", tier: "Supporter VIP", msg: "đã mua gói Supporter Pack." },
-            { name: "Alex_NetRunner", tier: "Premium VIP", msg: "upgraded to Premium VIP membership!" },
-            { name: "Kaito_Smali", tier: "Supporter VIP", msg: "がサポーターVIPパックを購入しました！" },
-            { name: "Dmitry_Reverse", tier: "Premium VIP", msg: "оформил подписку Premium VIP!" },
-            { name: "Kim_Hyun_Ji", tier: "Supporter VIP", msg: "님이 서포터 VIP 팩을 queue하셨습니다!" },
-            { name: "Shadow_Modder", tier: "Premium VIP", msg: "has bypassed the system key gate." },
-            { name: "Gamer_Hanoi2026", tier: "Supporter VIP", msg: "đã tham gia Supporter trọn đời." }
+            { name: "Kha_Gamer_2K", tier: "Sponsor", msg_vi: "vừa gia hạn gói Tài Trợ hệ thống!", msg_en: "just renewed Corporate Sponsor package!" },
+            { name: "Hoang_Sniper", tier: "Supporter VIP", msg_vi: "đã mua gói Supporter Pack.", msg_en: "acquired the Supporter Pack entry level." },
+            { name: "Alex_NetRunner", tier: "Premium VIP", msg_vi: "vừa nâng cấp lên gói VIP tháng!", msg_en: "upgraded to Premium VIP membership!" },
+            { name: "Shadow_Modder", tier: "Premium VIP", msg_vi: "đã vượt cổng kiểm tra an toàn.", msg_en: "has bypassed the system key gate." }
         ];
 
         const appsDatabase = [
@@ -1382,8 +1482,8 @@
                 badgeClass: "bg-insanity",
                 badgeText: "INSANITY!!",
                 hot: true,
-                desc: "Finding good launcher apk? NL will give you best enjoy. Hide your apps from others people to find it.<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                desc_vi: "Tìm kiếm Launcher chất lượng? NL sẽ mang lại trải nghiệm tối ưu nhất, ẩn ứng dụng của bạn cực kì bảo mật.<br><span style='color:#3b82f6;'>✓ Đã kiểm duyệt bởi NetKing Team</span>",
+                desc_en: "Finding good launcher apk? NL will give you best enjoy. Hide your apps from others people to find it.<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
                 downloadUrl: "https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file",
                 keyUrl: null
             },
@@ -1393,8 +1493,8 @@
                 badgeClass: "bg-hot",
                 badgeText: "HOT",
                 hot: false,
-                desc: "2 option antiband 88% - 90%:<br>1. Freeze<br>2. Ghost<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#EF4444" fill-opacity="0.2" stroke="#EF4444" stroke-width="2"/><path d="M12 7V13M12 17H12.01" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                desc_vi: "2 tùy chọn chống chặn tài khoản từ 88% - 90%:<br>1. Đóng băng dữ liệu<br>2. Chế độ bóng ma Ghost<br><span style='color:#3b82f6;'>✓ Đã kiểm duyệt bởi NetKing Team</span>",
+                desc_en: "2 option antiband 88% - 90%:<br>1. Freeze<br>2. Ghost<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
                 downloadUrl: "https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file",
                 keyUrl: "https://link4m.net/go/eb8Na3"
             },
@@ -1402,41 +1502,46 @@
                 name: "Netking Fake Lag",
                 version: "v1.0.1",
                 badgeClass: "bg-verified",
-                badgeText: "An toàn",
+                badgeText: "SAFE",
                 hot: false,
-                desc: "Fake Lag Modern, 3 Options:<br>1. Freeze Infinity<br>2. Invisible<br>3. Teleporter",
-                iconSvg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#EAB308" fill-opacity="0.2" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+                desc_vi: "Fake Lag hiện đại, tích hợp sẵn 3 tùy chọn chuyên sâu:<br>1. Đóng băng vô hạn<br>2. Tàng hình thực thể<br>3. Dịch chuyển Teleport",
+                desc_en: "Fake Lag Modern, 3 Options:<br>1. Freeze Infinity<br>2. Invisible<br>3. Teleporter",
                 downloadUrl: "https://www.mediafire.com/file/b566kfjwhsewl98/Netking_%25281%2529.apk/file",
                 keyUrl: null
             }
         ];
 
         let lastTickerIndex = -1;
-        
-        // SỬA ĐỔI CHÍNH: Lấy phiên đăng nhập từ localStorage để duy trì trạng thái khi reset web
         let currentUserSession = localStorage.getItem('currentUserSession') || null; 
 
         function renderAppsSystem() {
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
             const container = document.getElementById('apps-list-dom');
+            
             container.innerHTML = appsDatabase.map(app => {
-                let keyBtn = app.keyUrl ? `<div onclick="triggerKeyGate('${app.keyUrl}')" class="btn-download btn-key-style"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5M14 6l3 3"/></svg> Lấy Key</div>` : '';
+                let textDesc = currentLang === 'vi' ? app.desc_vi : app.desc_en;
+                let btnDlText = currentLang === 'vi' ? 'Tải Xuống APK' : 'Download APK';
+                let btnKeyText = currentLang === 'vi' ? 'Lấy Key' : 'Get Key';
+
+                let keyBtn = app.keyUrl ? `<div onclick="withLoading(() => triggerKeyGate('${app.keyUrl}'))" class="btn-download btn-key-style"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5M14 6l3 3"/></svg> ${btnKeyText}</div>` : '';
+                
                 return `
                     <div class="app-card neon-box scroll-anim">
                         <div>
                             <div class="app-icon-wrapper">
-                                <div class="app-icon-vector">${app.iconSvg}</div>
+                                <div class="app-icon-vector">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
                             </div>
                             <div class="badges-row">
                                 <span class="badge ${app.badgeClass}">${app.badgeText}</span>
-                                ${app.hot ? '<span class="badge bg-hot">HOT</span>' : ''}
-                                <span class="badge bg-verified">Verified</span>
                             </div>
                             <h3>${app.name}</h3>
-                            <span class="app-version">Phiên bản: ${app.version}</span>
-                            <p class="app-desc">${app.desc}</p>
+                            <span class="app-version">${app.version}</span>
+                            <p class="app-desc">${textDesc}</p>
                         </div>
                         <div class="app-card-footer">
-                            <div onclick="triggerDownload('${app.downloadUrl}')" class="btn-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M19 12l-7 7-7-7"/></svg> Tải tập tin</div>
+                            <button onclick="withLoading(() => triggerDownloadGate('${app.downloadUrl}'))" class="btn-download"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1m-4-4-4 4m0 0-4-4m4 4V4"/></svg> ${btnDlText}</button>
                             ${keyBtn}
                         </div>
                     </div>
@@ -1444,220 +1549,66 @@
             }).join('');
         }
 
-        function updateUserSessionUI() {
-            const frameContainer = document.getElementById('guest-notification-frame');
-            const authBtnArea = document.getElementById('auth-btn-area');
+        function triggerLiveTickerCycle() {
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            let nextIndex;
+            do {
+                nextIndex = Math.floor(Math.random() * liveMembersPool.length);
+            } while (nextIndex === lastTickerIndex);
+            
+            lastTickerIndex = nextIndex;
+            const item = liveMembersPool[nextIndex];
+            const contentNode = document.getElementById('ticker-content');
+            
+            if(contentNode) {
+                contentNode.style.opacity = '0';
+                setTimeout(() => {
+                    let message = currentLang === 'vi' ? item.msg_vi : item.msg_en;
+                    contentNode.innerHTML = `💎 [${item.tier}] <strong>${item.name}</strong> ${message}`;
+                    contentNode.style.opacity = '1';
+                }, 400);
+            }
+        }
 
-            if (!currentUserSession) {
-                frameContainer.innerHTML = `
-                    <div class="guest-alert-frame scroll-anim">
+        // --- AUTH MATRIX CONTROLLER ---
+        function updateAuthDynamicUI() {
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            const zone = document.getElementById('auth-btn-area');
+            const loginBtnTxt = currentLang === 'vi' ? 'Đăng Nhập' : 'Sign In';
+            const logoutBtnTxt = currentLang === 'vi' ? 'Đăng Xuất' : 'Log Out';
+
+            if (currentUserSession) {
+                zone.innerHTML = `<button class="btn-login" style="border-color:#ef4444; background:rgba(239,68,68,0.1);" onclick="withLoading(() => handleLogoutAction())">❌ <span>${logoutBtnTxt} (${currentUserSession})</span></button>`;
+            } else {
+                zone.innerHTML = `<button class="btn-login" onclick="withLoading(() => openAuthModal('login'))"><svg viewBox="0 0 24 24"><path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h7a3 3 0 0 1 3 3v1"/></svg><span>${loginBtnTxt}</span></button>`;
+            }
+            renderGuestNotificationBox();
+        }
+
+        function renderGuestNotificationBox() {
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            const box = document.getElementById('guest-notification-frame');
+            if(!box) return;
+
+            if(!currentUserSession) {
+                box.innerHTML = `
+                    <div class="guest-alert-frame" onclick="withLoading(() => openAuthModal('login'))" style="cursor:pointer;">
                         <div class="guest-alert-header">
-                            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                            <span>MODE KHÁCH (GUEST ANNOUNCEMENT):</span>
+                            <svg viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            <span data-lang-key="guest_notice_head">${translations[currentLang].guest_notice_head}</span>
                         </div>
-                        <p style="font-size:0.85rem; color:#f1f5f9; line-height:1.4;">
-                            Bạn đang truy cập với tư cách Khách. Toàn bộ tính năng tải xuống, lấy key bảo mật và gửi phản hồi phản ánh đã bị khóa tạm thời.
-                        </p>
-                        <div class="guest-tutorial-box">
-                            📖 <strong>Hướng dẫn đăng ký nhanh (Tutorial Guest):</strong> Bấm vào nút <span onclick="openAuthModal('register')">Đăng ký thành viên</span> bên trên góc phải màn hình ➔ Tạo tên tài khoản & mật khẩu bất kỳ ➔ Hệ thống sẽ tự động cấp quyền <strong>"Thành Viên Toàn Quyền"</strong> ngay lập tức!
-                        </div>
+                        <div class="guest-tutorial-box" data-lang-key="guest_notice_body">${translations[currentLang].guest_notice_body}</div>
                     </div>
                 `;
-                authBtnArea.innerHTML = `<button class="btn-login" onclick="openAuthModal('login')"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Đăng nhập</button>`;
             } else {
-                frameContainer.innerHTML = ''; 
-                authBtnArea.innerHTML = `<button class="btn-login" style="border-color:#10b981; color:#10b981;">👋 ${currentUserSession}</button> <button class="btn-login" onclick="logoutSystem()" style="margin-left:6px; background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444; padding:7px 10px;">Thoát</button>`;
-                
-                // Đồng bộ tên user sang cổng premium nếu có
-                const purchaseUser = document.getElementById('purchase-active-user');
-                if(purchaseUser) purchaseUser.innerText = currentUserSession;
+                box.innerHTML = '';
             }
-        }
-
-        function runLiveTickerEngine() {
-            const tickerContent = document.getElementById('ticker-content');
-            setInterval(() => {
-                let nextIndex;
-                do {
-                    nextIndex = Math.floor(Math.random() * liveMembersPool.length);
-                } while (nextIndex === lastTickerIndex);
-
-                lastTickerIndex = nextIndex;
-                const member = liveMembersPool[nextIndex];
-                
-                tickerContent.style.opacity = 0;
-                tickerContent.style.transform = "translateY(-3px)";
-
-                setTimeout(() => {
-                    let colorAccent = "#3b82f6"; 
-                    if (member.tier === "Sponsor") colorAccent = "#eab308"; 
-                    if (member.tier === "Supporter VIP") colorAccent = "#a855f7"; 
-
-                    tickerContent.innerHTML = `<strong style="color: ${colorAccent};">[${member.tier}]</strong> <span style="color: #fff; font-weight:700;">${member.name}</span> ${member.msg}`;
-                    tickerContent.style.opacity = 1;
-                    tickerContent.style.transform = "translateY(0)";
-                }, 300);
-            }, 3500);
-        }
-
-        // --- INTERSECTION OBSERVER ---
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                } else {
-                    entry.target.classList.remove('show');
-                }
-            });
-        }, { root: null, threshold: 0.05 });
-
-        function initAnimations() {
-            document.querySelectorAll('.scroll-anim, .scroll-fade').forEach(el => {
-                scrollObserver.observe(el);
-            });
-        }
-
-        function attemptPurchase(tierName, defaultPrice) {
-            if (!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
-            showPremiumPage();
-            const selectEl = document.getElementById('pricing-select-form');
-            selectEl.value = defaultPrice;
-            updateFormPriceDisplay();
-        }
-
-        function updateFormPriceDisplay() {
-            const selectEl = document.getElementById('pricing-select-form');
-            const price = parseInt(selectEl.value);
-            document.getElementById('form-price-render').innerText = price.toLocaleString('vi-VN') + "đ";
-            document.getElementById('qr-bank-memo').innerText = `Nội dung: NETKING VIP ${currentUserSession.toUpperCase()}`;
-        }
-
-        function openQuickJump() { document.getElementById('jump-modal').style.display = 'flex'; }
-        function quickJumpTo(id) { closeModal('jump-modal'); scrollToSection(id); }
-
-        if (!localStorage.getItem('netking_users')) {
-            localStorage.setItem('netking_users', JSON.stringify([]));
-        }
-
-        function handleRegister(e) {
-            e.preventDefault();
-            const user = document.getElementById('reg-user').value.trim();
-            const pass = document.getElementById('reg-pass').value;
-            let usersList = JSON.parse(localStorage.getItem('netking_users'));
-            
-            if (usersList.some(u => u.username.toLowerCase() === user.toLowerCase())) {
-                alert('Tên tài khoản này đã tồn tại!');
-                return;
-            }
-
-            usersList.push({ username: user, password: pass });
-            localStorage.setItem('netking_users', JSON.stringify(usersList));
-            localStorage.setItem('real_users', usersList.length);
-            
-            alert('Đăng ký thành công! Tiến hành đăng nhập.');
-            toggleAuthMode('login');
-            updateStatsDOM();
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const user = document.getElementById('login-user').value.trim();
-            const pass = document.getElementById('login-pass').value;
-            let usersList = JSON.parse(localStorage.getItem('netking_users'));
-            
-            const matchedUser = usersList.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
-            if (matchedUser) {
-                currentUserSession = matchedUser.username;
-                
-                // SỬA ĐỔI CHÍNH: Lưu phiên login vào localStorage để reset web không mất
-                localStorage.setItem('currentUserSession', currentUserSession); 
-
-                alert(`Đăng nhập thành công! Chào mừng trở lại, ${currentUserSession}.`);
-                closeModal('auth-modal');
-                document.getElementById('purchase-active-user').innerText = currentUserSession;
-                updateUserSessionUI();
-                updateStatsDOM();
-            } else {
-                alert('Sai thông tin đăng nhập! Vui lòng kiểm tra lại.');
-            }
-        }
-
-        function logoutSystem() {
-            currentUserSession = null;
-            localStorage.removeItem('currentUserSession'); // Xóa session khi logout
-            alert('Đã đăng xuất tài khoản, chế độ khách được kích hoạt.');
-            updateUserSessionUI();
-        }
-
-        function submitFeedback() {
-            if (!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
-            const content = document.getElementById('user-feedback-text').value.trim();
-            if (content === "") {
-                alert("Vui lòng điền nội dung phản hồi!");
-                return;
-            }
-            alert("Cảm ơn bạn đã đóng góp ý kiến! Hệ thống Admin NetKing đã ghi nhận dữ liệu.");
-            document.getElementById('user-feedback-text').value = "";
-        }
-
-        function triggerKeyGate(url) {
-            if (!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
-            window.open(url, '_blank');
-        }
-
-        function triggerDownload(url) {
-            if (!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
-
-            const loader = document.getElementById('loading-screen');
-            loader.style.display = 'flex';
-            
-            let currentDl = parseInt(localStorage.getItem('real_downloads') || 0);
-            currentDl += 1;
-            localStorage.setItem('real_downloads', currentDl);
-            updateStatsDOM();
-
-            setTimeout(() => {
-                loader.style.display = 'none';
-                document.getElementById('success-modal').style.display = 'flex';
-                window.open(url, '_blank');
-            }, 1500);
-        }
-
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function showPremiumPage() {
-            document.getElementById('main-page').style.display = 'none';
-            document.getElementById('premium-page').style.display = 'block';
-            window.scrollTo(0,0);
-        }
-
-        function showMainPage() {
-            document.getElementById('premium-page').style.display = 'none';
-            document.getElementById('main-page').style.display = 'block';
-            window.scrollTo(0,0);
         }
 
         function openAuthModal(mode) {
             document.getElementById('auth-modal').style.display = 'flex';
             toggleAuthMode(mode);
         }
-
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function toggleAuthMode(mode) {
             if(mode === 'login') {
@@ -1669,66 +1620,155 @@
             }
         }
 
-        function initRealtimeStats() {
-            let usersList = JSON.parse(localStorage.getItem('netking_users')) || [];
-            if (!localStorage.getItem('real_views')) localStorage.setItem('real_views', '1240');
-            if (!localStorage.getItem('real_downloads')) localStorage.setItem('real_downloads', '412');
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        function closeModalDirect(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            withLoading(() => {
+                const user = document.getElementById('login-user').value.trim();
+                if(user) {
+                    currentUserSession = user;
+                    localStorage.setItem('currentUserSession', user);
+                    closeModal('auth-modal');
+                    updateAuthDynamicUI();
+                }
+            }, "Authenticating profile...");
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            withLoading(() => {
+                const user = document.getElementById('reg-user').value.trim();
+                if(user) {
+                    currentUserSession = user;
+                    localStorage.setItem('currentUserSession', user);
+                    closeModal('auth-modal');
+                    updateAuthDynamicUI();
+                }
+            }, "Registering credentials...");
+        }
+
+        function handleLogoutAction() {
+            currentUserSession = null;
+            localStorage.removeItem('currentUserSession');
+            updateAuthDynamicUI();
+        }
+
+        function triggerDownloadGate(url) {
+            if(!currentUserSession) {
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+            window.open(url, '_blank');
+            document.getElementById('success-modal').style.display = 'flex';
+        }
+
+        function triggerKeyGate(url) {
+            if(!currentUserSession) {
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+            window.open(url, '_blank');
+        }
+
+        function submitFeedback() {
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            if(!currentUserSession) {
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+            alert(currentLang === 'en' ? "Telemetry dispatch successful!" : "Gửi dữ liệu phản hồi lên mảng máy chủ thành công!");
+            document.getElementById('user-feedback-text').value = '';
+        }
+
+        function attemptPurchase(name, price) {
+            if(!currentUserSession) {
+                document.getElementById('guest-modal').style.display = 'flex';
+                return;
+            }
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('premium-page').style.display = 'block';
+            document.getElementById('purchase-active-user').innerText = currentUserSession;
+            document.getElementById('qr-bank-memo').innerText = `NETKING VIP ${currentUserSession.toUpperCase()}`;
             
-            let currentRegisteredCount = usersList.length > 0 ? usersList.length : 58;
-            localStorage.setItem('real_users', currentRegisteredCount);
-
-            let views = parseInt(localStorage.getItem('real_views'));
-            views += 1;
-            localStorage.setItem('real_views', views);
-
-            updateStatsDOM();
-            updateOnlineCount();
-            runLiveTickerEngine();
+            const dropdown = document.getElementById('pricing-select-form');
+            dropdown.value = price.toString();
+            updateFormPriceDisplay();
+            window.scrollTo(0,0);
         }
 
-        function updateStatsDOM() {
-            const v = localStorage.getItem('real_views');
-            const d = localStorage.getItem('real_downloads');
-            const u = localStorage.getItem('real_users');
-
-            document.getElementById('view-count').innerText = parseInt(v).toLocaleString();
-            document.getElementById('user-count').innerText = parseInt(u).toLocaleString();
-            document.getElementById('dl-count').innerText = parseInt(d).toLocaleString();
-
-            document.getElementById('footer-view').innerText = parseInt(v).toLocaleString();
-            document.getElementById('footer-user').innerText = parseInt(u).toLocaleString();
-            document.getElementById('footer-dl').innerText = parseInt(d).toLocaleString();
+        function updateFormPriceDisplay() {
+            const dropdown = document.getElementById('pricing-select-form');
+            document.getElementById('form-price-render').innerText = parseInt(dropdown.value).toLocaleString('vi-VN') + "đ";
         }
 
-        function updateOnlineCount() {
-            let baseOnline = Math.floor(Math.random() * 6) + 15; 
-            document.getElementById('online-count').innerText = baseOnline;
-            document.getElementById('footer-online').innerText = baseOnline;
-            setTimeout(updateOnlineCount, 7000); 
+        function showMainPage() {
+            document.getElementById('main-page').style.display = 'block';
+            document.getElementById('premium-page').style.display = 'none';
         }
 
-        // --- HỆ THỐNG KIỂM TRA NGÔN NGỮ KHI KHỞI CHẠY TRANG ---
-        function checkLanguageOnLoad() {
-            const savedLang = localStorage.getItem('netking_lang');
-            if (!savedLang) {
-                // Nếu chưa từng chọn ngôn ngữ, mở modal lên và ép mặc định hệ thống dịch sang tiếng Anh trước
-                changeLanguage('en');
-                document.getElementById('lang-modal').style.display = 'flex';
-            } else {
-                // Nếu đã chọn rồi, áp dụng cấu hình cũ luôn
-                changeLanguage(savedLang);
+        function openQuickJump() {
+            withLoading(() => {
+                document.getElementById('jump-modal').style.display = 'flex';
+            }, "Loading navigation map...");
+        }
+
+        function quickJumpTo(id) {
+            closeModal('jump-modal');
+            scrollToSection(id);
+        }
+
+        function scrollToSection(id) {
+            const target = id === 'body' ? document.body : document.getElementById(id);
+            if(target) {
+                target.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        window.onload = function() {
+        // --- CORE INITS ---
+        window.addEventListener('DOMContentLoaded', () => {
             resizeCanvas();
             animateThemeBackground();
-            renderAppsSystem();
-            updateUserSessionUI();
-            initRealtimeStats();
-            checkLanguageOnLoad(); // Kiểm tra ngôn ngữ khi load web
-            setTimeout(initAnimations, 100); 
-        };
+            
+            // Đọc cấu hình ngôn ngữ từ trước
+            const savedLang = localStorage.getItem('netking_lang') || 'vi';
+            changeLanguage(savedLang);
+
+            // Mock statistical counters
+            document.getElementById('view-count').innerText = "284,910";
+            document.getElementById('user-count').innerText = "14,029";
+            document.getElementById('online-count').innerText = "381";
+            document.getElementById('dl-count').innerText = "94,112";
+
+            document.getElementById('footer-view').innerText = "284,910";
+            document.getElementById('footer-user').innerText = "14,029";
+            document.getElementById('footer-online').innerText = "381";
+            document.getElementById('footer-dl').innerText = "94,112";
+
+            updateAuthDynamicUI();
+
+            setInterval(triggerLiveTickerCycle, 4000);
+            triggerLiveTickerCycle();
+        });
+
+        // --- SCROLL ANIM MATRIX INTERSECTION ---
+        const scrollObjects = document.querySelectorAll('.scroll-anim, .scroll-fade');
+        const observerOptions = { threshold: 0.05, rootMargin: "0px 0px -40px 0px" };
+        
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, observerOptions);
+
+        scrollObjects.forEach(obj => scrollObserver.observe(obj));
     </script>
 </body>
 </html>
