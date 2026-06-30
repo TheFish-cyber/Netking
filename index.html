@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NetKing Team - Premium Android Apps</title>
     <style>
-        /* --- RESET & MODERN SYSTEM --- */
+        /* --- RESET & MODERN FONTS --- */
         * {
             margin: 0;
             padding: 0;
@@ -21,75 +21,77 @@
             color: #f1f5f9;
         }
 
-        /* --- BACKGROUND FIREWORKS CANVAS --- */
-        #fireworks-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        /* SMOKE EFFECT NỀN FEEDBACK */
-        #smoke-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(15, 23, 42, 0.4) 0%, #020617 90%);
-            opacity: 0; pointer-events: none; z-index: 1100;
-            transition: opacity 0.6s ease;
-        }
-        #smoke-overlay.active { opacity: 1; pointer-events: auto; }
-
-        /* --- GLOBAL BROADCAST BANNER --- */
-        #global-broadcast-banner {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 500px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
-            border: 2px solid #a855f7;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
-            border-radius: 12px;
-            padding: 16px;
-            z-index: 2500;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-        }
-        #global-broadcast-banner.show { top: 20px; }
-
-        /* --- HOẠT ẢNH INTERSECTION OBSERVER --- */
+        /* --- HOẠT ẢNH INTERSECTION OBSERVER (ANIMATION ENGINE) --- */
         .scroll-anim {
             opacity: 0;
             filter: blur(15px);
             transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                        filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: opacity, filter, transform;
         }
-        .scroll-anim.show { opacity: 1; filter: blur(0px); transform: translateY(0); }
-        .scroll-fade { opacity: 0; filter: blur(10px); transition: opacity 0.6s ease, filter 0.6s ease; }
-        .scroll-fade.show { opacity: 1; filter: blur(0); }
+
+        .scroll-anim.show {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
+        }
+
+        .scroll-fade {
+            opacity: 0;
+            filter: blur(10px);
+            transition: opacity 0.6s ease, filter 0.6s ease;
+        }
+        .scroll-fade.show {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        @keyframes popupScale {
+            from { opacity: 0; transform: scale(0.95); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
 
         /* --- LAYOUT CHUNG --- */
         .hero-bg {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 580px;
-            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), #020617), url('https://images.alphacoders.com/134/1347648.png') no-repeat center top;
-            background-size: cover; z-index: -2; opacity: 0.6;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 580px;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), #020617), 
+                        url('https://images.alphacoders.com/134/1347648.png') no-repeat center top;
+            background-size: cover;
+            z-index: -2;
+            opacity: 0.6;
         }
 
-        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
-        
+        .smoke-glow {
+            position: absolute;
+            top: -100px;
+            right: -50px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(40px);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
         .neon-box {
             background: rgba(7, 13, 31, 0.75);
             border: 1px solid rgba(0, 102, 255, 0.25);
-            box-shadow: 0 0 20px rgba(0, 82, 204, 0.12);
+            box-shadow: 0 0 20px rgba(0, 82, 204, 0.12), inset 0 0 12px rgba(0, 102, 255, 0.05);
             backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-radius: 14px;
         }
 
@@ -97,212 +99,364 @@
         header {
             border-bottom: 1px solid rgba(0, 102, 255, 0.15);
             backdrop-filter: blur(12px);
-            position: sticky; top: 0; z-index: 100;
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
             background: rgba(2, 6, 23, 0.8);
         }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 65px; }
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
-        .logo-img { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-        .logo-text { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
-        .logo-text span { color: #3b82f6; display: block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
-        nav ul { display: flex; list-style: none; gap: 20px; }
-        nav ul a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; }
-        nav ul a:hover, nav ul a.active { color: #3b82f6; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); }
-        .btn-login { background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
-        .btn-login:hover { background: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
 
-        /* --- TICKER CHỈ HIỆN "LIVE" KHÔNG ICON --- */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        .logo-text {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-text span {
+            color: #3b82f6;
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: -1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        nav ul a:hover, nav ul a.active {
+            color: #3b82f6;
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-login {
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            color: #fff;
+            padding: 7px 14px;
+            border-radius: 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-login:hover {
+            background: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        /* --- FRAME LIVE SHOW MEMBERS (NEW) --- */
         .live-ticker-bar {
             background: rgba(15, 23, 42, 0.9);
             border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-            color: #94a3b8; font-size: 0.78rem; padding: 8px 0;
-            display: flex; justify-content: center; align-items: center; gap: 8px; min-height: 36px;
-        }
-        .live-badge {
-            background: #ef4444; color: #fff; font-size: 0.65rem; font-weight: 800;
-            padding: 2px 6px; border-radius: 4px; text-transform: uppercase;
-        }
-        #ticker-content {
-            display: inline-block; color: #fff;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            color: #94a3b8;
+            font-size: 0.78rem;
+            padding: 8px 0;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            min-height: 36px;
         }
 
-        /* --- HERO & KHÔNG ICON TRÊN BUTTONS --- */
+        .live-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite;
+        }
+
+        #ticker-content {
+            display: inline-block;
+            transition: all 0.3s ease-in-out;
+            color: #fff;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* --- HERO --- */
         .hero { padding: 50px 0 30px 0; }
-        .welcome-tag { background: rgba(0, 102, 255, 0.1); color: #3b82f6; padding: 5px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; display: inline-flex; margin-bottom: 12px; border: 1px solid rgba(0, 102, 255, 0.2); }
-        .hero h2 { font-size: 2.5rem; font-weight: 850; color: #fff; margin-bottom: 6px; line-height: 1.2; }
-        .hero h2 span { color: #3b82f6; text-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
+        .welcome-tag {
+            background: rgba(0, 102, 255, 0.1);
+            color: #3b82f6;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-flex;
+            margin-bottom: 12px;
+            border: 1px solid rgba(0, 102, 255, 0.2);
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            font-weight: 850;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .hero h2 span {
+            color: #3b82f6;
+            text-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+        }
+
         .hero-subtitle { font-size: 0.9rem; color: #94a3b8; margin-bottom: 14px; font-weight: 500; }
         .hero-desc { max-width: 450px; color: #64748b; font-size: 0.82rem; line-height: 1.5; margin-bottom: 24px; }
         .hero-buttons { display: flex; gap: 10px; }
-        .btn-discord, .btn-view-apps { padding: 10px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; text-align: center; min-width: 130px; }
-        .btn-discord { background: #5865f2; color: white; border: none; }
+        .btn-discord, .btn-view-apps { padding: 10px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+        .btn-discord { background: #5865f2; color: white; }
         .btn-view-apps { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: white; }
 
         /* --- DASHBOARD --- */
         .dashboard-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin-bottom: 30px; }
-        .card-panel { padding: 20px; position: relative;}
+        .card-panel { padding: 20px; }
         .panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 0.5px; margin-bottom: 14px; }
-        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 3px solid #eab308; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
+        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 3px solid #eab308; padding: 12px; border-radius: 0 8px 8px 0; }
         .notice-date { font-size: 0.7rem; color: #eab308; margin-bottom: 4px; font-weight: 600; }
         .notice-content h4 { font-size: 0.85rem; color: #fff; margin-bottom: 2px;}
         .notice-content p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
-        .btn-view-all-notices { background: transparent; border: 1px dashed rgba(59, 130, 246, 0.4); color: #3b82f6; font-size: 0.75rem; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; width: 100%; text-align: center; }
+
         .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
         .stat-number { font-size: 1.2rem; font-weight: 700; color: #fff; }
         .stat-label { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
         .stats-footer { text-align: center; font-size: 0.75rem; color: #3b82f6; margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
 
-        /* --- KHÔI PHỤC TOÀN BỘ 7 MODES --- */
+        /* --- SECTION HEADLINES --- */
         .intro-section { margin-bottom: 45px; }
         .section-headline { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 4px; text-align: center; }
         .section-subheadline { font-size: 0.82rem; color: #64748b; text-align: center; margin-bottom: 24px; }
-        .modes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
-        .mode-card { padding: 18px; }
-        .mode-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .mode-tag { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
-        .mode-badge { font-size: 0.6rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-        .mode-card h4 { font-size: 0.95rem; color: #fff; margin-bottom: 6px; }
-        .mode-card p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
-
-        /* --- MỞ RỘNG TOÀN BỘ PHẦN TƯ VẤN (NHIỀU THẬT NHIỀU VÀO) --- */
-        .consulting-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 45px; }
-        .consult-card { padding: 18px; }
-        .consult-question { font-size: 0.88rem; font-weight: 700; color: #eab308; margin-bottom: 6px; }
-        .consult-answer { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
-
-        /* --- KHO TẢI FILE --- */
-        .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 45px; }
-        .app-card { padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-        .app-card h3 { font-size: 0.95rem; color: #fff; margin-bottom: 4px; }
-        .app-desc { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; margin-bottom: 12px; }
-        .btn-download { background: #0052cc; color: #fff; text-decoration: none; padding: 9px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-align: center; cursor: pointer; display: block; border: none; }
-        .btn-download.btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); margin-top: 6px; }
-
-        /* --- BẢNG GIÁ --- */
-        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 45px; }
-        .price-tier-card { padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
-        .tier-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
-        .tier-price { font-size: 1.25rem; font-weight: 800; color: #3b82f6; margin: 10px 0; }
-        .tier-features { list-style: none; text-align: left; font-size: 0.72rem; color: #94a3b8; margin-bottom: 15px; }
-        .tier-features li { margin-bottom: 6px; }
-
-        /* --- HỆ THỐNG FEEDBACK TRỰC TUYẾN MỚI --- */
-        .feedback-section { margin-bottom: 45px; }
-        .feedback-search-wrapper { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-        .search-input { flex: 1; min-width: 200px; padding: 10px; background: #070d1f; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 8px; color: #fff; font-size: 0.85rem; }
-        .feedback-container-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-        .review-card { padding: 16px; cursor: pointer; transition: transform 0.2s; position: relative; }
-        .review-card:hover { transform: translateY(-2px); border-color: #3b82f6; }
-        .reviewer-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .reviewer-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
-        .review-stars { color: #eab308; font-size: 0.75rem; font-weight: bold; }
-        .review-text-cut { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .feedback-badge { font-size: 0.65rem; background: #3b82f6; color: #fff; padding: 1px 5px; border-radius: 3px; font-weight: bold; margin-left: 6px; vertical-align: middle; }
         
-        /* Nút xem thêm nhấp nháy */
-        .btn-trigger-more-feedback {
-            grid-column: span 2; text-align: center; padding: 12px; color: #3b82f6; font-size: 0.82rem;
-            font-weight: 700; text-transform: uppercase; cursor: pointer; background: rgba(59, 130, 246, 0.05);
-            border: 1px dashed rgba(59, 130, 246, 0.3); border-radius: 8px; margin-top: 10px;
-            animation: blinker 1.5s linear infinite;
-        }
-        @keyframes blinker { 50% { opacity: 0.3; } }
+        /* --- FEATURES --- */
+        .features-showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+        .feature-detail-card { padding: 20px; }
+        .feature-tag-row { display: flex; gap: 6px; margin-bottom: 12px; }
+        .feat-tag { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .feature-detail-card h4 { font-size: 1.05rem; color: #fff; margin-bottom: 8px; }
+        .feature-detail-card p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
 
-        /* --- LIVE INTERACTIVE TUTORIAL OVERLAY FRAME --- */
-        #tutorial-guide-mask {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 3000; pointer-events: none; display: none;
-        }
-        .guide-highlight-hole {
-            position: absolute; box-shadow: 0 0 0 9999px rgba(2, 6, 23, 0.85);
-            border-radius: 8px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            pointer-events: auto; z-index: 3001; border: 2px dashed #3b82f6;
-        }
-        .guide-tooltip-box {
-            position: absolute; background: #0f172a; border: 1px solid #3b82f6;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 16px; border-radius: 12px;
-            max-width: 280px; width: 280px; color: #fff; font-size: 0.82rem; z-index: 3002;
-            transition: all 0.4s ease; pointer-events: auto;
-        }
-        .guide-tooltip-box h5 { color: #3b82f6; font-size: 0.9rem; margin-bottom: 6px; font-weight: 700; }
-        .guide-tooltip-box p { color: #94a3b8; line-height: 1.4; margin-bottom: 10px; }
-        .guide-actions { display: flex; justify-content: space-between; align-items: center; }
-        .btn-guide-next { background: #3b82f6; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; border: none; cursor: pointer; font-weight: 600; }
-        .btn-guide-skip-fixed {
-            position: fixed; bottom: 20px; right: 20px; background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(255,255,255,0.1); color: #64748b; padding: 8px 16px;
-            border-radius: 20px; font-size: 0.78rem; cursor: pointer; pointer-events: auto;
-            z-index: 3100; font-weight: 600;
-        }
+        .specs-list-box { padding: 20px; margin-bottom: 30px; }
+        .spec-item-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+        .spec-item-row:last-child { border-bottom: none; }
+        .spec-badge-num { background: rgba(0, 102, 255, 0.15); color: #3b82f6; font-size: 0.75rem; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(0, 102, 255, 0.3); }
+        .spec-info h5 { font-size: 0.88rem; color: #fff; margin-bottom: 2px; }
+        .spec-info p { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
 
-        /* --- MODALS --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
-        .modal-box { max-width: 420px; width: 100%; padding: 22px; position: relative; border-radius: 14px; background: #070d1f; border: 1px solid rgba(0,102,255,0.2); }
-        .btn-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: #64748b; font-size: 1.1rem; cursor: pointer; }
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px; background: #020617; border: 1px solid rgba(0,102,255,0.2); border-radius: 6px; color: #fff; font-size: 0.82rem; }
-        
-        /* PREMIUM CONTENT FORM CONTROL */
+        /* --- TƯ VẤN --- */
+        .consulting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 45px; }
+        .consult-card { padding: 22px; }
+        .consult-question { font-size: 0.95rem; font-weight: 700; color: #eab308; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;}
+        .consult-answer { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; }
+
+        /* --- BẢNG GIÁ + GÓI SUPPORTER MỚI --- */
+        .pricing-section { margin-bottom: 45px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .price-tier-card { padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
+        .price-tier-card.popular { border-color: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .price-tier-card.supporter-tier { border-color: #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+        .pop-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #3b82f6; color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;}
+        .supp-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #a855f7; color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;}
+        .tier-name { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .tier-price { font-size: 1.3rem; font-weight: 800; color: #3b82f6; margin-bottom: 12px; }
+        .tier-price span { font-size: 0.7rem; color: #64748b; font-weight: 400; }
+        .tier-features { list-style: none; text-align: left; font-size: 0.75rem; color: #94a3b8; margin-bottom: 20px;}
+        .tier-features li { margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+
+        /* --- APPS GRID --- */
+        .apps-section { margin-bottom: 45px; }
+        .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .app-card { padding: 20px; text-align: center; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .app-card:hover { transform: translateY(-4px); border-color: rgba(0, 102, 255, 0.5); box-shadow: 0 0 25px rgba(0, 102, 255, 0.25); }
+        .app-icon-wrapper { width: 56px; height: 56px; margin: 0 auto 12px auto; }
+        .app-icon { width: 100%; height: 100%; border-radius: 12px; border: 1px solid rgba(0, 102, 255, 0.35); display: flex; align-items: center; justify-content: center; object-fit: cover; }
+        .badges-row { display: flex; justify-content: center; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
+        .badge { font-size: 0.6rem; font-weight: 700; padding: 2px 5px; border-radius: 4px; }
+        .bg-verified { background: rgba(59, 130, 246, 0.12); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .bg-risk { background: rgba(234, 88, 12, 0.12); color: #ea580c; border: 1px solid rgba(234, 88, 12, 0.2); }
+        .bg-hot { background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .bg-insanity { background: linear-gradient(135deg, #3b82f6, #a855f7, #ec4899); color: #fff; }
+        .app-card h3 { font-size: 0.95rem; color: #fff; margin-bottom: 4px; font-weight: 700; }
+        .app-version { font-size: 0.68rem; color: #94a3b8; background: rgba(255, 255, 255, 0.04); padding: 1px 6px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+        .app-desc { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; margin-bottom: 16px; text-align: left; }
+        .app-card-footer { border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+
+        .btn-download { background: #0052cc; color: #fff; text-decoration: none; padding: 9px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(0, 102, 255, 0.3); box-shadow: 0 0 10px rgba(0, 82, 204, 0.2); }
+        .btn-download:hover { background: #0066ff; box-shadow: 0 0 15px rgba(0, 102, 255, 0.5); }
+        .btn-download.risk-style { background: rgba(234, 88, 12, 0.08); color: #ea580c; border: 1px solid rgba(234, 88, 12, 0.25); box-shadow: none; }
+        .btn-download.risk-style:hover { background: #ea580c; color: #fff; }
+        .btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); box-shadow: none; }
+        .btn-key-style:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+        /* --- TUTORIALS HUB (NEW SECTION) --- */
+        .tutorials-section { margin-bottom: 45px; }
+        .tutorial-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .step-card { padding: 20px; position: relative;}
+        .step-num-badge { position: absolute; top: 12px; right: 16px; font-size: 1.5rem; font-weight: 900; color: rgba(59, 130, 246, 0.15); }
+        .step-card h4 { font-size: 0.95rem; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .step-card p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
+
+        /* --- REVIEWS --- */
+        .reviews-section { margin-bottom: 45px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .review-card { padding: 18px; }
+        .reviewer { font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .review-stars { color: #eab308; font-size: 0.7rem; }
+        .review-text { font-size: 0.78rem; color: #64748b; line-height: 1.4; }
+
+        /* --- PREMIUM BANNER --- */
+        .premium-banner { padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .premium-left { display: flex; align-items: center; gap: 12px; }
+        .premium-text h4 { font-size: 0.9rem; color: #fff; margin-bottom: 2px; }
+        .premium-text p { font-size: 0.78rem; color: #64748b; }
+        .btn-upgrade { background: #3b82f6; color: white; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-upgrade:hover { background: #2563eb; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+
+        /* --- SUBSCRIPTION SUB PAGE --- */
         #premium-page { display: none; padding: 30px 0; }
+        .premium-form-card { max-width: 520px; margin: 0 auto; padding: 24px; text-align: center; }
+        .flash-sale-badge { background: #ef4444; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+        .price-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0; }
+        .old-price { text-decoration: line-through; color: #64748b; font-size: 1rem; }
+        .new-price { color: #ef4444; font-size: 1.6rem; font-weight: 800; }
+        .qr-placeholder { background: #fff; color: #0f172a; padding: 14px; border-radius: 10px; margin: 16px 0; font-weight: bold; }
+        .form-group { margin-bottom: 12px; text-align: left; }
+        .form-group label { display: block; font-size: 0.78rem; color: #94a3b8; margin-bottom: 4px; }
+        .form-group input { width: 100%; padding: 10px; background: #020617; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 6px; color: #fff; font-size: 0.82rem; }
+        .form-group select { width: 100%; padding: 10px; background: #020617; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 6px; color: #fff; font-size: 0.82rem; }
 
-        /* LOADING ENGINE */
-        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.94); z-index: 4000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { width: 40px; height: 40px; border: 3px solid rgba(0, 102, 255, 0.1); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
+        /* --- MODALS & QUICK JUMP PANEL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(6px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
+        .modal-box { max-width: 380px; width: 100%; padding: 24px; text-align: center; position: relative; animation: popupScale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        #jump-modal .modal-box { max-width: 500px; text-align: left; }
+        .jump-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+        .jump-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(0,102,255,0.15); border-radius: 8px; padding: 12px; color: #fff; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left;}
+        .jump-btn:hover { background: rgba(0,102,255,0.1); border-color: #3b82f6; transform: translateX(2px); }
+        .jump-btn span { display: block; font-size: 0.68rem; color: #64748b; font-weight: 400; margin-top: 2px;}
+        .btn-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: #64748b; font-size: 1.1rem; cursor: pointer; }
+        .modal-box h3 { margin-bottom: 14px; color: #fff; font-size: 1.1rem; font-weight: 700; }
+        .modal-avatar { width: 64px; height: 64px; border-radius: 50%; border: 2px solid #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); margin: 0 auto 12px auto; display: block; }
+        .modal-switch { font-size: 0.78rem; color: #64748b; margin-top: 14px; }
+        .modal-switch span { color: #3b82f6; cursor: pointer; text-decoration: underline; }
+        .btn-download:disabled { background: #1e293b !important; color: #64748b !important; border-color: rgba(255,255,255,0.05) !important; cursor: not-allowed; }
+
+        /* --- LOADING ENGINE --- */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.94); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 44px; height: 44px; border: 3px solid rgba(0, 102, 255, 0.1); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 14px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- FOOTER --- */
-        footer { margin-top: 50px; background: #010409; border-top: 1px solid rgba(0, 102, 255, 0.15); padding: 30px 0 20px 0; }
-        .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; }
-        .footer-stat-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: #64748b; margin-bottom: 6px; }
+        /* --- SUCCESS FRAME --- */
+        .success-accent-bar { width: 100%; height: 4px; background: #10b981; position: absolute; top: 0; left: 0; border-radius: 14px 14px 0 0; }
+        .success-icon-circle { width: 50px; height: 50px; background: rgba(16, 185, 129, 0.1); border: 2px solid #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.4rem; font-weight: bold; margin: 0 auto 14px auto; box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
 
-        @media (max-width: 768px) {
-            .modes-grid, .consulting-grid, .feedback-container-layout { grid-template-columns: 1fr; }
+        /* --- FOOTER --- */
+        footer { margin-top: 50px; background: #010409; border-top: 1px solid rgba(0, 102, 255, 0.15); padding: 35px 0 20px 0; }
+        .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+        .footer-brand p { font-size: 0.78rem; color: #64748b; line-height: 1.5; margin-top: 10px; }
+        .footer-links h5, .footer-stats h5 { font-size: 0.8rem; text-transform: uppercase; color: #fff; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .footer-links ul a { color: #64748b; text-decoration: none; font-size: 0.78rem; cursor: pointer; transition: color 0.2s; }
+        .footer-links ul a:hover { color: #3b82f6; }
+        .footer-stat-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.02); font-size: 0.78rem; color: #64748b; }
+        .footer-stat-row strong { color: #fff; }
+        .dot-online { width: 6px; height: 6px; background: #10b981; border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px #10b981; }
+        .copyright-bar { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; font-size: 0.72rem; color: #475569; }
+
+        /* --- RESPONSIVE MATRIX --- */
+        @media (max-width: 1024px) {
             .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-            .apps-grid { grid-template-columns: 1fr; }
-            .btn-trigger-more-feedback { grid-column: span 1; }
+        }
+        @media (max-width: 768px) {
+            .apps-grid, .features-showcase-grid, .consulting-grid, .reviews-grid, .tutorial-steps-grid { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-row { grid-template-columns: 1fr; }
             nav { display: none; }
+        }
+        @media (max-width: 520px) {
+            .apps-grid, .features-showcase-grid, .consulting-grid, .pricing-grid, .reviews-grid, .tutorial-steps-grid { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 1.9rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+            .premium-banner { flex-direction: column; text-align: center; gap: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="fireworks-canvas"></canvas>
-    <div id="smoke-overlay"></div>
+    <audio id="click-sound" src="https://raw.githubusercontent.com/TheFish-cyber/Netking/main/creatorshome-sharp-pop-328170.mp3" preload="auto"></audio>
 
-    <div id="global-broadcast-banner">
-        <div style="font-size: 1.8rem;">🎉</div>
-        <div>
-            <h4 id="broadcast-title" style="font-size:0.9rem; color:#fff;">Hệ thống</h4>
-            <p id="broadcast-body" style="font-size:0.78rem; color:#c084fc;"></p>
-        </div>
-    </div>
+    <div class="hero-bg scroll-fade"></div>
+    <div class="smoke-glow"></div>
 
-    <header id="nav-header-zone">
+    <header class="scroll-fade">
         <div class="container nav-container">
-            <div class="logo">
+            <a onclick="openQuickJump()" class="logo" title="Bấm để mở bảng điều hướng nhanh">
                 <img src="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png" alt="NetKing Logo" class="logo-img">
                 <div class="logo-text">NetKing <span>Developer 🔍</span></div>
-            </div>
+            </a>
             <nav>
                 <ul>
-                    <li><a onclick="showMainPage();" class="active">Trang chủ</a></li>
-                    <li><a onclick="scrollToSection('modes-section-zone')">Chế độ</a></li>
-                    <li><a onclick="scrollToSection('files-section-zone')">Tải về</a></li>
-                    <li><a onclick="scrollToSection('pricing-section-zone')">Bảng giá</a></li>
-                    <li><a onclick="scrollToSection('feedback-section-zone')">Đánh giá</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('body')" class="active">Trang chủ</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('files-section')">Tải xuống</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('consulting-section')">Tư vấn</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('pricing-section')">Bảng giá</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('tutorials-section')">Hướng dẫn</a></li>
                 </ul>
             </nav>
-            <div>
-                <button class="btn-login" id="header-auth-btn" onclick="openAuthModal('login')">Đăng nhập</button>
+            <div class="header-right">
+                <button class="btn-login" id="header-auth-btn" onclick="openAuthModal('login')">👤 Đăng nhập</button>
             </div>
         </div>
     </header>
 
-    <div class="live-ticker-bar" id="live-ticker-zone">
-        <span class="live-badge">Live</span>
-        <div id="ticker-content">Đang tải luồng dữ liệu thành viên...</div>
+    <div class="live-ticker-bar">
+        <span class="live-badge">Live Actived</span>
+        <div id="ticker-content">Đang khởi tạo danh sách vinh danh toàn cầu...</div>
     </div>
 
     <div id="main-page" class="container">
@@ -311,230 +465,281 @@
             <div class="welcome-tag">Welcome to my website</div>
             <h2>NetKing <span>Team</span></h2>
             <p class="hero-subtitle">Premium Android Apps • Secure Downloads</p>
-            <p class="hero-desc">Hạ tầng can thiệp dữ liệu gói tin UDP mạng di động chất lượng cao và hoàn toàn miễn phí cho cộng đồng.</p>
+            <p class="hero-desc">Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team. Bạn có thể click tiêu đề để nhảy nhanh.</p>
             <div class="hero-buttons">
-                <a href="https://discord.gg/wf4QnepsxS" target="_blank" class="btn-discord">Discord</a>
-                <a onclick="scrollToSection('files-section-zone')" class="btn-view-apps">Xem ứng dụng</a>
+                <a href="https://discord.gg/wf4QnepsxS" target="_blank" class="btn-discord">💬 Discord</a>
+                <a onclick="scrollToSection('files-section')" class="btn-view-apps">Xem ứng dụng 📥</a>
             </div>
         </section>
 
-        <section class="dashboard-row">
-            <div class="card-panel neon-box scroll-anim" id="notice-board-zone">
-                <div class="panel-title">Thông báo từ Admin</div>
-                <div id="latest-notice-slot"></div>
-                <button class="btn-view-all-notices" onclick="openNoticesModal()">Xem tất cả thông báo cũ hơn</button>
-            </div>
+        <section class="dashboard-row" id="notice-section">
             <div class="card-panel neon-box scroll-anim">
-                <div class="panel-title">Số liệu hệ thống</div>
+                <div class="panel-title">Thông báo mới nhất</div>
+                <div class="notice-box">
+                    <div class="notice-date">⚡ Hệ thống</div>
+                    <div class="notice-content">
+                        <h4>Hệ thống Đồng bộ Toàn diện</h4>
+                        <p>Đã vá lỗi bất tuần tự dữ liệu. Tích hợp thanh Live Show đa ngôn ngữ và giới hạn tốc độ lướt web chống giật khung hình.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-panel neon-box scroll-anim">
+                <div class="panel-title">Số liệu thời gian thực</div>
                 <div class="stats-container">
-                    <div><div class="stat-number" id="view-count">12,860</div><div class="stat-label">Lượt truy cập</div></div>
-                    <div><div class="stat-number" id="dl-count">3,652</div><div class="stat-label">Tổng lượt tải</div></div>
-                    <div><div class="stat-number" id="user-count">1,248</div><div class="stat-label">Thành viên</div></div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="view-count">0</div>
+                        <div class="stat-label">Lượt xem trang</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="dl-count">0</div>
+                        <div class="stat-label">Lượt tải thật</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="user-count">0</div>
+                        <div class="stat-label">Thành viên đăng ký</div>
+                    </div>
                 </div>
+                <div class="stats-footer">Dữ liệu chuẩn hóa 2026</div>
             </div>
         </section>
 
-        <section class="intro-section" id="modes-section-zone">
-            <h3 class="section-headline scroll-anim">Hệ Thống 7 Chế Độ Can Thiệp Bộ Cụ</h3>
-            <p class="section-subheadline scroll-anim">Cấu trúc lõi can thiệp luồng dữ liệu packet thời gian thực</p>
-            <div class="modes-grid">
-                <div class="mode-card neon-box scroll-anim">
-                    <div class="mode-header"><span class="mode-tag">MODE 01</span><span class="mode-badge">Burst Fire</span></div>
-                    <h4>Teleport V1</h4>
-                    <p>Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, sau đó giải phóng đồng loạt tạo hiệu ứng dịch chuyển tức thời.</p>
+        <section class="intro-section" id="features-section">
+            <h3 class="section-headline scroll-anim">Làm Chủ Kết Nối, Làm Chủ Trận Đấu</h3>
+            <p class="section-subheadline scroll-anim">Giải pháp can thiệp UDP packet chuyên sâu dành cho mobile</p>
+
+            <div class="features-showcase-grid">
+                <div class="feature-detail-card neon-box scroll-anim">
+                    <div class="feature-tag-row"><span class="feat-tag">MODE 01</span><span class="feat-tag">TELEPORT</span></div>
+                    <h4>Teleport V1, V2, V3</h4>
+                    <p>Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, sau đó giải phóng đồng loạt giúp tối ưu hóa định vị vị trí.</p>
                 </div>
-                <div class="mode-card neon-box scroll-anim">
-                    <div class="mode-header"><span class="mode-tag">MODE 02</span><span class="mode-badge">Smooth Snap</span></div>
-                    <h4>Teleport V2</h4>
-                    <p>Tiến hóa từ V1 với cơ chế đảo ngược thứ tự gói tin mạng, khiến timeline vị trí bị xáo trộn trên máy chủ, mượt mà hơn.</p>
-                </div>
-                <div class="mode-card neon-box scroll-anim">
-                    <div class="mode-header"><span class="mode-tag">MODE 03</span><span class="mode-badge">Elite Split</span></div>
-                    <h4>Teleport V3</h4>
-                    <p>Kiến trúc split-burst thông minh, xử lý ghi nhận sát thương nửa đầu và biến mất điểm xuất phát ở nửa sau một cách hoàn hảo.</p>
-                </div>
-                <div class="mode-card neon-box scroll-anim">
-                    <div class="mode-header"><span class="mode-tag">MODE 04</span><span class="mode-badge">Loop Replay</span></div>
+                <div class="feature-detail-card neon-box scroll-anim">
+                    <div class="feature-tag-row"><span class="feat-tag">MODE 04</span><span class="feat-tag">GHOST</span></div>
                     <h4>Ghost Mode</h4>
-                    <p>Nhân bản và phát lại liên tục packet vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời trong khi bạn tự do di chuyển.</p>
-                </div>
-                <div class="mode-card neon-box scroll-anim">
-                    <div class="mode-header"><span class="mode-tag">MODE 05</span><span class="mode-badge">Freeze Cycle</span></div>
-                    <h4>Ngừng Động V1</h4>
-                    <p>Chặn toàn bộ luồng packet outgoing theo chu kỳ quy định, tạo hiệu ứng đóng băng tạm thời cục bộ trên server.</p>
-                </div>
-                <div class="mode-card neon-box scroll-anim">
-                    <div class="mode-header"><span class="mode-tag">MODE 06</span><span class="mode-badge">Combo Layer</span></div>
-                    <h4>Ngừng Động V2</h4>
-                    <p>Kết hợp cộng hưởng giữa Freeze và Ghost mode nhằm tích lũy layer vị trí ngầm ẩn danh trước khi giải phóng.</p>
-                </div>
-                <div class="mode-card neon-box scroll-anim" style="grid-column: span 1;">
-                    <div class="mode-header"><span class="mode-tag">MODE 07</span><span class="mode-badge">Anti-Detect</span></div>
-                    <h4>Ngừng Động V3</h4>
-                    <p>Chế độ cao cấp nhất, kiểm soát tốc độ xả burst, điều chỉnh interval ngẫu nhiên để bypass hệ thống quét nhạy cảm.</p>
+                    <p>Nhân bản và phát lại liên tục các packet tại vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời trong khi bạn tự do di chuyển.</p>
                 </div>
             </div>
         </section>
 
-        <section class="intro-section" id="consulting-section-zone">
-            <h3 class="section-headline scroll-anim">Góc Tư Vấn Kỹ Thuật Chuyên Sâu</h3>
-            <p class="section-subheadline scroll-anim">Giải đáp chi tiết mọi thắc mắc về cấu hình nâng cao thiết bị di động</p>
+        <section class="intro-section" id="consulting-section">
+            <h3 class="section-headline scroll-anim">Góc Tư Vấn & Hỗ Trợ Kỹ Thuật</h3>
+            <p class="section-subheadline scroll-anim">Giải đáp thắc mắc và định hướng cấu hình tối ưu thiết bị</p>
+            
             <div class="consulting-grid">
                 <div class="consult-card neon-box scroll-anim">
-                    <div class="consult-question">💡 Khác biệt thực tế giữa NetPlus và Itachi Ping là gì?</div>
-                    <div class="consult-answer">NetPlus tập trung vào cấu hình bypass ổn định bảo mật chống khóa tài khoản, trong khi Itachi Ping tối ưu chuyên sâu kiến trúc NIO phi tuần tự, xử lý hàng nghìn packet mà không gây trễ thiết bị.</div>
+                    <div class="consult-question">💡 Nên chọn NetPlus hay Netking Fake Lag?</div>
+                    <div class="consult-answer">Nếu bạn cần can thiệp sâu có tích hợp Anti-ban tỷ lệ cao (88-90%), hãy ưu tiên dùng NetPlus. Nếu cần sự gọn nhẹ, chạy ngay không cần lấy key rườm rà, Fake Lag OG là giải pháp tốt nhất.</div>
                 </div>
                 <div class="consult-card neon-box scroll-anim">
-                    <div class="consult-question">💡 Tại sao ứng dụng can thiệp UDP yêu cầu thiết lập VPN nội bộ?</div>
-                    <div class="consult-answer">Hệ thống khởi tạo một LocalVPN service cục bộ chạy ngầm trực tiếp trên máy để đánh chặn, phân tích cấu trúc gói tin IPv4/UDP header mà hoàn toàn không yêu cầu quyền Root.</div>
-                </div>
-                <div class="consult-card neon-box scroll-anim">
-                    <div class="consult-question">💡 Ghost Mode có thể duy trì liên tục trong bao lâu?</div>
-                    <div class="consult-answer">Khuyến nghị thiết lập interval từ 2.5 giây đến tối đa 4 giây để tránh tình trạng mất đồng bộ dữ liệu nghiêm trọng dẫn đến ngắt kết nối khỏi máy chủ game.</div>
-                </div>
-                <div class="consult-card neon-box scroll-anim">
-                    <div class="consult-question">💡 Cơ chế mã hóa chống bẻ khóa của NetKing Team hoạt động ra sao?</div>
-                    <div class="consult-answer">Hệ thống áp dụng cơ chế xáo trộn mã nguồn Smali nâng cao kết hợp ProGuard, giúp bảo vệ toàn diện cấu trúc tệp tin khi xuất xưởng, ngăn chặn việc khai thác lỗ hổng bất hợp pháp.</div>
+                    <div class="consult-question">🛡️ Ứng dụng chưa xác minh (Modern) có an toàn không?</div>
+                    <div class="consult-answer">Các bản Mod/Cracked từ bên thứ ba luôn được hệ thống cảnh báo màu cam. NetKing Team đã bẻ khóa để nghiên cứu cấu trúc Smali nhưng khuyến cáo test trên giả lập hoặc máy phụ trước khi dùng diện rộng.</div>
                 </div>
             </div>
         </section>
 
-        <section class="apps-section" id="files-section-zone">
-            <div class="panel-title scroll-anim">Tải Tập Tin Hệ Thống</div>
+        <section class="apps-section" id="files-section">
+            <div class="panel-title scroll-anim" style="color: #fff; margin-bottom: 14px;">Danh sách ứng dụng nổi bật (Tải công khai miễn phí)</div>
+
             <div class="apps-grid">
                 <div class="app-card neon-box scroll-anim">
                     <div>
+                        <div class="app-icon-wrapper">
+                            <img src="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png" alt="Launcher" class="app-icon">
+                        </div>
+                        <div class="badges-row">
+                            <span class="badge bg-insanity">INSANITY!!</span>
+                            <span class="badge bg-hot">HOT 🔥</span>
+                            <span class="badge bg-verified">An toàn</span>
+                        </div>
                         <h3>Netking Launcher</h3>
-                        <p class="app-desc">Bảo mật giao diện màn hình nền, ẩn ứng dụng hệ thống an toàn chuyên nghiệp.</p>
+                        <span class="app-version">Phiên bản: V1</span>
+                        <p class="app-desc">Finding good launcher apk? NL will give you best enjoy. Hide your apps from others people to find it.<br><span style="color:#3b82f6;">✓ Verified by netking team</span></p>
                     </div>
-                    <button onclick="triggerDownload('https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file')" class="btn-download">Tải APK</button>
+                    <div class="app-card-footer">
+                        <div onclick="triggerDownload('https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file')" class="btn-download">Tải tập tin</div>
+                    </div>
                 </div>
+
                 <div class="app-card neon-box scroll-anim">
                     <div>
-                        <h3>NetPlus V18</h3>
-                        <p class="app-desc">Công cụ tối ưu hóa UDP can thiệp 2 tùy chọn đóng băng mạng nâng cao.</p>
+                        <div class="app-icon-wrapper"><div class="app-icon" style="background:#020617; font-size:1.2rem; display:flex; align-items:center; justify-content:center;">➕</div></div>
+                        <div class="badges-row">
+                            <span class="badge bg-hot">HOT 🔥</span>
+                            <span class="badge bg-verified">An toàn</span>
+                        </div>
+                        <h3>NetPlus</h3>
+                        <span class="app-version">Phiên bản: V18</span>
+                        <p class="app-desc">2 option antiband 88% - 90%:<br>1. Freeze<br>2. Ghost<br><span style="color:#3b82f6;">✓ Verified by netking team</span></p>
                     </div>
-                    <button onclick="triggerDownload('https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file')" class="btn-download">Tải APK</button>
-                    <a href="https://link4m.net/go/eb8Na3" target="_blank" class="btn-download btn-key-style">Lấy Key Kích Hoạt</a>
+                    <div class="app-card-footer">
+                        <div onclick="triggerDownload('https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file')" class="btn-download">Tải tập tin</div>
+                        <a href="https://link4m.net/go/eb8Na3" target="_blank" class="btn-download btn-key-style">Lấy Key</a>
+                    </div>
                 </div>
+
                 <div class="app-card neon-box scroll-anim">
                     <div>
-                        <h3>Itachi Ping OG</h3>
-                        <p class="app-desc">Bản mod can thiệp mượt mà không cần quyền root hệ thống.</p>
+                        <div class="app-icon-wrapper"><div class="app-icon" style="background:#020617; font-size:1.2rem; display:flex; align-items:center; justify-content:center;">⚡</div></div>
+                        <div class="badges-row"><span class="badge bg-verified">An toàn</span></div>
+                        <h3>Netking Fake Lag</h3>
+                        <span class="app-version">Phiên bản: v1.0.1</span>
+                        <p class="app-desc">Fake Lag Modern, 3 Options:<br>1. Freeze Infinity<br>2. Invisible<br>3. Teleporter</p>
                     </div>
-                    <button onclick="triggerDownload('https://www.mediafire.com/file/b566kfjwhsewl98/Netking_%25281%2529.apk/file')" class="btn-download">Tải APK</button>
+                    <div class="app-card-footer">
+                        <div onclick="triggerDownload('https://www.mediafire.com/file/b566kfjwhsewl98/Netking_%25281%2529.apk/file')" class="btn-download">Tải tập tin</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="pricing-section" id="pricing-section-zone">
-            <h3 class="section-headline scroll-anim">Gói Nâng Cấp Kích Hoạt</h3>
+        <section class="pricing-section" id="pricing-section">
+            <h3 class="section-headline scroll-anim">Gói Thành Viên VIP & Tài Trợ</h3>
+            <p class="section-subheadline scroll-anim">Yêu cầu Đăng nhập hệ thống trước khi thực hiện giao dịch nâng cấp</p>
+            
             <div class="pricing-grid">
                 <div class="price-tier-card neon-box scroll-anim">
                     <div>
                         <div class="tier-name">Thành Viên Thường</div>
-                        <div class="tier-price">0đ</div>
-                        <ul class="tier-features"><li>✓ Vượt link lấy key</li><li>✓ Tải tệp công khai</li></ul>
+                        <div class="tier-price">0đ <span>/ vĩnh viễn</span></div>
+                        <ul class="tier-features">
+                            <li>✓ Tải full kho công khai</li>
+                            <li>⚠️ Tốc độ giới hạn chuẩn</li>
+                            <li>⚠️ Vượt link lấy key hàng ngày</li>
+                        </ul>
                     </div>
-                    <button class="btn-download btn-key-style" disabled>Mặc định</button>
+                    <button class="btn-download btn-key-style" style="width:100%;" disabled>Mặc Định công khai</button>
                 </div>
-                <div class="price-tier-card neon-box scroll-anim" style="border-color:#3b82f6;">
+                
+                <div class="price-tier-card neon-box popular scroll-anim">
+                    <div class="pop-badge">KHUYÊN DÙNG</div>
                     <div>
                         <div class="tier-name">Premium VIP</div>
-                        <div class="tier-price">55.000đ</div>
-                        <ul class="tier-features"><li>✓ Không dính quảng cáo</li><li>✓ Link trực tiếp</li></ul>
+                        <div class="tier-price">55.000đ <span>/ tháng</span></div>
+                        <ul class="tier-features">
+                            <li>⚡ Link trực tiếp (No Ads)</li>
+                            <li>🚀 Không cần vượt cổng lấy Key</li>
+                            <li>🛡️ Cập nhật file sớm Beta</li>
+                        </ul>
                     </div>
-                    <button class="btn-download" onclick="attemptPurchase('Premium VIP', 55000)">Nâng cấp</button>
+                    <button class="btn-download" style="width:100%;" onclick="attemptPurchase('Premium VIP', 55000)">Nâng Cấp</button>
                 </div>
-                <div class="price-tier-card neon-box scroll-anim" id="pricing-supporter-card" style="border-color:#a855f7;">
+
+                <div class="price-tier-card neon-box supporter-tier scroll-anim">
+                    <div class="supp-badge">💥 SUPPORTER SALE</div>
                     <div>
                         <div class="tier-name">Supporter VIP Pack</div>
-                        <div class="tier-price">200.000đ</div>
-                        <ul class="tier-features"><li>✓ Sở hữu vĩnh viễn</li><li>✓ Vinh danh thanh cuộn</li></ul>
+                        <div class="tier-price"><span style="text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;">300k</span> 200.000đ <span>/ vĩnh viễn</span></div>
+                        <ul class="tier-features">
+                            <li>💎 Trọn đời Premium Đặc quyền</li>
+                            <li>🎖️ Vinh danh Tên lên Live Show thanh cuộn</li>
+                            <li>🔥 Ưu tiên Support riêng 1-1</li>
+                        </ul>
                     </div>
-                    <button class="btn-download" style="background:#a855f7;" onclick="attemptPurchase('Supporter VIP Pack', 200000)">Nâng cấp</button>
+                    <button class="btn-download" style="width:100%; background:#a855f7; border-color:rgba(168,85,247,0.4);" onclick="attemptPurchase('Supporter VIP Pack', 200000)">Mua Gói Gốc</button>
                 </div>
+
                 <div class="price-tier-card neon-box scroll-anim">
                     <div>
-                        <div class="tier-name">Sponsor</div>
-                        <div class="tier-price">150.000đ</div>
-                        <ul class="tier-features"><li>✓ Đặt logo chân trang</li><li>✓ Yêu cầu can thiệp riêng</li></ul>
+                        <div class="tier-name">Sponsor - Đối Tác</div>
+                        <div class="tier-price">150.000đ <span>/ vĩnh viễn</span></div>
+                        <ul class="tier-features">
+                            <li>🔥 Treo logo vinh danh chân trang</li>
+                            <li>🛠️ Yêu cầu bẻ khóa/Mod app riêng</li>
+                        </ul>
                     </div>
-                    <button class="btn-download" onclick="attemptPurchase('Sponsor', 150000)">Nâng cấp</button>
+                    <button class="btn-download risk-style" style="width:100%;" onclick="attemptPurchase('Sponsor - Đối Tác', 150000)">Tài Trợ</button>
                 </div>
             </div>
         </section>
 
-        <section class="feedback-section" id="feedback-section-zone">
-            <h3 class="section-headline scroll-anim">Đánh Giá Từ Cộng Đồng Người Dùng</h3>
-            <p class="section-subheadline scroll-anim">Nhấp vào từng phản hồi để xem chi tiết nội dung</p>
-
-            <div class="feedback-search-wrapper scroll-anim">
-                <input type="text" id="feedback-search-box" class="search-input" placeholder="🔍 Nhập từ khóa để tìm kiếm phản hồi..." oninput="filterFeedbacks()">
-                <button class="btn-login" style="border-radius:8px;" onclick="openAddFeedbackModal()">✍️ Gửi phản hồi của bạn</button>
+        <section class="tutorials-section" id="tutorials-section">
+            <h3 class="section-headline scroll-anim">📚 Hướng Dẫn Sử Dụng Cho Thành Viên Mới</h3>
+            <p class="section-subheadline scroll-anim">Làm theo chính xác 3 bước sau để tối ưu hóa công cụ NetKing trên thiết bị</p>
+            
+            <div class="tutorial-steps-grid">
+                <div class="step-card neon-box scroll-anim">
+                    <div class="step-num-badge">01</div>
+                    <h4>🔑 Bước 1: Lấy Key Xác Thực</h4>
+                    <p>Đối với các bản App miễn phí (như NetPlus), hãy bấm nút "Lấy Key" để vượt liên kết an toàn bảo mật. Sao chép chuỗi mã và dán vào ô khởi động trong App.</p>
+                </div>
+                <div class="step-card neon-box scroll-anim">
+                    <div class="step-num-badge">02</div>
+                    <h4>🛡️ Bước 2: Bật Cấu Hình VPN cục bộ</h4>
+                    <p>Khi mở ứng dụng Fake Lag, hệ thống sẽ yêu cầu cấp quyền cấu hình VPN cục bộ. Hãy chọn "Đồng ý/Cho phép". Điều này không làm lộ dữ liệu cá nhân của bạn.</p>
+                </div>
+                <div class="step-card neon-box scroll-anim">
+                    <div class="step-num-badge">03</div>
+                    <h4>🔋 Bước 3: Tắt Tối Ưu Hóa Pin</h4>
+                    <p>Vào Cài đặt Android -> Ứng dụng -> Chọn NetKing -> Pin -> Chuyển từ "Tối ưu hóa" sang "Không giới hạn" để tránh bị hệ thống ép đóng ứng dụng chạy ngầm khi đang chơi game.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="feedback-container-layout" id="feedback-render-grid"></div>
+        <section class="reviews-section" id="reviews-section">
+            <h3 class="section-headline scroll-anim">Đánh Giá Từ Thành Viên</h3>
+            <p class="section-subheadline scroll-anim">Phản hồi thực tế từ những người đã trải nghiệm giải pháp của NetKing</p>
+            
+            <div class="reviews-grid">
+                <div class="review-card neon-box scroll-anim">
+                    <div class="reviewer">xine3d_dev <span class="review-stars">⭐⭐⭐⭐⭐</span></div>
+                    <div class="review-text">"Bản NetPlus V18 chạy bypass UDP mượt cực kỳ, chỉnh Ghost mode test ping không hề bị giật lác."</div>
+                </div>
+                <div class="review-card neon-box scroll-anim">
+                    <div class="reviewer">thinhBCN_ff <span class="review-stars">⭐⭐⭐⭐⭐</span></div>
+                    <div class="review-text">"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác."</div>
+                </div>
+            </div>
         </section>
     </div>
 
     <div id="premium-page" class="container">
-        <div class="modal-box neon-box" style="max-width:500px; margin: 0 auto; text-align:center;">
-            <h2>Cổng Thanh Toán Hóa Đơn VIP</h2>
-            <p style="color:#64748b; font-size:0.8rem; margin:10px 0;">Tài khoản: <span id="purchase-active-user" style="color:#3b82f6; font-weight:700;"></span></p>
+        <div class="premium-form-card neon-box">
+            <div class="flash-sale-badge">⚡ CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT</div>
+            <h2 style="color: #fff; margin-bottom: 6px;">Cổng Thanh Toán Hóa Đơn VIP</h2>
+            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 14px;">Tài khoản đang thực hiện: <span id="purchase-active-user" style="color:#3b82f6; font-weight:700;">Chưa xác định</span></p>
+            
             <div class="form-group">
+                <label>Gói dịch vụ đã chọn</label>
                 <select id="pricing-select-form" onchange="updateFormPriceDisplay()">
-                    <option value="55000">Premium VIP — 55.000đ</option>
-                    <option value="200000">Supporter VIP Pack — 200.000đ</option>
-                    <option value="150000">Sponsor — 150.000đ</option>
+                    <option value="55000">Gói Premium VIP — 55.000đ / Tháng</option>
+                    <option value="200000" selected>Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)</option>
+                    <option value="150000">Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn</option>
                 </select>
             </div>
-            <h1 style="color:#ef4444; margin:15px 0;" id="form-price-render">200.000đ</h1>
-            <form onsubmit="handleConfirmPurchase(event)">
-                <div class="form-group"><input type="text" placeholder="Nhập mã TransID giao dịch ví/ngân hàng" required></div>
-                <button type="submit" class="btn-download" style="width:100%;">Xác nhận giao dịch</button>
-                <div onclick="showMainPage()" style="margin-top:12px; font-size:0.8rem; color:#3b82f6; cursor:pointer;">Quay lại trang chủ</div>
-            </form>
-        </div>
-    </div>
 
-    <div id="feedback-detail-modal" class="modal-overlay" onclick="closeModal('feedback-detail-modal')">
-        <div class="modal-box neon-box" onclick="event.stopPropagation()">
-            <button class="btn-close" onclick="closeModal('feedback-detail-modal')">✕</button>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <h3 id="f-detail-name" style="margin:0;"></h3>
-                <div id="f-detail-stars" class="review-stars"></div>
+            <div class="price-row">
+                <span class="new-price" id="form-price-render">200.000đ</span>
             </div>
-            <p id="f-detail-content" style="font-size:0.85rem; color:#94a3b8; line-height:1.5; text-align:left; white-space:pre-wrap;"></p>
-        </div>
-    </div>
 
-    <div id="add-feedback-modal" class="modal-overlay" onclick="closeModal('add-feedback-modal')">
-        <div class="modal-box neon-box" onclick="event.stopPropagation()">
-            <button class="btn-close" onclick="closeModal('add-feedback-modal')">✕</button>
-            <h3>Gửi Đánh Giá Của Bạn</h3>
-            <form onsubmit="submitNewFeedback(event)">
-                <div class="form-group"><label>Tên hiển thị</label><input type="text" id="fb-input-name" required placeholder="Nhập tên của bạn..."></div>
-                <div class="form-group"><label>Số sao đánh giá</label>
-                    <select id="fb-input-stars">
-                        <option value="5">⭐⭐⭐⭐⭐ (5 Sao)</option>
-                        <option value="4">⭐⭐⭐⭐ (4 Sao)</option>
-                        <option value="3">⭐⭐⭐ (3 Sao)</option>
-                        <option value="2">⭐⭐ (2 Sao)</option>
-                        <option value="1">⭐ (1 Sao)</option>
-                    </select>
+            <div class="qr-placeholder">
+                <p style="font-size:0.8rem; color:#0f172a; margin-bottom:4px;">QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN</p>
+                <div style="width:130px; height:130px; background:#475569; margin: 8px auto; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.75rem;">[QR MOMO/BANK]</div>
+                <p style="font-size:0.75rem; color:#ef4444;" id="qr-bank-memo">Nội dung: NETKING VIP [Tên tài khoản]</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Hệ thống đang xử lý xác thực hóa đơn đóng góp của bạn!'); showMainPage();">
+                <div class="form-group">
+                    <label>Mã giao dịch ngân hàng / Ví điện tử</label>
+                    <input type="text" placeholder="Nhập mã TransID hoặc mã tham chiếu bưu điện" required>
                 </div>
-                <div class="form-group"><label>Nội dung phản hồi</label><textarea id="fb-input-content" rows="4" required placeholder="Nhập nội dung chi tiết kỹ thuật..."></textarea></div>
-                <button type="submit" class="btn-download" style="width:100%;">Gửi Lên Hệ Thống</button>
+                <button type="submit" class="btn-download" style="width:100%; border:none; margin-top:10px;">Xác nhận hoàn tất giao dịch</button>
+                <div onclick="showMainPage()" style="text-align:center; margin-top:14px; font-size:0.8rem; color:#3b82f6; cursor:pointer;">➔ Hủy bỏ, quay lại Trang Chủ</div>
             </form>
         </div>
     </div>
 
-    <div id="notices-modal" class="modal-overlay" onclick="closeModal('notices-modal')">
-        <div class="modal-box neon-box" style="max-width:500px;" onclick="event.stopPropagation()">
-            <button class="btn-close" onclick="closeModal('notices-modal')">✕</button>
-            <h3 style="color:#eab308; margin-bottom:14px;">📂 Nhật Ký Lịch Sử Thông Báo</h3>
-            <div id="all-notices-modal-list" style="max-height:300px; overflow-y:auto; padding-right:4px;"></div>
+    <div id="jump-modal" class="modal-overlay" onclick="closeModal('jump-modal')">
+        <div class="modal-box neon-box" onclick="event.stopPropagation()">
+            <button class="btn-close" onclick="closeModal('jump-modal')">✕</button>
+            <h3 style="color:#3b82f6;">🧭 Bảng Điều Hướng Nhanh Website</h3>
+            <div class="jump-grid">
+                <div class="jump-btn" onclick="quickJumpTo('body')">🏠 Trang Chủ <span>Đầu trang</span></div>
+                <div class="jump-btn" onclick="quickJumpTo('notice-section')">⚡ Bảng Thông Báo <span>Số liệu thực</span></div>
+                <div class="jump-btn" onclick="quickJumpTo('files-section')">📥 Kho Tải Ứng Dụng <span>Download APK</span></div>
+                <div class="jump-btn" onclick="quickJumpTo('pricing-section')">💎 Bảng Giá Thành Viên <span>Gói Supporter</span></div>
+                <div class="jump-btn" onclick="quickJumpTo('tutorials-section')">📚 Hướng Dẫn Sử Dụng <span>Dành cho Newbie</span></div>
+            </div>
         </div>
     </div>
 
@@ -543,476 +748,268 @@
             <button class="btn-close" onclick="closeModal('auth-modal')">✕</button>
             <h3>Đăng Nhập Hệ Thống</h3>
             <form onsubmit="handleLogin(event)">
-                <div class="form-group"><label>Tài khoản</label><input type="text" id="login-user" required></div>
-                <div class="form-group"><label>Mật khẩu</label><input type="password" id="login-pass" required></div>
+                <div class="form-group">
+                    <label>Tài khoản</label>
+                    <input type="text" id="login-user" placeholder="Nhập tài khoản" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="login-pass" placeholder="Nhập mật khẩu" required>
+                </div>
                 <button type="submit" class="btn-download" style="width:100%;">Vào Hệ Thống</button>
             </form>
-            <p style="font-size:0.75rem; text-align:center; margin-top:10px; color:#64748b;">Chưa có tài khoản? <span style="color:#3b82f6; cursor:pointer;" onclick="toggleAuthMode('register')">Đăng ký</span></p>
+            <div class="modal-switch">Chưa có tài khoản? <span onclick="toggleAuthMode('register')">Đăng ký ngay</span></div>
         </div>
+
         <div class="modal-box neon-box" id="register-form-box" style="display:none;">
             <button class="btn-close" onclick="closeModal('auth-modal')">✕</button>
             <h3>Đăng Ký Thành Viên</h3>
             <form onsubmit="handleRegister(event)">
-                <div class="form-group"><label>Tài khoản mới</label><input type="text" id="reg-user" required></div>
-                <div class="form-group"><label>Mật khẩu</label><input type="password" id="reg-pass" required></div>
-                <button type="submit" class="btn-download" style="width:100%; background:#10b981;">Xác nhận Đăng ký</button>
+                <div class="form-group">
+                    <label>Tài khoản mới</label>
+                    <input type="text" id="reg-user" placeholder="Tạo tên tài khoản" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="reg-pass" placeholder="Tạo mật khẩu" required>
+                </div>
+                <button type="submit" class="btn-download" style="width:100%; background:#10b981;">Xác Nhận Đăng Ký</button>
             </form>
-            <p style="font-size:0.75rem; text-align:center; margin-top:10px; color:#64748b;">Đã có tài khoản? <span style="color:#3b82f6; cursor:pointer;" onclick="toggleAuthMode('login')">Đăng nhập</span></p>
+            <div class="modal-switch">Đã có tài khoản? <span onclick="toggleAuthMode('login')">Quay lại Đăng nhập</span></div>
         </div>
     </div>
 
-    <div id="loading-screen"><div class="spinner"></div><p style="color:#fff; font-size:0.8rem;">Đang xử lý luồng mã hóa...</p></div>
-
-    <div id="tutorial-guide-mask">
-        <div class="guide-highlight-hole" id="guide-hole"></div>
-        <div class="guide-tooltip-box" id="guide-tooltip">
-            <h5 id="guide-title">Tiêu đề</h5>
-            <p id="guide-desc">Nội dung giải thích hướng dẫn</p>
-            <div class="guide-actions">
-                <span style="font-size:0.7rem; color:#64748b;" id="guide-step-counter">Bước 1/4</span>
-                <button class="btn-guide-next" onclick="nextTutorialStep()" id="guide-next-btn-text">Tiếp theo</button>
-            </div>
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-box neon-box" style="max-width: 340px;">
+            <div class="success-accent-bar"></div>
+            <div class="success-icon-circle">✓</div>
+            <h3>Tải Xuống Thành Công</h3>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 16px;">Đường dẫn tải tệp tin an toàn đã được khởi tạo qua Mediafire.</p>
+            <button class="btn-download" onclick="closeModal('success-modal')" style="width: 100%; background: #10b981;">Hoàn tất</button>
         </div>
-        <button class="btn-guide-skip-fixed" id="guide-skip-btn" onclick="endTutorial(false)">Bỏ qua (2s)</button>
     </div>
 
-    <footer>
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p style="color: #fff; font-size: 0.85rem;">Đang kiểm tra tệp tin độc hại...</p>
+    </div>
+
+    <footer class="scroll-fade">
         <div class="container footer-grid">
-            <div>
-                <div class="logo-text" style="font-size:1.1rem; color:#fff; margin-bottom:8px;">NetKing Team</div>
-                <p style="font-size:0.75rem; color:#64748b; line-height:1.4;">Hạ tầng bẻ khóa cấu trúc tệp tin APK và nghiên cứu can thiệp mạng di động chuyên sâu.</p>
+            <div class="footer-brand">
+                <div class="logo-text" style="font-size: 1.2rem;">NetKing Team</div>
+                <p>Chia sẻ ứng dụng Android chất lượng cao và hoàn toàn miễn phí cho cộng đồng.</p>
             </div>
-            <div></div>
-            <div>
-                <div class="footer-stat-row"><span>👁️ Lượt truy cập</span><strong id="footer-view-count">12,860</strong></div>
-                <div class="footer-stat-row"><span>📥 Tổng lượt tải</span><strong id="footer-dl-count">3,652</strong></div>
-                <div class="footer-stat-row"><span>🟢 Đang trực tuyến</span><strong id="footer-online-count" style="color:#10b981;">18</strong></div>
+            <div class="footer-links">
+                <h5>Liên kết nhanh</h5>
+                <ul>
+                    <li><a onclick="showMainPage(); scrollToSection('body')">Trang chủ</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('files-section')">Tải xuống file</a></li>
+                    <li><a onclick="showMainPage(); scrollToSection('tutorials-section')">Hướng dẫn sử dụng</a></li>
+                </ul>
             </div>
+            <div class="footer-stats">
+                <h5>Thống kê chuẩn (Realtime)</h5>
+                <div class="footer-stat-row"><span>👁️ Lượt xem trang</span><strong id="footer-view">0</strong></div>
+                <div class="footer-stat-row"><span>📥 Tổng lượt tải</span><strong id="footer-dl">0</strong></div>
+                <div class="footer-stat-row"><span>👥 Thành viên hệ thống</span><strong id="footer-user">0</strong></div>
+                <div class="footer-stat-row" style="border:none;"><span><span class="dot-online"></span>Đang trực tuyến</span><strong id="online-count">0</strong></div>
+            </div>
+        </div>
+        <div class="container copyright-bar">
+            <div>© 2026 NetKing Team. All rights reserved.</div>
         </div>
     </footer>
 
     <script>
-        // DATA CONFIG
-        let currentUserSession = null;
-        let baseViews = 12860;
-        let baseDownloads = 3652;
-        let baseMembers = 1248;
-        let baseOnline = 18;
-
-        // Đếm tổng lượt tải khi mở trang (Mở web tải app)
-        if (!sessionStorage.getItem('counted_open_dl')) {
-            baseDownloads += 1;
-            sessionStorage.setItem('counted_open_dl', 'true');
-        }
-
-        const poolFirstNames = ["Anh", "Bảo", "Cường", "Dũng", "Đạt", "Hải", "Hoàng", "Hùng", "Huy", "Khánh", "Linh", "Minh", "Nam", "Phong", "Quân", "Sơn", "Thành", "Tiến", "Trung", "Tuấn", "Vinh", "Vũ", "Alex", "David", "John", "Kaito", "Ken", "Yuki", "Gamer", "Pro"];
-        const poolLastNames = ["Tuấn", "Văn", "Quang", "Minh", "Đức", "Duy", "Mạnh", "Ngọc", "Thanh", "Hữu", "Khắc", "Tú", "Kaito", "Alpha", "Zero", "Shadow", "Cyber", "Dev", "Fix", "UDP", "Bypass", "Leet"];
-        const poolDevices = ["FPS", "Ping", "Bypass", "Mod", "Smali", "Android", "ROG", "IOS", "FreeFire", "PUBG", "99", "88", "VIP", "Pro", "X", "Glitch"];
-
-        function generate10000RandomNames() {
-            let names = [];
-            for (let i = 0; i < 10050; i++) {
-                let f = poolFirstNames[Math.floor(Math.random() * poolFirstNames.length)];
-                let l = poolLastNames[Math.floor(Math.random() * poolLastNames.length)];
-                let d = poolDevices[Math.floor(Math.random() * poolDevices.length)];
-                let finalName = Math.random() > 0.5 ? f + "_" + d : f + l + Math.floor(Math.random() * 900 + 100);
-                let lower = finalName.toLowerCase();
-                if(!lower.includes("thinh") && !lower.includes("xine") && !lower.includes("netking")) {
-                    names.push(finalName);
-                }
-            }
-            return names;
-        }
-        const global10000Names = generate10000RandomNames();
-
-        function generate250FakeFeedbacks() {
-            let fbs = [];
-            const feedbackTexts = [
-                "Bản Mod can thiệp mạng hoạt động cực kỳ mượt mà, giảm hẳn ping ảo.",
-                "Chế độ Ghost mode chạy siêu VIP, bypass mượt các trận đấu căng thẳng.",
-                "Tải file siêu tốc độ, cấu trúc tệp an toàn không dính lỗi phân tách.",
-                "Hệ thống nạp VIP xử lý hóa đơn tự động siêu nhanh, đáng đồng tiền bát gạo.",
-                "Mới thử Mode 07 bypass quét cực đỉnh, khuyên anh em nên trải nghiệm thử gói Premium.",
-                "Sử dụng NetPlus thấy kết nối 4G cực kỳ ổn định, không lo dính delay packet.",
-                "Ứng dụng can thiệp UDP đỉnh nhất từ trước tới nay, giao diện sạch bóng không rác.",
-                "Lúc đầu chưa biết dùng được admin hỗ trợ nhiệt tình qua kênh Discord, 5 sao!",
-                "Cấu hình LocalVPN chạy ẩn mượt, không hề làm nóng máy hay tốn pin.",
-                "Bản cập nhật 2026 fix triệt để lỗi sát thương của Teleport V3, quá đỉnh."
-            ];
-            for (let i = 0; i < 250; i++) {
-                let name = global10000Names[Math.floor(Math.random() * 3000)];
-                let starChoices = [4, 5, 5, 5]; // Ưu tiên chất lượng cao để real hơn
-                let star = starChoices[Math.floor(Math.random() * starChoices.length)];
-                let txt = feedbackTexts[Math.floor(Math.random() * feedbackTexts.length)] + " (Mã kiểm duyệt #" + (1000 + i) + ")";
-                fbs.push({ name: name, stars: star, content: txt, isVIP: Math.random() > 0.4 });
-            }
-            return fbs;
-        }
-        let staticFeedbacksDatabase = generate250FakeFeedbacks();
-
-        // ĐỒNG BỘ CHỈ SỐ THEO THỜI GIAN THỰC (REAL-TIME ENGINE)
-        function updateStatsDOM() {
-            document.getElementById('view-count').innerText = baseViews.toLocaleString();
-            document.getElementById('footer-view-count').innerText = baseViews.toLocaleString();
-            document.getElementById('dl-count').innerText = baseDownloads.toLocaleString();
-            document.getElementById('footer-dl-count').innerText = baseDownloads.toLocaleString();
-            document.getElementById('user-count').innerText = baseMembers.toLocaleString();
-            document.getElementById('footer-online-count').innerText = baseOnline;
-        }
-
-        function runRealTimeStatsEngine() {
-            setInterval(() => {
-                // 1. Lượt truy cập tăng ngẫu nhiên theo luồng view
-                baseViews += Math.floor(Math.random() * 3) + 1;
-                // 4. Trực tuyến biến động tăng giảm ngẫu nhiên
-                let change = Math.random() > 0.5 ? 1 : -1;
-                baseOnline = Math.max(10, baseOnline + change);
-                updateStatsDOM();
-            }, 4000);
-
-            setInterval(() => {
-                // 2. Thành viên được tạo tăng theo thời gian thực
-                baseMembers += 1;
-                updateStatsDOM();
-                // Bắn thông báo trải nghiệm thành viên mới
-                let randomUser = global10000Names[Math.floor(Math.random() * global10000Names.length)];
-                triggerExperienceNotification(randomUser, "Đăng ký thành viên");
-            }, 12000);
-        }
-
-        // THÔNG BÁO TRAI NGHIỆM POPUP NGẪU NHIÊN CHẠY BIẾN ĐỘNG
-        function triggerExperienceNotification(user, type) {
-            const banner = document.getElementById('global-broadcast-banner');
-            document.getElementById('broadcast-title').innerText = `⚡ Hệ thống thời gian thực`;
-            if (type === "Đăng ký thành viên") {
-                document.getElementById('broadcast-body').innerHTML = `Người dùng <strong style="color:#fff;">${user}</strong> vừa tạo thành công tài khoản mới.`;
-            } else if (type === "Tải file") {
-                document.getElementById('broadcast-body').innerHTML = `Thành viên <strong style="color:#fff;">${user}</strong> vừa tải gói cài đặt hệ thống.`;
-            }
-            banner.classList.add('show');
-            setTimeout(() => banner.classList.remove('show'), 3500);
-        }
-
-        // RENDER FEEDBACK VÀ ĐƯA FEEDBACK CAO LÊN ĐẦU
-        let displayAllFeedbackState = false;
-        function renderFeedbackGrid(dataList) {
-            const grid = document.getElementById('feedback-render-grid');
-            grid.innerHTML = "";
-
-            // Thuật toán sắp xếp đưa feedback cao (5 sao, 4 sao) lên đầu danh sách để tăng độ real
-            let sortedData = [...dataList].sort((a, b) => b.stars - a.stars);
-
-            let limit = displayAllFeedbackState ? sortedData.length : 3;
-            
-            for(let i = 0; i < Math.min(limit, sortedData.length); i++) {
-                let f = sortedData[i];
-                let card = document.createElement('div');
-                card.className = "review-card neon-box scroll-anim show";
-                
-                if (!displayAllFeedbackState && i === 2) {
-                    card.style.opacity = "0.35";
-                    card.style.maxHeight = "60px";
-                    card.style.overflow = "hidden";
-                    card.style.pointerEvents = "none";
-                }
-
-                let starStr = "★ " + f.stars;
-                card.onclick = function() { openFeedbackDetail(f.name, starStr, f.content); };
-
-                let vipTag = f.isVIP ? `<span class="feedback-badge">VIP</span>` : '';
-
-                card.innerHTML = `
-                    <div class="reviewer-meta">
-                        <span class="reviewer-name">${f.name} ${vipTag}</span>
-                        <span class="review-stars">${starStr}</span>
-                    </div>
-                    <div class="review-text-cut">${f.content}</div>
-                `;
-                grid.appendChild(card);
-            }
-
-            if(!displayAllFeedbackState && sortedData.length > 2) {
-                let btnMore = document.createElement('div');
-                btnMore.className = "btn-trigger-more-feedback";
-                btnMore.innerText = "Xem thêm phản hồi đánh giá";
-                btnMore.onclick = triggerExpandFeedbackWithSmoke;
-                grid.appendChild(btnMore);
-            }
-        }
-
-        function triggerExpandFeedbackWithSmoke() {
-            const smoke = document.getElementById('smoke-overlay');
-            smoke.classList.add('active');
-            setTimeout(() => {
-                displayAllFeedbackState = true;
-                renderFeedbackGrid(staticFeedbacksDatabase);
-                smoke.classList.remove('active');
-                scrollToSection('feedback-section-zone');
-            }, 600);
-        }
-
-        function filterFeedbacks() {
-            let kw = document.getElementById('feedback-search-box').value.toLowerCase().trim();
-            if(kw === "") {
-                renderFeedbackGrid(staticFeedbacksDatabase);
-                return;
-            }
-            let filtered = staticFeedbacksDatabase.filter(f => f.name.toLowerCase().includes(kw) || f.content.toLowerCase().includes(kw));
-            renderFeedbackGrid(filtered);
-        }
-
-        function openFeedbackDetail(name, star, text) {
-            document.getElementById('f-detail-name').innerText = name;
-            document.getElementById('f-detail-stars').innerText = star;
-            document.getElementById('f-detail-content').innerText = text;
-            document.getElementById('feedback-detail-modal').style.display = 'flex';
-        }
-
-        function openAddFeedbackModal() { document.getElementById('add-feedback-modal').style.display = 'flex'; }
-        
-        function submitNewFeedback(e) {
-            e.preventDefault();
-            let nameInput = document.getElementById('fb-input-name').value.trim();
-            let starsInput = parseFloat(document.getElementById('fb-input-stars').value);
-            let contentInput = document.getElementById('fb-input-content').value.trim();
-
-            let lower = nameInput.toLowerCase();
-            if(lower.includes("thinh") || lower.includes("xine") || lower.includes("netking")) {
-                alert("Tên hiển thị chứa từ khóa quản trị bị cấm. Vui lòng nhập tên khác!");
-                return;
-            }
-
-            let newFb = { name: nameInput, stars: starsInput, content: contentInput, isVIP: currentUserSession !== null };
-            staticFeedbacksDatabase.unshift(newFb); // Thêm trực tiếp theo thời gian thực
-            
-            localStorage.setItem('local_stored_feedbacks', JSON.stringify(staticFeedbacksDatabase));
-
-            alert("Gửi phản hồi thành công! Hệ thống đã ghi nhận thời gian thực và xếp hạng.");
-            closeModal('add-feedback-modal');
-            displayAllFeedbackState = true;
-            renderFeedbackGrid(staticFeedbacksDatabase);
-        }
-
-        // --- INTERACTIVE TUTORIAL ENGINE MATRIX ---
-        let currentTutorialIndex = 0;
-        let tutorialSkipTimerInterval = null;
-        let tutorialActiveState = false;
-
-        const tutorialStepsData = [
-            { id: "nav-header-zone", title: "🧭 Thanh Điều Hướng Hệ Thống", desc: "Giúp bạn chuyển đổi nhanh giữa các phân khu chức năng can thiệp dữ liệu và quản trị.", type: "rect" },
-            { id: "notice-board-zone", title: "⚡ Bảng Thông Báo Từ Admin", desc: "Nơi cập nhật lịch sử nhật ký bảo trì hệ thống luôn cập nhật mới nhất.", type: "rect" },
-            { id: "modes-section-zone", title: "⚙️ 7 Chế Độ Bộ Cụ Can Thiệp", desc: "Khu vực hiển thị chi tiết các Mode can thiệp mạng UDP từ Teleport đến Ghost Mode.", type: "rect" },
-            { id: "pricing-supporter-card", title: "💎 Gói Supporter Cao Cấp", desc: "Đặc quyền kích hoạt trạng thái VIP trọn đời, đồng bộ luồng vinh danh lên thanh hiển thị.", type: "rect" }
+        // --- DATA KHỞI TẠO CHO LIVE SHOW (NHIỀU THỨ TIẾNG) ---
+        const liveMembersPool = [
+            { name: "xine3d_dev", tier: "Sponsor", lang: "vi", msg: "vừa gia hạn gói Tài Trợ phát triển hệ thống!" },
+            { name: "thinhBCN_ff", tier: "Supporter VIP", lang: "vi", msg: "đã mua gói Supporter Pack Flash Sale thành công." },
+            { name: "Alex_NetRunner", tier: "Premium VIP", lang: "en", msg: "just upgraded to Premium VIP membership!" },
+            { name: "Kaito_Smali", tier: "Supporter VIP", lang: "jp", msg: "がサポーターVIPパックを購入しました！" },
+            { name: "XiaoThinh_99", tier: "Sponsor", lang: "zh", msg: "刚刚赞助了 NetKing Team 开发者！" },
+            { name: "Dmitry_Reverse", tier: "Premium VIP", lang: "ru", msg: "оформил подписку Premium VIP!" },
+            { name: "Kim_Hyun_Ji", tier: "Supporter VIP", lang: "ko", msg: "님이 서포터 VIP 팩을 구매하셨습니다!" },
+            { name: "Shadow_Modder", tier: "Premium VIP", lang: "en", msg: "has successfully bypassed the system key gate." },
+            { name: "Gamer_Hanoi2026", tier: "Supporter VIP", lang: "vi", msg: "đã tham gia hàng ngũ Supporter trọn đời." }
         ];
 
-        function checkTriggerTutorialWorkflow() {
-            if (currentUserSession) return;
-            setTimeout(() => {
-                let conf = confirm("Hệ thống phát hiện bạn là thành viên mới. Bạn có muốn xem Hướng dẫn (Tutorial) cách sử dụng giao diện web không?");
-                if(conf) {
-                    startTutorialWorkflow();
-                }
-            }, 1500);
-        }
+        let lastTickerIndex = -1;
+        let currentUserSession = null; // Quản lý session đăng nhập người dùng
 
-        function startTutorialWorkflow() {
-            tutorialActiveState = true;
-            currentTutorialIndex = 0;
-            document.getElementById('tutorial-guide-mask').style.display = 'block';
-            renderCurrentTutorialStep();
-        }
-
-        function renderCurrentTutorialStep() {
-            if(currentTutorialIndex >= tutorialStepsData.length) {
-                endTutorial(true);
-                return;
-            }
-
-            const step = tutorialStepsData[currentTutorialIndex];
-            const targetEl = document.getElementById(step.id);
-            
-            if(!targetEl) {
-                nextTutorialStep();
-                return;
-            }
-
-            targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
-
-            setTimeout(() => {
-                const rect = targetEl.getBoundingClientRect();
-                const scrollX = window.scrollX;
-                const scrollY = window.scrollY;
-
-                const hole = document.getElementById('guide-hole');
-                const tooltip = document.getElementById('guide-tooltip');
-
-                let pad = 8;
-                hole.style.top = (rect.top + scrollY - pad) + "px";
-                hole.style.left = (rect.left + scrollX - pad) + "px";
-                hole.style.width = (rect.width + (pad * 2)) + "px";
-                hole.style.height = (rect.height + (pad * 2)) + "px";
-
-                document.getElementById('guide-title').innerText = step.title;
-                document.getElementById('guide-desc').innerText = step.desc;
-                document.getElementById('guide-step-counter').innerText = `Bước ${currentTutorialIndex + 1}/${tutorialStepsData.length}`;
-
-                if (currentTutorialIndex === tutorialStepsData.length - 1) {
-                    document.getElementById('guide-next-btn-text').innerText = "Hoàn tất";
-                } else {
-                    document.getElementById('guide-next-btn-text').innerText = "Tiếp theo";
-                }
-
-                tooltip.style.top = (rect.bottom + scrollY + 16) + "px";
-                tooltip.style.left = (rect.left + scrollX) + "px";
-
-                startSkipTimerCountdown();
-            }, 500);
-        }
-
-        function startSkipTimerCountdown() {
-            clearInterval(tutorialSkipTimerInterval);
-            let timeLeft = 2;
-            const skipBtn = document.getElementById('guide-skip-btn');
-            skipBtn.disabled = true;
-            skipBtn.innerText = `Bỏ qua (${timeLeft}s)`;
-
-            tutorialSkipTimerInterval = setInterval(() => {
-                timeLeft--;
-                if(timeLeft <= 0) {
-                    clearInterval(tutorialSkipTimerInterval);
-                    skipBtn.disabled = false;
-                    skipBtn.innerText = "Bỏ qua";
-                } else {
-                    skipBtn.innerText = `Bỏ qua (${timeLeft}s)`;
-                }
-            }, 1000);
-        }
-
-        function nextTutorialStep() {
-            currentTutorialIndex++;
-            renderCurrentTutorialStep();
-        }
-
-        function endTutorial(completedAll) {
-            clearInterval(tutorialSkipTimerInterval);
-            tutorialActiveState = false;
-            document.getElementById('tutorial-guide-mask').style.display = 'none';
-            
-            if(completedAll) {
-                alert("Bạn đã hoàn thành xong các bước hướng dẫn. Vui lòng tiến hành đăng ký tài khoản thành viên hệ thống để tiếp tục trải nghiệm!");
-                openAuthModal('register');
-            }
-        }
-
-        // NOTICES DATABASE
-        const adminNoticesDatabase = [
-            { date: "28/02/2024", tag: "📌 Thành lập", title: "Khởi tạo hạ tầng NetKing Project", content: "Chính thức thiết lập cụm server đầu tiên phục vụ bẻ khóa cấu trúc APK, tối ưu hóa smali reverse engineering." },
-            { date: "15/07/2024", tag: "🛠️ Cập nhật", title: "Thử nghiệm lõi can thiệp UDP Fake Lag V1", content: "Thử nghiệm bộ script đóng gói gói tin luồng mạng giúp tối ưu độ trễ nhân vật trên di động." },
-            { date: "12/10/2025", tag: "🤝 Từ thiện", title: "Chiến dịch quyên góp hỗ trợ lũ lụt toàn quốc", content: "Toàn thể thành viên NetKing cùng ban quản trị tổng hợp quỹ lưu động, đóng góp 85 triệu VND tới Ủy ban Mặt trận Tổ quốc khắc phục thiên tai." },
-            { date: "20/05/2026", tag: "🚀 Máy chủ VIP", title: "Đồng bộ máy chủ Supporter VIP và hệ thống Live mới", content: "Hạ giá kịch sàn gói Supporter Pack vĩnh viễn từ 300k xuống 200k. Tích hợp thanh vinh danh Live thời gian thực." }
-        ];
-
-        function initAdminNotices() {
-            const latest = adminNoticesDatabase[adminNoticesDatabase.length - 1];
-            document.getElementById('latest-notice-slot').innerHTML = `
-                <div class="notice-box">
-                    <div class="notice-date">${latest.tag} — Ngày đăng: ${latest.date}</div>
-                    <div class="notice-content"><h4>${latest.title}</h4><p>${latest.content}</p></div>
-                </div>
-            `;
-            document.getElementById('all-notices-modal-list').innerHTML = adminNoticesDatabase.map(n => `
-                <div class="notice-box">
-                    <div class="notice-date">${n.tag} — Đăng ngày: ${n.date}</div>
-                    <div class="notice-content"><h4>${n.title}</h4><p>${n.content}</p></div>
-                </div>
-            `).reverse().join('');
-        }
-
-        function openNoticesModal() { document.getElementById('notices-modal').style.display = 'flex'; }
-
-        // LIVE TICKER CONTROL
+        // --- ENGINE LIVE SHOW CHẠY RANDOM KHÔNG LẶP LẠI (3 GIÂY ĐỔI MỘT LẦN) ---
         function runLiveTickerEngine() {
             const tickerContent = document.getElementById('ticker-content');
+            
             setInterval(() => {
-                let idx = Math.floor(Math.random() * global10000Names.length);
-                let name = global10000Names[idx];
-                const packages = ["Premium VIP", "Supporter VIP Pack", "Sponsor"];
-                let p = packages[Math.floor(Math.random() * packages.length)];
+                let nextIndex;
+                // Vòng lặp lấy ngẫu nhiên không trùng với chỉ số vừa hiển thị trước đó
+                do {
+                    nextIndex = Math.floor(Math.random() * liveMembersPool.length);
+                } while (nextIndex === lastTickerIndex);
 
-                tickerContent.style.opacity = "0";
-                tickerContent.style.transform = "translateY(-4px)";
+                lastTickerIndex = nextIndex;
+                const member = liveMembersPool[nextIndex];
+                
+                // Hiệu ứng mờ dần trước khi đổi chữ
+                tickerContent.style.opacity = 0;
+                tickerContent.style.transform = "translateY(-5px)";
 
                 setTimeout(() => {
-                    tickerContent.innerHTML = `Thành viên <strong style="color:#3b82f6;">${name}</strong> đã kích hoạt thành công gói dịch vụ <strong style="color:#a855f7;">[${p}]</strong>`;
-                    tickerContent.style.opacity = "1";
+                    let colorAccent = "#3b82f6"; // Premium xanh lam
+                    if (member.tier === "Sponsor") colorAccent = "#eab308"; // Sponsor vàng chanh
+                    if (member.tier === "Supporter VIP") colorAccent = "#a855f7"; // Supporter tím khói
+
+                    tickerContent.innerHTML = `👑 <strong style="color: ${colorAccent};">[${member.tier}]</strong> <span style="color: #fff; font-weight:700;">${member.name}</span> ${member.msg}`;
+                    tickerContent.style.opacity = 1;
                     tickerContent.style.transform = "translateY(0)";
-                }, 400);
+                }, 300);
 
-                if(Math.random() < 0.15) {
-                    triggerGlobalScreenBroadcast(name, p);
-                } else if(Math.random() < 0.40) {
-                    // Kích hoạt thông báo tải file real-time trải nghiệm
-                    let randomU = global10000Names[Math.floor(Math.random() * global10000Names.length)];
-                    triggerExperienceNotification(randomU, "Tải file");
+            }, 3000);
+        }
+
+        // --- CHỐNG LƯỚT WEB QUÁ NHANH (SMOOTH SCROLL LIMIT ENGINE) ---
+        let currentScrollVelocity = 0;
+        let customScrollTop = window.scrollY;
+
+        window.addEventListener('wheel', function(e) {
+            e.preventDefault(); // Chặn hành vi cuộn gốc của trình duyệt
+            
+            // Giảm xung lực cuộn xuống còn 35% tốc độ thực để hãm người dùng lại
+            let customDelta = e.deltaY * 0.35; 
+            window.scrollBy({
+                top: customDelta,
+                behavior: 'auto' // Bắt buộc dùng chế độ tức thời để kiểm soát frame nhịp nhàng
+            });
+        }, { passive: false });
+
+        window.addEventListener('touchmove', function(e) {
+            // Đối với thiết bị di động, cơ chế Intersection Observer sẽ tự xử lý mượt mà, giữ nguyên hành vi touch tiêu chuẩn.
+        }, { passive: true });
+
+
+        // --- ENGINE ÂM THANH CLICK CHUỘT ---
+        const clickSound = document.getElementById('click-sound');
+        document.addEventListener('click', function() {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(() => {});
+        });
+
+        // --- INTERSECTION OBSERVER ENGINES ---
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show'); // Ra khỏi khung hình thì tự động ẩn đi
                 }
-            }, 4500);
-        }
+            });
+        }, { root: null, threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
 
-        // CANVAS FIREWORKS
-        const canvas = document.getElementById('fireworks-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        document.querySelectorAll('.scroll-anim, .scroll-fade').forEach(el => {
+            scrollObserver.observe(el);
+        });
 
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x; this.y = y; this.color = color;
-                this.radius = Math.random() * 2.5 + 1;
-                this.velocity = { x: (Math.random() - 0.5) * 7, y: (Math.random() - 0.5) * 7 };
-                this.alpha = 1; this.decay = Math.random() * 0.015 + 0.015;
+        // --- KIỂM TRA ĐIỀU KIỆN MUA HÀNG (CHƯA ĐĂNG NHẬP THÌ CHẶN LẠI) ---
+        function attemptPurchase(tierName, defaultPrice) {
+            if (!currentUserSession) {
+                alert(`⚠️ Hệ thống chặn: Bạn cần Đăng nhập tài khoản trước khi thực hiện mua gói [${tierName}].\n(Khách vãng lai hiện tại chỉ được cấp quyền tải file công khai miễn phí).`);
+                openAuthModal('login');
+                return;
             }
-            draw() {
-                ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
+
+            // Nếu đã đăng nhập thành công thì cho phép tiến vào Form thanh toán
+            showPremiumPage();
+            
+            // Tự động gán cấu hình giá tiền tương ứng lên Form nạp tiền
+            const selectEl = document.getElementById('pricing-select-form');
+            selectEl.value = defaultPrice;
+            updateFormPriceDisplay();
+        }
+
+        function updateFormPriceDisplay() {
+            const selectEl = document.getElementById('pricing-select-form');
+            const price = parseInt(selectEl.value);
+            document.getElementById('form-price-render').innerText = price.toLocaleString('vi-VN') + "đ";
+            document.getElementById('qr-bank-memo').innerText = `Nội dung: NETKING VIP ${currentUserSession.toUpperCase()}`;
+        }
+
+        // --- QUICK JUMP FRAME ---
+        function openQuickJump() { document.getElementById('jump-modal').style.display = 'flex'; }
+        function quickJumpTo(id) { closeModal('jump-modal'); scrollToSection(id); }
+
+        // --- AUTH LOGIC SYSTEM ---
+        if (!localStorage.getItem('netking_users')) {
+            localStorage.setItem('netking_users', JSON.stringify([]));
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const user = document.getElementById('reg-user').value.trim();
+            const pass = document.getElementById('reg-pass').value;
+            let usersList = JSON.parse(localStorage.getItem('netking_users'));
+            
+            if (usersList.some(u => u.username.toLowerCase() === user.toLowerCase())) {
+                alert('Tên tài khoản này đã tồn tại!');
+                return;
             }
-            update() { this.velocity.y += 0.05; this.x += this.velocity.x; this.y += this.velocity.y; this.alpha -= this.decay; }
+
+            usersList.push({ username: user, password: pass });
+            localStorage.setItem('netking_users', JSON.stringify(usersList));
+            alert('Đăng ký thành công! Tiến hành đăng nhập.');
+            toggleAuthMode('login');
         }
 
-        function createFireworkExplosion(x, y) {
-            const colors = ['#3b82f6', '#a855f7', '#ec4899', '#10b981', '#eab308'];
-            let c = colors[Math.floor(Math.random() * colors.length)];
-            for (let i = 0; i < 40; i++) particles.push(new Particle(x, y, c));
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('login-user').value.trim();
+            const pass = document.getElementById('login-pass').value;
+            let usersList = JSON.parse(localStorage.getItem('netking_users'));
+            
+            const matchedUser = usersList.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+            if (matchedUser) {
+                currentUserSession = matchedUser.username;
+                alert(`Đăng nhập thành công! Chào mừng trở lại, ${currentUserSession}.`);
+                closeModal('auth-modal');
+                document.getElementById('header-auth-btn').innerText = `👋 ${currentUserSession}`;
+                document.getElementById('purchase-active-user').innerText = currentUserSession;
+                
+                // Cộng thêm 1 User thật vào LocalStorage để đồng bộ hệ thống số liệu
+                let totalU = parseInt(localStorage.getItem('real_users') || 0);
+                localStorage.setItem('real_users', totalU + 1);
+                updateStatsDOM();
+            } else {
+                alert('Sai thông tin đăng nhập! Vui lòng kiểm tra lại.');
+            }
         }
 
-        function animateFireworks() {
-            requestAnimationFrame(animateFireworks);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => { if (p.alpha <= 0) particles.splice(i, 1); else { p.update(); p.draw(); } });
-        }
-        animateFireworks();
-
-        function triggerGlobalScreenBroadcast(username, packageName) {
-            setTimeout(() => createFireworkExplosion(canvas.width * 0.3, canvas.height * 0.4), 0);
-            setTimeout(() => createFireworkExplosion(canvas.width * 0.7, canvas.height * 0.3), 400);
-
-            const banner = document.getElementById('global-broadcast-banner');
-            document.getElementById('broadcast-title').innerText = `⚡ Giao dịch VIP Kích hoạt`;
-            document.getElementById('broadcast-body').innerHTML = `Người dùng <strong style="color:#fff;">${username}</strong> vừa sở hữu <strong style="color:#eab308;">[${packageName}]</strong>.`;
-            banner.classList.add('show');
-            setTimeout(() => banner.classList.remove('show'), 4000);
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
-        // AUTH & ACTIONS
-        if (!localStorage.getItem('netking_users')) localStorage.setItem('netking_users', JSON.stringify([]));
-        
+        function showPremiumPage() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('premium-page').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showMainPage() {
+            document.getElementById('premium-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
         function openAuthModal(mode) {
             document.getElementById('auth-modal').style.display = 'flex';
             toggleAuthMode(mode);
         }
+
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
         function toggleAuthMode(mode) {
             if(mode === 'login') {
                 document.getElementById('login-form-box').style.display = 'block';
@@ -1023,91 +1020,62 @@
             }
         }
 
-        function handleRegister(e) {
-            e.preventDefault();
-            const u = document.getElementById('reg-user').value.trim();
-            const p = document.getElementById('reg-pass').value;
-            let list = JSON.parse(localStorage.getItem('netking_users'));
-            if(list.some(x => x.username.toLowerCase() === u.toLowerCase())) { alert("Tài khoản đã tồn tại!"); return; }
-            list.push({ username: u, password: p });
-            localStorage.setItem('netking_users', JSON.stringify(list));
-            alert("Đăng ký thành công!");
-            toggleAuthMode('login');
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('login-user').value.trim();
-            const p = document.getElementById('login-pass').value;
-            let list = JSON.parse(localStorage.getItem('netking_users'));
-            const match = list.find(x => x.username.toLowerCase() === u.toLowerCase() && x.password === p);
-            if(match) {
-                currentUserSession = match.username;
-                alert("Chào mừng quay trở lại, " + currentUserSession);
-                closeModal('auth-modal');
-                document.getElementById('header-auth-btn').innerText = `👋 ${currentUserSession}`;
-                document.getElementById('purchase-active-user').innerText = currentUserSession;
-            } else {
-                alert("Thông tin đăng nhập không hợp lệ!");
-            }
-        }
-
-        function attemptPurchase(tier, price) {
-            if(!currentUserSession) {
-                alert("Hệ thống chặn: Vui lòng thực hiện đăng nhập trước khi tiến hành giao dịch VIP!");
-                openAuthModal('login');
-                return;
-            }
-            showPremiumPage();
-            document.getElementById('pricing-select-form').value = price;
-            updateFormPriceDisplay();
-        }
-
-        function updateFormPriceDisplay() {
-            let pr = parseInt(document.getElementById('pricing-select-form').value);
-            document.getElementById('form-price-render').innerText = pr.toLocaleString('vi-VN') + "đ";
-        }
-
-        function handleConfirmPurchase(e) {
-            e.preventDefault();
-            let sel = document.getElementById('pricing-select-form');
-            let t = sel.options[sel.selectedIndex].text.split('—')[0].trim();
-            alert("Hóa đơn kiểm duyệt giao dịch đã được gửi lên hệ thống trung tâm!");
-            showMainPage();
-            triggerGlobalScreenBroadcast(currentUserSession, t);
-        }
-
-        // 3. Tính năng cộng dồn đếm tổng lượt tải REAL khi click nút tải file
+        // --- DOWNLOAD SYSTEM ---
         function triggerDownload(url) {
-            baseDownloads += 1;
-            updateStatsDOM();
-            document.getElementById('loading-screen').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-                window.open(url, '_blank');
-            }, 1500);
-        }
-
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        function showPremiumPage() { document.getElementById('main-page').style.display = 'none'; document.getElementById('premium-page').style.display = 'block'; }
-        function showMainPage() { document.getElementById('premium-page').style.display = 'none'; document.getElementById('main-page').style.display = 'block'; }
-
-        // START ENGINE
-        window.onload = function() {
-            let localFbs = localStorage.getItem('local_stored_feedbacks');
-            if (localFbs) {
-                staticFeedbacksDatabase = JSON.parse(localFbs);
-            }
+            const loader = document.getElementById('loading-screen');
+            loader.style.display = 'flex';
             
+            let currentDl = parseInt(localStorage.getItem('real_downloads') || 0);
+            currentDl += 1;
+            localStorage.setItem('real_downloads', currentDl);
             updateStatsDOM();
-            renderFeedbackGrid(staticFeedbacksDatabase);
-            initAdminNotices();
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                document.getElementById('success-modal').style.display = 'flex';
+                window.open(url, '_blank');
+            }, 1800);
+        }
+
+        // --- THỐNG KÊ CHUẨN (VIEWS > DOWNLOADS > USERS) ---
+        function initRealtimeStats() {
+            // Thiết lập mốc cơ sở logic chuẩn theo thời gian thực (Views luôn lớn nhất)
+            if (!localStorage.getItem('real_views')) localStorage.setItem('real_views', '394');
+            if (!localStorage.getItem('real_downloads')) localStorage.setItem('real_downloads', '148');
+            if (!localStorage.getItem('real_users')) localStorage.setItem('real_users', '42');
+
+            let views = parseInt(localStorage.getItem('real_views'));
+            views += Math.floor(Math.random() * 3) + 1; // Tăng view thực khi tải trang
+            localStorage.setItem('real_views', views);
+
+            updateStatsDOM();
+            updateOnlineCount();
             runLiveTickerEngine();
-            runRealTimeStatsEngine();
-            checkTriggerTutorialWorkflow();
+        }
+
+        function updateStatsDOM() {
+            const v = localStorage.getItem('real_views');
+            const d = localStorage.getItem('real_downloads');
+            const u = localStorage.getItem('real_users');
+
+            document.getElementById('view-count').innerText = v;
+            document.getElementById('footer-view').innerText = v;
+
+            document.getElementById('dl-count').innerText = d;
+            document.getElementById('footer-dl').innerText = d;
+
+            document.getElementById('user-count').innerText = u;
+            document.getElementById('footer-user').innerText = u;
+        }
+
+        function updateOnlineCount() {
+            let baseOnline = Math.floor(Math.random() * 6) + 14;
+            document.getElementById('online-count').innerText = baseOnline;
+            setTimeout(updateOnlineCount, 7000);
+        }
+
+        window.onload = function() {
+            initRealtimeStats();
         };
     </script>
 </body>
