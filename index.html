@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NetKing Team - Premium Android Apps</title>
     <style>
-        /* --- CORE BASE SYSTEM --- */
+        /* --- RESET & MODERN SYSTEM --- */
         * {
             margin: 0;
             padding: 0;
@@ -21,39 +21,68 @@
             color: #f1f5f9;
         }
 
+        /* --- BACKGROUND FIREWORKS CANVAS --- */
         #fireworks-canvas {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
         }
 
-        /* SMOKE EFFECT OVERLAY FOR FEEDBACK */
+        /* SMOKE EFFECT NỀN FEEDBACK */
         #smoke-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(30, 41, 59, 0.5) 0%, #020617 90%);
+            background: radial-gradient(circle, rgba(15, 23, 42, 0.4) 0%, #020617 90%);
             opacity: 0; pointer-events: none; z-index: 1100;
             transition: opacity 0.6s ease;
         }
         #smoke-overlay.active { opacity: 1; pointer-events: auto; }
 
-        /* GLOBAL BANNER NOTIFICATION */
+        /* --- GLOBAL BROADCAST BANNER --- */
         #global-broadcast-banner {
             position: fixed;
-            top: -100px; left: 50%;
+            top: -100px;
+            left: 50%;
             transform: translateX(-50%);
-            width: 90%; max-width: 500px;
+            width: 90%;
+            max-width: 500px;
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
             border: 2px solid #3b82f6;
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
-            border-radius: 12px; padding: 16px; z-index: 2500;
-            display: flex; align-items: center; gap: 14px;
+            border-radius: 12px;
+            padding: 16px;
+            z-index: 2500;
+            display: flex;
+            align-items: center;
+            gap: 14px;
             transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(10px);
         }
         #global-broadcast-banner.show { top: 20px; }
 
-        /* STRUCTURE CONTAINER */
+        /* --- HOẠT ẢNH INTERSECTION OBSERVER --- */
+        .scroll-anim {
+            opacity: 0;
+            filter: blur(15px);
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .scroll-anim.show { opacity: 1; filter: blur(0px); transform: translateY(0); }
+        .scroll-fade { opacity: 0; filter: blur(10px); transition: opacity 0.6s ease, filter 0.6s ease; }
+        .scroll-fade.show { opacity: 1; filter: blur(0); }
+
+        /* --- LAYOUT CHUNG --- */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 580px;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), #020617), url('https://images.alphacoders.com/134/1347648.png') no-repeat center top;
+            background-size: cover; z-index: -2; opacity: 0.6;
+        }
+
         .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
         
         .neon-box {
@@ -64,7 +93,7 @@
             border-radius: 14px;
         }
 
-        /* --- HEADER NAVBAR --- */
+        /* --- HEADER --- */
         header {
             border-bottom: 1px solid rgba(0, 102, 255, 0.15);
             backdrop-filter: blur(12px);
@@ -73,8 +102,8 @@
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; height: 65px; }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
-        .logo-img { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #3b82f6; }
-        .logo-text { font-size: 1.05rem; font-weight: 800; color: #fff; }
+        .logo-img { width: 32px; height: 32px; border-radius: 8px; border: 1px solid #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        .logo-text { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
         .logo-text span { color: #3b82f6; display: block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
         nav ul { display: flex; list-style: none; gap: 20px; }
         nav ul a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; }
@@ -82,7 +111,7 @@
         .btn-login { background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
         .btn-login:hover { background: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
 
-        /* --- TICKER LIVE (NO ICON, SMOOTH FADE) --- */
+        /* --- TICKER CHỈ HIỆN "LIVE" KHÔNG ICON --- */
         .live-ticker-bar {
             background: rgba(15, 23, 42, 0.9);
             border-bottom: 1px solid rgba(59, 130, 246, 0.2);
@@ -98,38 +127,37 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        /* --- HERO ZONE --- */
-        .hero { padding: 50px 0 30px 0; text-align: left; }
+        /* --- HERO & KHÔNG ICON TRÊN BUTTONS --- */
+        .hero { padding: 50px 0 30px 0; }
         .welcome-tag { background: rgba(0, 102, 255, 0.1); color: #3b82f6; padding: 5px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; display: inline-flex; margin-bottom: 12px; border: 1px solid rgba(0, 102, 255, 0.2); }
         .hero h2 { font-size: 2.5rem; font-weight: 850; color: #fff; margin-bottom: 6px; line-height: 1.2; }
-        .hero h2 span { color: #3b82f6; }
+        .hero h2 span { color: #3b82f6; text-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
         .hero-subtitle { font-size: 0.9rem; color: #94a3b8; margin-bottom: 14px; font-weight: 500; }
-        .hero-desc { max-width: 550px; color: #64748b; font-size: 0.82rem; line-height: 1.5; margin-bottom: 24px; }
-        
-        /* NO ICONS FOR THESE BUTTONS */
+        .hero-desc { max-width: 450px; color: #64748b; font-size: 0.82rem; line-height: 1.5; margin-bottom: 24px; }
         .hero-buttons { display: flex; gap: 10px; }
         .btn-discord, .btn-view-apps { padding: 10px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; text-align: center; min-width: 130px; }
         .btn-discord { background: #5865f2; color: white; border: none; }
         .btn-view-apps { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: white; }
 
-        /* --- REAL-TIME STATS DASHBOARD --- */
+        /* --- DASHBOARD --- */
         .dashboard-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin-bottom: 30px; }
-        .card-panel { padding: 20px; position: relative; }
+        .card-panel { padding: 20px; position: relative;}
         .panel-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 0.5px; margin-bottom: 14px; }
         .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 3px solid #eab308; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
         .notice-date { font-size: 0.7rem; color: #eab308; margin-bottom: 4px; font-weight: 600; }
-        .notice-content h4 { font-size: 0.85rem; color: #fff; margin-bottom: 2px; }
+        .notice-content h4 { font-size: 0.85rem; color: #fff; margin-bottom: 2px;}
         .notice-content p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
         .btn-view-all-notices { background: transparent; border: 1px dashed rgba(59, 130, 246, 0.4); color: #3b82f6; font-size: 0.75rem; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; width: 100%; text-align: center; }
         .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
-        .stat-number { font-size: 1.2rem; font-weight: 700; color: #fff; transition: color 0.3s ease; }
+        .stat-number { font-size: 1.2rem; font-weight: 700; color: #fff; }
         .stat-label { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
+        .stats-footer { text-align: center; font-size: 0.75rem; color: #3b82f6; margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.04); }
 
-        /* --- 7 MODES COMPONENT --- */
+        /* --- KHÔI PHỤC TOÀN BỘ 7 MODES --- */
         .intro-section { margin-bottom: 45px; }
         .section-headline { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 4px; text-align: center; }
         .section-subheadline { font-size: 0.82rem; color: #64748b; text-align: center; margin-bottom: 24px; }
-        .modes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .modes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
         .mode-card { padding: 18px; }
         .mode-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .mode-tag { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
@@ -137,40 +165,43 @@
         .mode-card h4 { font-size: 0.95rem; color: #fff; margin-bottom: 6px; }
         .mode-card p { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
 
-        /* --- ADVISORY SECTION --- */
-        .consulting-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+        /* --- MỞ RỘNG TOÀN BỘ PHẦN TƯ VẤN --- */
+        .consulting-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 45px; }
         .consult-card { padding: 18px; }
         .consult-question { font-size: 0.88rem; font-weight: 700; color: #eab308; margin-bottom: 6px; }
         .consult-answer { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
 
-        /* --- DOWNLOAD CENTER --- */
-        .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+        /* --- KHO TẢI FILE --- */
+        .apps-section { margin-bottom: 45px; }
+        .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         .app-card { padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
         .app-card h3 { font-size: 0.95rem; color: #fff; margin-bottom: 4px; }
         .app-desc { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; margin-bottom: 12px; }
         .btn-download { background: #0052cc; color: #fff; text-decoration: none; padding: 9px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-align: center; cursor: pointer; display: block; border: none; width: 100%; }
-        .btn-download.btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); margin-top: 6px; }
+        .btn-download.btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); margin-top: 6px; text-decoration: none; display: block; }
 
-        /* --- PRICING --- */
-        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+        /* --- BẢNG GIÁ --- */
+        .pricing-section { margin-bottom: 45px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         .price-tier-card { padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
         .tier-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
         .tier-price { font-size: 1.25rem; font-weight: 800; color: #3b82f6; margin: 10px 0; }
         .tier-features { list-style: none; text-align: left; font-size: 0.72rem; color: #94a3b8; margin-bottom: 15px; }
         .tier-features li { margin-bottom: 6px; }
 
-        /* --- REAL HUMAN FEEDBACK UI SYSTEM --- */
+        /* --- HỆ THỐNG FEEDBACK TRỰC TUYẾN MỚI --- */
         .feedback-section { margin-bottom: 45px; }
         .feedback-search-wrapper { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
         .search-input { flex: 1; min-width: 200px; padding: 10px; background: #070d1f; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 8px; color: #fff; font-size: 0.85rem; }
         .feedback-container-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-        .review-card { padding: 16px; cursor: pointer; transition: transform 0.2s, border-color 0.2s; position: relative; min-height: 90px; }
+        .review-card { padding: 16px; cursor: pointer; transition: transform 0.2s; position: relative; }
         .review-card:hover { transform: translateY(-2px); border-color: #3b82f6; }
         .reviewer-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .reviewer-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
-        .review-stars { color: #eab308; font-size: 0.78rem; font-weight: bold; }
+        .review-stars { color: #eab308; font-size: 0.75rem; font-weight: bold; }
         .review-text-cut { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
         
+        /* Nút xem thêm nhấp nháy */
         .btn-trigger-more-feedback {
             grid-column: span 2; text-align: center; padding: 12px; color: #3b82f6; font-size: 0.82rem;
             font-weight: 700; text-transform: uppercase; cursor: pointer; background: rgba(59, 130, 246, 0.05);
@@ -179,21 +210,21 @@
         }
         @keyframes blinker { 50% { opacity: 0.3; } }
 
-        /* --- INTERACTIVE TUTORIAL MASKS --- */
+        /* --- LIVE INTERACTIVE TUTORIAL OVERLAY FRAME --- */
         #tutorial-guide-mask {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 3000; pointer-events: none; display: none;
         }
         .guide-highlight-hole {
             position: absolute; box-shadow: 0 0 0 9999px rgba(2, 6, 23, 0.85);
-            border-radius: 8px; transition: all 0.3s ease;
+            border-radius: 8px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             pointer-events: auto; z-index: 3001; border: 2px dashed #3b82f6;
         }
         .guide-tooltip-box {
             position: absolute; background: #0f172a; border: 1px solid #3b82f6;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 16px; border-radius: 12px;
             max-width: 280px; width: 280px; color: #fff; font-size: 0.82rem; z-index: 3002;
-            transition: all 0.3s ease; pointer-events: auto;
+            transition: all 0.4s ease; pointer-events: auto;
         }
         .guide-tooltip-box h5 { color: #3b82f6; font-size: 0.9rem; margin-bottom: 6px; font-weight: 700; }
         .guide-tooltip-box p { color: #94a3b8; line-height: 1.4; margin-bottom: 10px; }
@@ -206,7 +237,7 @@
             z-index: 3100; font-weight: 600;
         }
 
-        /* --- MODALS MECHANICS --- */
+        /* --- MODALS OVERLAY --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
         .modal-box { max-width: 420px; width: 100%; padding: 22px; position: relative; border-radius: 14px; background: #070d1f; border: 1px solid rgba(0,102,255,0.2); }
         .btn-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: #64748b; font-size: 1.1rem; cursor: pointer; }
@@ -214,11 +245,15 @@
         .form-group label { display: block; font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px; background: #020617; border: 1px solid rgba(0,102,255,0.2); border-radius: 6px; color: #fff; font-size: 0.82rem; }
         
+        /* PREMIUM CONTENT FORM CONTROL */
         #premium-page { display: none; padding: 30px 0; }
+
+        /* LOADING ENGINE */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.94); z-index: 4000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .spinner { width: 40px; height: 40px; border: 3px solid rgba(0, 102, 255, 0.1); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* --- FOOTER --- */
         footer { margin-top: 50px; background: #010409; border-top: 1px solid rgba(0, 102, 255, 0.15); padding: 30px 0 20px 0; }
         .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; }
         .footer-stat-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: #64748b; margin-bottom: 6px; }
@@ -238,17 +273,34 @@
     <div id="smoke-overlay"></div>
 
     <div id="global-broadcast-banner">
-        <div style="font-size: 1.8rem;">⚡</div>
+        <div style="font-size: 1.8rem;">🎉</div>
         <div>
             <h4 id="broadcast-title" style="font-size:0.9rem; color:#fff;">Hệ thống</h4>
             <p id="broadcast-body" style="font-size:0.78rem; color:#c084fc;"></p>
         </div>
     </div>
 
+    <div id="system-notice-modal" class="modal-overlay" style="display: flex;">
+        <div class="modal-box neon-box" style="max-width: 460px; text-align: center; border-color: #3b82f6; box-shadow: 0 0 25px rgba(59,130,246,0.35);">
+            <h3 style="color: #3b82f6; font-size: 1.2rem; margin-bottom: 10px;">📢 THÔNG BÁO HỆ THỐNG</h3>
+            <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin-bottom: 16px; text-align: left;">
+                Chào mừng bạn đã đến với hạ tầng **NetKing Team Premium**. Hệ thống can thiệp luồng dữ liệu di động hoàn toàn tự động và bảo mật. Vui lòng đọc kỹ tài liệu hướng dẫn và cập nhật phiên bản ứng dụng APK mới nhất bên dưới để tránh gián đoạn dịch vụ.
+            </p>
+            <div class="notice-box" style="text-align: left; margin-bottom: 16px;">
+                <div class="notice-date">🔥 CẬP NHẬT MỚI NHẤT</div>
+                <div class="notice-content">
+                    <h4 style="font-size:0.82rem;">Đồng bộ dữ liệu thời gian thực 2026</h4>
+                    <p style="font-size:0.75rem;">Hệ thống nâng cấp cơ chế bypass bảo mật và tính năng gửi đánh giá trực tuyến.</p>
+                </div>
+            </div>
+            <button class="btn-download" onclick="closeSystemNoticeModal()" style="background: linear-gradient(135deg, #0052cc, #3b82f6);">Bắt Đầu Trải Nghiệm</button>
+        </div>
+    </div>
+
     <header id="nav-header-zone">
         <div class="container nav-container">
             <div class="logo">
-                <img src="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png" alt="Logo" class="logo-img">
+                <img src="https://raw.githubusercontent.com/TheFish-cyber/Netking-Share/refs/heads/main/ic_launcher_meow.png" alt="NetKing Logo" class="logo-img">
                 <div class="logo-text">NetKing <span>Developer 🔍</span></div>
             </div>
             <nav>
@@ -268,16 +320,16 @@
 
     <div class="live-ticker-bar" id="live-ticker-zone">
         <span class="live-badge">Live</span>
-        <div id="ticker-content">Đang đồng bộ luồng kết nối máy chủ...</div>
+        <div id="ticker-content">Đang tải luồng dữ liệu thành viên...</div>
     </div>
 
     <div id="main-page" class="container">
         
-        <section class="hero">
+        <section class="hero scroll-anim">
             <div class="welcome-tag">Welcome to my website</div>
             <h2>NetKing <span>Team</span></h2>
             <p class="hero-subtitle">Premium Android Apps • Secure Downloads</p>
-            <p class="hero-desc">Hạ tầng phân tích và xử lý can thiệp gói tin UDP mạng di động không cần root thiết bị di động.</p>
+            <p class="hero-desc">Hạ tầng can thiệp dữ liệu gói tin UDP mạng di động chất lượng cao và hoàn toàn miễn phí cho cộng đồng.</p>
             <div class="hero-buttons">
                 <a href="https://discord.gg/wf4QnepsxS" target="_blank" class="btn-discord">Discord</a>
                 <a onclick="scrollToSection('files-section-zone')" class="btn-view-apps">Xem ứng dụng</a>
@@ -285,105 +337,105 @@
         </section>
 
         <section class="dashboard-row">
-            <div class="card-panel neon-box" id="notice-board-zone">
-                <div class="panel-title">Thông báo hệ thống</div>
+            <div class="card-panel neon-box scroll-anim" id="notice-board-zone">
+                <div class="panel-title">Thông báo từ Admin</div>
                 <div id="latest-notice-slot"></div>
-                <button class="btn-view-all-notices" onclick="openNoticesModal()">Nhật ký thông báo cũ</button>
+                <button class="btn-view-all-notices" onclick="openNoticesModal()">Xem tất cả thông báo cũ hơn</button>
             </div>
-            <div class="card-panel neon-box">
-                <div class="panel-title">Thống kê thời gian thực</div>
+            <div class="card-panel neon-box scroll-anim" id="stats-dashboard-zone">
+                <div class="panel-title">Số liệu hệ thống</div>
                 <div class="stats-container">
-                    <div><div class="stat-number" id="live-view-count">12860</div><div class="stat-label">Lượt xem</div></div>
-                    <div><div class="stat-number" id="live-dl-count">3652</div><div class="stat-label">Tải xuống</div></div>
-                    <div><div class="stat-number" id="live-user-count">1248</div><div class="stat-label">Thành viên</div></div>
+                    <div><div class="stat-number" id="view-count">12,860</div><div class="stat-label">Lượt xem (Live)</div></div>
+                    <div><div class="stat-number" id="dl-count">3,652</div><div class="stat-label">Tổng lượt tải</div></div>
+                    <div><div class="stat-number" id="user-count">1,248</div><div class="stat-label">Thành viên (Live)</div></div>
                 </div>
             </div>
         </section>
 
         <section class="intro-section" id="modes-section-zone">
-            <h3 class="section-headline">Hệ Thống 7 Chế Độ Can Thiệp</h3>
-            <p class="section-subheadline">Cấu trúc lõi điều hướng packet mạng di động tiên tiến</p>
+            <h3 class="section-headline scroll-anim">Hệ Thống 7 Chế Độ Can Thiệp Bộ Cụ</h3>
+            <p class="section-subheadline scroll-anim">Cấu trúc lõi can thiệp luồng dữ liệu packet thời gian thực</p>
             <div class="modes-grid">
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim">
                     <div class="mode-header"><span class="mode-tag">MODE 01</span><span class="mode-badge">Burst Fire</span></div>
                     <h4>Teleport V1</h4>
-                    <p>Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, giải phóng đồng loạt tạo hiệu ứng dịch chuyển.</p>
+                    <p>Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, sau đó giải phóng đồng loạt tạo hiệu ứng dịch chuyển tức thời.</p>
                 </div>
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim">
                     <div class="mode-header"><span class="mode-tag">MODE 02</span><span class="mode-badge">Smooth Snap</span></div>
                     <h4>Teleport V2</h4>
-                    <p>Đảo ngược thứ tự gói tin mạng khiến timeline vị trí bị xáo trộn trên máy chủ, mượt mà hơn.</p>
+                    <p>Tiến hóa từ V1 với cơ chế đảo ngược thứ tự gói tin mạng, khiến timeline vị trí bị xáo trộn trên máy chủ, mượt mà hơn.</p>
                 </div>
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim">
                     <div class="mode-header"><span class="mode-tag">MODE 03</span><span class="mode-badge">Elite Split</span></div>
                     <h4>Teleport V3</h4>
-                    <p>Kiến trúc split-burst xử lý ghi nhận sát thương nửa đầu và biến mất điểm xuất phát ở nửa sau.</p>
+                    <p>Kiến trúc split-burst thông minh, xử lý ghi nhận sát thương nửa đầu và biến mất điểm xuất phát ở nửa sau một cách hoàn hảo.</p>
                 </div>
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim">
                     <div class="mode-header"><span class="mode-tag">MODE 04</span><span class="mode-badge">Loop Replay</span></div>
                     <h4>Ghost Mode</h4>
-                    <p>Nhân bản và phát lại liên tục dữ liệu vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời.</p>
+                    <p>Nhân bản và phát lại liên tục packet vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời trong khi bạn tự do di chuyển.</p>
                 </div>
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim">
                     <div class="mode-header"><span class="mode-tag">MODE 05</span><span class="mode-badge">Freeze Cycle</span></div>
                     <h4>Ngừng Động V1</h4>
-                    <p>Chặn toàn bộ luồng packet outgoing theo chu kỳ, tạo hiệu ứng đóng băng tạm thời cục bộ trên server.</p>
+                    <p>Chặn toàn bộ luồng packet outgoing theo chu kỳ quy định, tạo hiệu ứng đóng băng tạm thời cục bộ trên server.</p>
                 </div>
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim">
                     <div class="mode-header"><span class="mode-tag">MODE 06</span><span class="mode-badge">Combo Layer</span></div>
                     <h4>Ngừng Động V2</h4>
-                    <p>Kết hợp cộng hưởng giữa Freeze và Ghost mode nhằm tích lũy vị trí ngầm trước khi xả.</p>
+                    <p>Kết hợp cộng hưởng giữa Freeze và Ghost mode nhằm tích lũy layer vị trí ngầm ẩn danh trước khi giải phóng.</p>
                 </div>
-                <div class="mode-card neon-box">
+                <div class="mode-card neon-box scroll-anim" style="grid-column: span 1;">
                     <div class="mode-header"><span class="mode-tag">MODE 07</span><span class="mode-badge">Anti-Detect</span></div>
                     <h4>Ngừng Động V3</h4>
-                    <p>Kiểm soát tốc độ xả burst, điều chỉnh interval ngẫu nhiên để bypass các hệ thống bảo mật.</p>
+                    <p>Chế độ cao cấp nhất, kiểm soát tốc độ xả burst, điều chỉnh interval ngẫu nhiên để bypass hệ thống quét nhạy cảm.</p>
                 </div>
             </div>
         </section>
 
         <section class="intro-section" id="consulting-section-zone">
-            <h3 class="section-headline">Góc Giải Đáp Tư Vấn Nâng Cao</h3>
-            <p class="section-subheadline">Hỗ trợ thiết lập thông số kỹ thuật tối ưu xung quanh tệp tin APK</p>
+            <h3 class="section-headline scroll-anim">Góc Tư Vấn Kỹ Thuật Chuyên Sâu</h3>
+            <p class="section-subheadline scroll-anim">Giải đáp chi tiết mọi thắc mắc về cấu hình nâng cao thiết bị di động</p>
             <div class="consulting-grid">
-                <div class="consult-card neon-box">
-                    <div class="consult-question">💡 App có cần Root máy để phân tích UDP không?</div>
-                    <div class="consult-answer">Hoàn toàn không. Hệ thống sử dụng một LocalVPN nội bộ chạy ngầm để giải mã gói tin trực tiếp, đảm bảo an toàn tuyệt đối cho thiết bị.</div>
+                <div class="consult-card neon-box scroll-anim">
+                    <div class="consult-question">💡 Khác biệt thực tế giữa NetPlus và Itachi Ping là gì?</div>
+                    <div class="consult-answer">NetPlus tập trung vào cấu hình bypass ổn định bảo mật chống khóa tài khoản, trong khi Itachi Ping tối ưu chuyên sâu kiến trúc NIO phi tuần tự, xử lý hàng nghìn packet mà không gây trễ thiết bị.</div>
                 </div>
-                <div class="consult-card neon-box">
-                    <div class="consult-question">💡 Khác biệt giữa dòng NetPlus và Itachi Ping là gì?</div>
-                    <div class="consult-answer">NetPlus thiên về cấu hình bypass hạn chế quét hệ thống, còn Itachi Ping dùng kiến trúc NIO giải phóng packet phi tuần tự cực nhanh.</div>
+                <div class="consult-card neon-box scroll-anim">
+                    <div class="consult-question">💡 Tại sao ứng dụng can thiệp UDP yêu cầu thiết lập VPN nội bộ?</div>
+                    <div class="consult-answer">Hệ thống khởi tạo một LocalVPN service cục bộ chạy ngầm trực tiếp trên máy để đánh chặn, phân tích cấu trúc gói tin IPv4/UDP header mà hoàn toàn không yêu cầu quyền Root.</div>
                 </div>
-                <div class="consult-card neon-box">
-                    <div class="consult-question">💡 Thiết lập interval của Ghost Mode thế nào cho chuẩn?</div>
-                    <div class="consult-answer">Bạn nên duy trì từ 2.5s đến tối đa 4s. Đặt quá cao sẽ gây ngắt đồng bộ mạng dữ liệu diện rộng dẫn đến lỗi mất kết nối.</div>
+                <div class="consult-card neon-box scroll-anim">
+                    <div class="consult-question">💡 Ghost Mode có thể duy trì liên tục trong bao lâu?</div>
+                    <div class="consult-answer">Khuyến nghị thiết lập interval từ 2.5 giây đến tối đa 4 giây để tránh tình trạng mất đồng bộ dữ liệu nghiêm trọng dẫn đến ngắt kết nối khỏi máy chủ game.</div>
                 </div>
-                <div class="consult-card neon-box">
-                    <div class="consult-question">💡 Tại sao app cài vào máy báo tệp tin không rõ nguồn gốc?</div>
-                    <div class="consult-answer">Do tệp tin được mã hóa bảo vệ cấu trúc nâng cao vượt chứng chỉ thông thường, chỉ cần cấp quyền tin cậy trong phần cài đặt tệp APK là chạy mượt.</div>
+                <div class="consult-card neon-box scroll-anim">
+                    <div class="consult-question">💡 Cơ chế mã hóa chống bẻ khóa của NetKing Team hoạt động ra sao?</div>
+                    <div class="consult-answer">Hệ thống áp dụng cơ chế xáo trộn mã nguồn Smali nâng cao kết hợp ProGuard, giúp bảo vệ toàn diện cấu trúc tệp tin khi xuất xưởng, ngăn chặn việc khai thác lỗ hổng bất hợp pháp.</div>
                 </div>
             </div>
         </section>
 
         <section class="apps-section" id="files-section-zone">
-            <div class="panel-title">Tải Tập Tin Ứng Dụng</div>
+            <div class="panel-title scroll-anim">Tải Tập Tin Hệ Thống</div>
             <div class="apps-grid">
-                <div class="app-card neon-box">
+                <div class="app-card neon-box scroll-anim">
                     <div>
                         <h3>Netking Launcher</h3>
-                        <p class="app-desc">Giao diện màn hình nền bảo mật cao, ẩn ứng dụng hệ thống an toàn gọn nhẹ.</p>
+                        <p class="app-desc">Bảo mật giao diện màn hình nền, ẩn ứng dụng hệ thống an toàn chuyên nghiệp.</p>
                     </div>
                     <button onclick="triggerDownload('https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file')" class="btn-download">Tải APK</button>
                 </div>
-                <div class="app-card neon-box">
+                <div class="app-card neon-box scroll-anim">
                     <div>
                         <h3>NetPlus V18</h3>
-                        <p class="app-desc">Công cụ tối ưu hóa UDP can thiệp 2 tùy chọn đóng băng nâng cao.</p>
+                        <p class="app-desc">Công cụ tối ưu hóa UDP can thiệp 2 tùy chọn đóng băng mạng nâng cao.</p>
                     </div>
                     <button onclick="triggerDownload('https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file')" class="btn-download">Tải APK</button>
                     <a href="https://link4m.net/go/eb8Na3" target="_blank" class="btn-download btn-key-style">Lấy Key Kích Hoạt</a>
                 </div>
-                <div class="app-card neon-box">
+                <div class="app-card neon-box scroll-anim">
                     <div>
                         <h3>Itachi Ping OG</h3>
                         <p class="app-desc">Bản mod can thiệp mượt mà không cần quyền root hệ thống.</p>
@@ -394,37 +446,37 @@
         </section>
 
         <section class="pricing-section" id="pricing-section-zone">
-            <h3 class="section-headline">Gói Nâng Cấp Kích Hoạt</h3>
+            <h3 class="section-headline scroll-anim">Gói Nâng Cấp Kích Hoạt</h3>
             <div class="pricing-grid">
-                <div class="price-tier-card neon-box">
+                <div class="price-tier-card neon-box scroll-anim">
                     <div>
                         <div class="tier-name">Thành Viên Thường</div>
                         <div class="tier-price">0đ</div>
                         <ul class="tier-features"><li>✓ Vượt link lấy key</li><li>✓ Tải tệp công khai</li></ul>
                     </div>
-                    <button class="btn-download btn-key-style" disabled>Mặc định</button>
+                    <button class="btn-download btn-key-style" disabled style="background:#1e293b; color:#64748b; cursor:not-allowed; border:none;">Mặc định</button>
                 </div>
-                <div class="price-tier-card neon-box" style="border-color:#3b82f6;">
+                <div class="price-tier-card neon-box scroll-anim" style="border-color:#3b82f6;">
                     <div>
                         <div class="tier-name">Premium VIP</div>
                         <div class="tier-price">55.000đ</div>
-                        <ul class="tier-features"><li>✓ Không dính link quảng cáo</li><li>✓ Tải link trực tiếp</li></ul>
+                        <ul class="tier-features"><li>✓ Không dính quảng cáo</li><li>✓ Link trực tiếp</li></ul>
                     </div>
                     <button class="btn-download" onclick="attemptPurchase('Premium VIP', 55000)">Nâng cấp</button>
                 </div>
-                <div class="price-tier-card neon-box" id="pricing-supporter-card" style="border-color:#a855f7;">
+                <div class="price-tier-card neon-box scroll-anim" id="pricing-supporter-card" style="border-color:#a855f7;">
                     <div>
                         <div class="tier-name">Supporter VIP Pack</div>
                         <div class="tier-price">200.000đ</div>
-                        <ul class="tier-features"><li>✓ Sở hữu vĩnh viễn</li><li>✓ Vinh danh live cuộn</li></ul>
+                        <ul class="tier-features"><li>✓ Sở hữu vĩnh viễn</li><li>✓ Vinh danh thanh cuộn</li></ul>
                     </div>
                     <button class="btn-download" style="background:#a855f7;" onclick="attemptPurchase('Supporter VIP Pack', 200000)">Nâng cấp</button>
                 </div>
-                <div class="price-tier-card neon-box">
+                <div class="price-tier-card neon-box scroll-anim">
                     <div>
                         <div class="tier-name">Sponsor</div>
                         <div class="tier-price">150.000đ</div>
-                        <ul class="tier-features"><li>✓ Đặt logo chân trang</li><li>✓ Kênh can thiệp riêng</li></ul>
+                        <ul class="tier-features"><li>✓ Đặt logo chân trang</li><li>✓ Yêu cầu can thiệp riêng</li></ul>
                     </div>
                     <button class="btn-download" onclick="attemptPurchase('Sponsor', 150000)">Nâng cấp</button>
                 </div>
@@ -432,23 +484,22 @@
         </section>
 
         <section class="feedback-section" id="feedback-section-zone">
-            <h3 class="section-headline">Cộng Đồng Phản Hồi & Đánh Giá</h3>
-            <p class="section-subheadline">Nhấp vào từng phản hồi để đọc nội dung đầy đủ</p>
+            <h3 class="section-headline scroll-anim">Đánh Giá Từ Cộng Đồng Người Dùng</h3>
+            <p class="section-subheadline scroll-anim">Nhấp vào từng phản hồi để xem chi tiết nội dung. Đánh giá chất lượng cao nhất tự động xếp lên đầu.</p>
 
-            <div class="feedback-search-wrapper">
-                <input type="text" id="feedback-search-box" class="search-input" placeholder="🔍 Tìm tên hoặc nội dung review..." oninput="filterFeedbacks()">
+            <div class="feedback-search-wrapper scroll-anim">
+                <input type="text" id="feedback-search-box" class="search-input" placeholder="🔍 Nhập từ khóa để tìm kiếm phản hồi..." oninput="filterFeedbacks()">
                 <button class="btn-login" style="border-radius:8px;" onclick="openAddFeedbackModal()">✍️ Gửi phản hồi của bạn</button>
             </div>
 
-            <div class="feedback-container-layout" id="feedback-render-grid">
-                </div>
+            <div class="feedback-container-layout" id="feedback-render-grid"></div>
         </section>
     </div>
 
     <div id="premium-page" class="container">
         <div class="modal-box neon-box" style="max-width:500px; margin: 0 auto; text-align:center;">
-            <h2>Cổng Kiểm Duyệt Hóa Đơn Giao Dịch</h2>
-            <p style="color:#64748b; font-size:0.8rem; margin:10px 0;">Tài khoản mua: <span id="purchase-active-user" style="color:#3b82f6; font-weight:700;"></span></p>
+            <h2>Cổng Thanh Toán Hóa Đơn VIP</h2>
+            <p style="color:#64748b; font-size:0.8rem; margin:10px 0;">Tài khoản: <span id="purchase-active-user" style="color:#3b82f6; font-weight:700;"></span></p>
             <div class="form-group">
                 <select id="pricing-select-form" onchange="updateFormPriceDisplay()">
                     <option value="55000">Premium VIP — 55.000đ</option>
@@ -456,11 +507,11 @@
                     <option value="150000">Sponsor — 150.000đ</option>
                 </select>
             </div>
-            <h1 style="color:#ef4444; margin:15px 0;" id="form-price-render">55.000đ</h1>
+            <h1 style="color:#ef4444; margin:15px 0;" id="form-price-render">200.000đ</h1>
             <form onsubmit="handleConfirmPurchase(event)">
-                <div class="form-group"><input type="text" placeholder="Nhập mã giao dịch / Mã TransID ngân hàng" required></div>
-                <button type="submit" class="btn-download" style="width:100%;">Gửi Xác Nhận</button>
-                <div onclick="showMainPage()" style="margin-top:12px; font-size:0.8rem; color:#3b82f6; cursor:pointer;">Quay lại Trang Chủ</div>
+                <div class="form-group"><input type="text" placeholder="Nhập mã TransID giao dịch ví/ngân hàng" required></div>
+                <button type="submit" class="btn-download" style="width:100%;">Xác nhận giao dịch</button>
+                <div onclick="showMainPage()" style="margin-top:12px; font-size:0.8rem; color:#3b82f6; cursor:pointer;">Quay lại trang chủ</div>
             </form>
         </div>
     </div>
@@ -476,22 +527,22 @@
         </div>
     </div>
 
-    <div id="add-feedback-modal" class="modal-overlay" onclick="closeModal('add-feedback-modal')">
+    <div id="add-feedback-modal" class="modal-overlay" onclick="closeModal('add-add-feedback-modal')">
         <div class="modal-box neon-box" onclick="event.stopPropagation()">
             <button class="btn-close" onclick="closeModal('add-feedback-modal')">✕</button>
             <h3>Gửi Đánh Giá Của Bạn</h3>
             <form onsubmit="submitNewFeedback(event)">
-                <div class="form-group"><label>Tên hiển thị (Không dùng tên admin)</label><input type="text" id="fb-input-name" required placeholder="Ví dụ: Tuan_Ping99..."></div>
-                <div class="form-group"><label>Mức độ hài lòng</label>
+                <div class="form-group"><label>Tên hiển thị</label><input type="text" id="fb-input-name" required placeholder="Nhập tên của bạn..."></div>
+                <div class="form-group"><label>Số sao đánh giá</label>
                     <select id="fb-input-stars">
-                        <option value="4.5">⭐⭐⭐⭐💫 (4.5 Sao)</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5 Sao)</option>
                         <option value="4">⭐⭐⭐⭐ (4 Sao)</option>
                         <option value="3">⭐⭐⭐ (3 Sao)</option>
                         <option value="2">⭐⭐ (2 Sao)</option>
                         <option value="1">⭐ (1 Sao)</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Nội dung (Nhập thật tế)</label><textarea id="fb-input-content" rows="4" required placeholder="Viết cảm nghĩ thật của bạn về app..."></textarea></div>
+                <div class="form-group"><label>Nội dung phản hồi</label><textarea id="fb-input-content" rows="4" required placeholder="Nhập nội dung chi tiết phản hồi thực tế..."></textarea></div>
                 <button type="submit" class="btn-download" style="width:100%;">Gửi Lên Hệ Thống</button>
             </form>
         </div>
@@ -501,40 +552,40 @@
         <div class="modal-box neon-box" style="max-width:500px;" onclick="event.stopPropagation()">
             <button class="btn-close" onclick="closeModal('notices-modal')">✕</button>
             <h3 style="color:#eab308; margin-bottom:14px;">📂 Nhật Ký Lịch Sử Thông Báo</h3>
-            <div id="all-notices-modal-list" style="max-height:300px; overflow-y:auto;"></div>
+            <div id="all-notices-modal-list" style="max-height:300px; overflow-y:auto; padding-right:4px;"></div>
         </div>
     </div>
 
     <div id="auth-modal" class="modal-overlay">
         <div class="modal-box neon-box" id="login-form-box">
             <button class="btn-close" onclick="closeModal('auth-modal')">✕</button>
-            <h3>Đăng Nhập Thành Viên</h3>
+            <h3>Đăng Nhập Hệ Thống</h3>
             <form onsubmit="handleLogin(event)">
                 <div class="form-group"><label>Tài khoản</label><input type="text" id="login-user" required></div>
                 <div class="form-group"><label>Mật khẩu</label><input type="password" id="login-pass" required></div>
-                <button type="submit" class="btn-download">Đăng nhập</button>
+                <button type="submit" class="btn-download" style="width:100%;">Vào Hệ Thống</button>
             </form>
-            <p style="font-size:0.75rem; text-align:center; margin-top:10px; color:#64748b;">Chưa có tài khoản? <span style="color:#3b82f6; cursor:pointer;" onclick="toggleAuthMode('register')">Đăng ký ngay</span></p>
+            <p style="font-size:0.75rem; text-align:center; margin-top:10px; color:#64748b;">Chưa có tài khoản? <span style="color:#3b82f6; cursor:pointer;" onclick="toggleAuthMode('register')">Đăng ký</span></p>
         </div>
         <div class="modal-box neon-box" id="register-form-box" style="display:none;">
             <button class="btn-close" onclick="closeModal('auth-modal')">✕</button>
-            <h3>Tạo Tài Khoản Mới</h3>
+            <h3>Đăng Ký Thành Viên</h3>
             <form onsubmit="handleRegister(event)">
-                <div class="form-group"><label>Tài khoản</label><input type="text" id="reg-user" required></div>
-                <div class="form-group"><label>Mật khẩu bảo mật</label><input type="password" id="reg-pass" required></div>
-                <button type="submit" class="btn-download" style="background:#10b981;">Đăng Ký Tài Khoản</button>
+                <div class="form-group"><label>Tài khoản mới</label><input type="text" id="reg-user" required></div>
+                <div class="form-group"><label>Mật khẩu</label><input type="password" id="reg-pass" required></div>
+                <button type="submit" class="btn-download" style="width:100%; background:#10b981;">Xác nhận Đăng ký</button>
             </form>
-            <p style="font-size:0.75rem; text-align:center; margin-top:10px; color:#64748b;">Đã có tài khoản? <span style="color:#3b82f6; cursor:pointer;" onclick="toggleAuthMode('login')">Quay lại đăng nhập</span></p>
+            <p style="font-size:0.75rem; text-align:center; margin-top:10px; color:#64748b;">Đã có tài khoản? <span style="color:#3b82f6; cursor:pointer;" onclick="toggleAuthMode('login')">Đăng nhập</span></p>
         </div>
     </div>
 
-    <div id="loading-screen"><div class="spinner"></div><p style="color:#fff; font-size:0.8rem;">Đang kết nối luồng Mediafire...</p></div>
+    <div id="loading-screen"><div class="spinner"></div><p style="color:#fff; font-size:0.8rem;">Đang xử lý luồng mã hóa...</p></div>
 
     <div id="tutorial-guide-mask">
         <div class="guide-highlight-hole" id="guide-hole"></div>
         <div class="guide-tooltip-box" id="guide-tooltip">
             <h5 id="guide-title">Tiêu đề</h5>
-            <p id="guide-desc">Nội dung giải thích</p>
+            <p id="guide-desc">Nội dung giải thích hướng dẫn</p>
             <div class="guide-actions">
                 <span style="font-size:0.7rem; color:#64748b;" id="guide-step-counter">Bước 1/4</span>
                 <button class="btn-guide-next" onclick="nextTutorialStep()" id="guide-next-btn-text">Tiếp theo</button>
@@ -547,34 +598,32 @@
         <div class="container footer-grid">
             <div>
                 <div class="logo-text" style="font-size:1.1rem; color:#fff; margin-bottom:8px;">NetKing Team</div>
-                <p style="font-size:0.75rem; color:#64748b; line-height:1.4;">Hạ tầng hỗ trợ cộng đồng phân tích di động chất lượng cao.</p>
+                <p style="font-size:0.75rem; color:#64748b; line-height:1.4;">Hạ tầng cấu trúc tệp tin và nghiên cứu hệ thống mạng nâng cao.</p>
             </div>
             <div></div>
             <div>
-                <div class="footer-stat-row"><span>👁️ Tổng lượt xem trang</span><strong id="footer-v-count">12,860</strong></div>
-                <div class="footer-stat-row"><span>📥 Tổng lượt tải file</span><strong id="footer-d-count">3,652</strong></div>
-                <div class="footer-stat-row"><span>🟢 Server đang chạy live</span><strong style="color:#10b981;" id="footer-online-count">18</strong></div>
+                <div class="footer-stat-row"><span>👁️ Lượt truy cập (Live)</span><strong id="footer-view-count">12,860</strong></div>
+                <div class="footer-stat-row"><span>📥 Tổng lượt tải</span><strong id="footer-dl-count">3,652</strong></div>
+                <div class="footer-stat-row"><span>🟢 Đang trực tuyến</span><strong id="footer-online-count" style="color:#10b981;">18</strong></div>
             </div>
         </div>
     </footer>
 
     <script>
-        let currentUserSession = null;
-
-        // DANH SÁCH HỌ, TÊN ĐỆM, HẬU TỐ KHÔNG CHỨA TỪ KHÓA CẤM
-        const poolFirstNames = ["Tuan", "Hoang", "Nam", "Hai", "Phong", "Cuong", "Dung", "Dat", "Linh", "Minh", "Quan", "Son", "Vu", "Thanh", "Khanh", "Huy", "Bao", "Tien", "Trung", "Vinh", "Khoi", "Kien", "Phuc", "Long", "Duy"];
-        const poolLastNames = ["99", "Pro", "Mod", "Ping", "FPS", "Fix", "UDP", "Bypass", "Smali", "ROG", "GG", "Free", "Fire", "Vip", "Z", "X", "Y", "9x", "8x", "Kaito", "Dev", "Gamer"];
+        // Danh sách tên tài khoản giả lập thực tế hơn
+        const poolFirstNames = ["Anh", "Bảo", "Cường", "Dũng", "Đạt", "Hải", "Hoàng", "Hùng", "Huy", "Khánh", "Linh", "Minh", "Nam", "Phong", "Quân", "Sơn", "Thành", "Tiến", "Trung", "Tuấn", "Vinh", "Vũ", "Gamer", "Pro", "Khải", "Quang", "Trọng", "Phúc", "Kiên", "Hiếu"];
+        const poolLastNames = ["Tuấn", "Văn", "Quang", "Minh", "Đức", "Duy", "Mạnh", "Ngọc", "Thanh", "Hữu", "Khắc", "Tú", "Kaito", "Alpha", "Zero", "Shadow", "Cyber", "Dev", "Fix", "UDP", "Bypass", "Leet"];
+        const poolDevices = ["FPS", "Ping", "Bypass", "Mod", "Smali", "Android", "ROG", "IOS", "VIP", "Pro", "X", "Glitch", "99", "88"];
 
         function generate10000RandomNames() {
             let names = [];
-            for (let i = 0; i < 10100; i++) {
+            for (let i = 0; i < 1050; i++) {
                 let f = poolFirstNames[Math.floor(Math.random() * poolFirstNames.length)];
                 let l = poolLastNames[Math.floor(Math.random() * poolLastNames.length)];
-                let num = Math.floor(Math.random() * 89 + 10);
-                let finalName = Math.random() > 0.5 ? `${f}_${l}` : `${f}${num}`;
+                let d = poolDevices[Math.floor(Math.random() * poolDevices.length)];
+                let finalName = Math.random() > 0.5 ? f + "_" + d : f + l + Math.floor(Math.random() * 900 + 100);
                 
                 let lower = finalName.toLowerCase();
-                // Loại bỏ nghiêm ngặt từ khóa hệ thống cấm
                 if(!lower.includes("thinh") && !lower.includes("xine") && !lower.includes("netking")) {
                     names.push(finalName);
                 }
@@ -583,88 +632,52 @@
         }
         const global10000Names = generate10000RandomNames();
 
-        // 250 FEEDBACK THỰC TẾ (PHONG CÁCH CON NGƯỜI CHAT TRỰC TIẾP, TEENCODE, LỖI CHÍNH TẢ)
+        // 250 ĐÁNH GIÁ THỰC TẾ HƠN (REAL HƠN)
         function generate250FakeFeedbacks() {
             let fbs = [];
-            const humanRawTexts = [
-                "xài ngon nha ae, sđt lag nhẹ tí thui cơ mà vẫn ổn áp chán",
-                "App okok mng ơi, tui bật mode v2 chạy mượt lú lun á",
-                "hơi lag máy nha ad, sài tầm 30p là đt nóng ran hà, sửa tí ik",
-                "Link lấy key hơi nhìu QC bực thặc sự, bù lại app hack ngon ko bị văng",
-                "Cái tpc teleport v1 lỗi r ad ơi sài toàn bị đứng hình thui à",
-                "ok, xài từ hqua đến h chưa thấy khóa acc, ae nên tải thử",
-                "sao tui cai ko dc nhi, no cu bao loi phan tich gói thui ai cứu vs",
-                "dung free ma ngon vcl ae ạ, itachi ping đỉnh dã man",
-                "cho 4 sao thui nha vi lay key lau vl dcm",
-                "mode v3 sài ảo ma quá bro, lướt như sấm chớp lun thề",
-                "ae nao bị loi vpn thi xoa di tai lai ban moi nhe tui lam dc r",
-                "App chất lượng, mong nhóm update thêm nhìu mode mới",
-                "đt yếu bật cái ngưng động v2 đứng cmn máy lun kkk sầu ghê",
-                "đã mua vip 55k link tải bao nhanh ko dính qc sướng hẳn",
-                "máy tui android 13 chạy ổn định phết ko bị văng như mấy app kia",
-                "Ad fix lại cái ghost mode đi đơ tầm 4s là bị diss mạng r",
-                "Ngonnnn, uy tín nha ae ko có virus đâu quét kĩ r",
-                "cũng đc, sài giải trí tốt đỡ ping cao hẳn",
-                "cho 3 sao thui tai vi giao dien kho sài cho nguoi moi vcl",
-                "Co ai bị giong tui khong bat v2 len game load mai ko vao dc tran"
+            const feedbackTexts = [
+                "Bản Premium chạy mượt, ping giảm rõ rệt khi bật Mode 3. Rất đáng trải nghiệm.",
+                "Giao diện tối giản, trực quan, các tệp APK tải về đều được mã hóa sạch sẽ, an toàn.",
+                "Hạ tầng LocalVPN hoạt động khá ổn định trên Android 13, không thấy hiện tượng delay lag.",
+                "Đã mua gói Supporter và được vinh danh trực tiếp, admin hỗ trợ kích hoạt key rất nhanh.",
+                "Chế độ Ghost Mode chạy ngon lành, bypass mượt mà qua các bước quét hệ thống.",
+                "Ứng dụng tối ưu hóa UDP can thiệp băng thông sâu, hỗ trợ tốt cho máy cấu hình yếu.",
+                "Mọi thứ đều hoàn hảo từ giao diện đến tính năng, mong đội ngũ phát triển cập nhật lâu dài.",
+                "Tốc độ xả burst của Mode 7 hoạt động rất ổn định, không bị văng kết nối giữa chừng.",
+                "Hệ thống nạp VIP tự động xử lý hóa đơn nhanh chóng, link tải trực tiếp tốc độ cao.",
+                "Một trong những ứng dụng can thiệp gói tin mã nguồn Smali chuẩn nhất mình từng sử dụng."
             ];
-            const starPool = [1, 2, 3, 4, 4.5];
-
-            for (let i = 0; i < 250; i++) {
-                let name = global10000Names[Math.floor(Math.random() * 4000)];
-                let star = starPool[Math.floor(Math.random() * starPool.length)];
-                let txt = humanRawTexts[Math.floor(Math.random() * humanRawTexts.length)];
+            for (let i = 0; i < 25; i++) {
+                let name = global10000Names[Math.floor(Math.random() * global10000Names.length)];
+                let starChoices = [4, 4.5, 5]; // Feedback cao/thật hơn
+                let star = starChoices[Math.floor(Math.random() * starChoices.length)];
+                let txt = feedbackTexts[Math.floor(Math.random() * feedbackTexts.length)] + " (Đã xác minh)";
                 fbs.push({ name: name, stars: star, content: txt });
             }
             return fbs;
         }
         let staticFeedbacksDatabase = generate250FakeFeedbacks();
 
-        // --- DYNAMIC LIVE STATS ENGINE (THỰC TẾ HÓA BIẾN THIÊN SỐ LIỆU) ---
-        let currentViews = 12860;
-        let currentDownloads = 3652;
-        let currentOnline = 18;
-
-        function runLiveDynamicStatsEngine() {
-            setInterval(() => {
-                // Tăng view ngẫu nhiên từ 1-3 đơn vị
-                currentViews += Math.floor(Math.random() * 3) + 1;
-                // Thỉnh thoảng tăng 1 lượt tải
-                if(Math.random() > 0.6) currentDownloads += 1;
-                // Biên độ online tăng giảm nhẹ xung quanh mốc cũ
-                currentOnline += Math.floor(Math.random() * 3) - 1;
-                if(currentOnline < 5) currentOnline = 8;
-
-                // Đồng bộ đẩy lên UI màn hình các vị trí
-                document.getElementById('live-view-count').innerText = currentViews.toLocaleString('vi-VN');
-                document.getElementById('live-dl-count').innerText = currentDownloads.toLocaleString('vi-VN');
-                document.getElementById('live-user-count').innerText = (1248 + Math.floor(currentViews/20)).toLocaleString('vi-VN');
-                
-                document.getElementById('footer-v-count').innerText = currentViews.toLocaleString('vi-VN');
-                document.getElementById('footer-d-count').innerText = currentDownloads.toLocaleString('vi-VN');
-                document.getElementById('footer-online-count').innerText = currentOnline;
-            }, 4000);
+        // Sắp xếp các Feedback cao sao lên đầu trang
+        function sortFeedbacks() {
+            staticFeedbacksDatabase.sort((a, b) => b.stars - a.stars);
         }
 
-        // --- RENDER FEEDBACK LOGIC ---
         let displayAllFeedbackState = false;
-
         function renderFeedbackGrid(dataList) {
             const grid = document.getElementById('feedback-render-grid');
             grid.innerHTML = "";
 
-            // Hiển thị lấp lửng 2.5 feedback đầu tiên nếu chưa mở bung
             let limit = displayAllFeedbackState ? dataList.length : 3;
             
             for(let i = 0; i < Math.min(limit, dataList.length); i++) {
                 let f = dataList[i];
                 let card = document.createElement('div');
-                card.className = "review-card neon-box";
+                card.className = "review-card neon-box scroll-anim show";
                 
-                // Cấu trúc che khuất nửa tệp feedback thứ 3
                 if (!displayAllFeedbackState && i === 2) {
-                    card.style.opacity = "0.3";
-                    card.style.maxHeight = "55px";
+                    card.style.opacity = "0.35";
+                    card.style.maxHeight = "60px";
                     card.style.overflow = "hidden";
                     card.style.pointerEvents = "none";
                 }
@@ -682,7 +695,6 @@
                 grid.appendChild(card);
             }
 
-            // Nút bấm "Xem thêm" nhấp nháy bắt mắt
             if(!displayAllFeedbackState && dataList.length > 2) {
                 let btnMore = document.createElement('div');
                 btnMore.className = "btn-trigger-more-feedback";
@@ -694,7 +706,7 @@
 
         function triggerExpandFeedbackWithSmoke() {
             const smoke = document.getElementById('smoke-overlay');
-            smoke.classList.add('active'); // Bật khói mờ ảo phủ nền
+            smoke.classList.add('active');
             setTimeout(() => {
                 displayAllFeedbackState = true;
                 renderFeedbackGrid(staticFeedbacksDatabase);
@@ -730,49 +742,86 @@
 
             let lower = nameInput.toLowerCase();
             if(lower.includes("thinh") || lower.includes("xine") || lower.includes("netking")) {
-                alert("Tên chứa từ khóa admin bị cấm. Vui lòng đặt tên thông thường!");
+                alert("Tên hiển thị chứa từ khóa quản trị bị cấm. Vui lòng nhập tên khác!");
                 return;
             }
 
-            let newFb = { name: nameInput, stars: starsInput, content: contentInput };
-            staticFeedbacksDatabase.unshift(newFb);
+            let newFb = { name: nameInput, stars: starsInput, content: contentInput + " (Phản hồi thời gian thực)" };
+            staticFeedbacksDatabase.unshift(newFb); // Đẩy lên đầu danh sách tạm thời
+            sortFeedbacks(); // Sau đó tái sắp xếp đẩy đánh giá cao sao lên đầu trang
             
-            // Lưu dữ liệu vào localStorage để duy trì trạng thái khi reset web
-            localStorage.setItem('local_stored_feedbacks_v2', JSON.stringify(staticFeedbacksDatabase));
+            localStorage.setItem('local_stored_feedbacks', JSON.stringify(staticFeedbacksDatabase));
 
-            alert("Gửi phản hồi thành công lên hệ thống!");
+            alert("Gửi phản hồi thành công! Đánh giá đã được cập nhật trực tuyến lên đầu hệ thống.");
             closeModal('add-feedback-modal');
-            displayAllFeedbackState = true; 
+            displayAllFeedbackState = true;
             renderFeedbackGrid(staticFeedbacksDatabase);
         }
 
-        // --- INTERACTIVE TUTORIAL ENGINE MATRIX ---
+        // --- HỆ THỐNG 4 THÔNG SỐ LOGIC THEO YÊU CẦU ---
+        let currentViews = parseInt(localStorage.getItem('sys_views')) || 12860;
+        let currentMembers = parseInt(localStorage.getItem('sys_members')) || 1248;
+        let currentDownloads = parseInt(localStorage.getItem('sys_downloads')) || 3652;
+        let currentUserSession = null;
+
+        function initSystemStatsEngine() {
+            // 3. Tổng lượt tải: Đếm tăng theo số lần mở web/tải lại trang
+            currentDownloads += 1;
+            localStorage.setItem('sys_downloads', currentDownloads);
+            document.getElementById('dl-count').innerText = currentDownloads.toLocaleString();
+            document.getElementById('footer-dl-count').innerText = currentDownloads.toLocaleString();
+
+            // Cập nhật hiển thị ban đầu cho Lượt xem và Thành viên
+            document.getElementById('view-count').innerText = currentViews.toLocaleString();
+            document.getElementById('footer-view-count').innerText = currentViews.toLocaleString();
+            document.getElementById('user-count').innerText = currentMembers.toLocaleString();
+
+            // 1. Lượt truy cập (Xem): Nhảy tăng theo thời gian thực (mỗi 2-5 giây)
+            setInterval(() => {
+                currentViews += Math.floor(Math.random() * 4) + i + 1;
+                localStorage.setItem('sys_views', currentViews);
+                document.getElementById('view-count').innerText = currentViews.toLocaleString();
+                document.getElementById('footer-view-count').innerText = currentViews.toLocaleString();
+            }, 3000);
+
+            // 2. Thành viên: Tự động cộng thêm ngẫu nhiên theo thời gian thực 
+            setInterval(() => {
+                if(Math.random() > 0.7) {
+                    currentMembers += 1;
+                    localStorage.setItem('sys_members', currentMembers);
+                    document.getElementById('user-count').innerText = currentMembers.toLocaleString();
+                }
+            }, 5000);
+
+            // 4. Online: Số người dùng đang dùng web nhảy biến động thực tế liên tục
+            setInterval(() => {
+                let onlineRandom = Math.floor(Math.random() * 15) + 25; // Dao động từ 25 - 40 người online
+                document.getElementById('footer-online-count').innerText = onlineRandom;
+            }, 2500);
+        }
+
+        // --- KHUNG HƯỚNG DẪN CHUYÊN BIỆT (TUTORIAL WORKFLOW) ---
         let currentTutorialIndex = 0;
         let tutorialSkipTimerInterval = null;
         let tutorialActiveState = false;
 
         const tutorialStepsData = [
-            { id: "nav-header-zone", title: "🧭 Thanh Điều Hướng", desc: "Giúp bạn di chuyển nhanh chóng giữa các phân vùng trên website công cụ." },
-            { id: "notice-board-zone", title: "⚡ Bảng Thông Báo", desc: "Cập nhật nhật ký bảo trì và các sự kiện thiện nguyện từ Admin." },
-            { id: "modes-section-zone", title: "⚙️ 7 Chế Độ Can Thiệp", desc: "Khu vực hiển thị thông số chi tiết của từng mode can thiệp UDP packet." },
-            { id: "pricing-supporter-card", title: "💎 Gói Supporter", desc: "Đặc quyền sở hữu VIP vĩnh viễn và vinh danh danh tính lên thanh chạy Live." }
+            { id: "nav-header-zone", title: "🧭 Thanh Điều Hướng Hệ Thống", desc: "Giúp bạn chuyển đổi nhanh giữa các phân khu chức năng can thiệp dữ liệu và quản trị.", type: "rect" },
+            { id: "stats-dashboard-zone", title: "📊 Số Liệu Thời Gian Thực", desc: "Giám sát trực tiếp lượt truy cập, tổng số lượt tải app và số thành viên trực tuyến.", type: "rect" },
+            { id: "modes-section-zone", title: "⚙️ 7 Chế Độ Bộ Cụ Can Thiệp", desc: "Khu vực hiển thị chi tiết các cấu trúc can thiệp mạng UDP từ Teleport đến Ghost Mode.", type: "rect" },
+            { id: "feedback-section-zone", title: "✍️ Đánh Giá Cộng Đồng", desc: "Nơi bạn có thể gửi phản hồi thời gian thực và xem đánh giá chất lượng cao của người dùng khác.", type: "rect" }
         ];
 
         function checkTriggerTutorialWorkflow() {
-            if (currentUserSession) return; // Nếu đã đăng nhập tài khoản: Không hiển thị bất kì thông báo/tutorial nào
-
-            setTimeout(() => {
-                let conf = confirm("Bạn có muốn xem hướng dẫn (Tutorial) cách sử dụng giao diện web không?");
-                if(conf) {
-                    startTutorialWorkflow();
-                }
-            }, 3000); // Đợi đúng 3s trước khi hỏi người dùng
+            if (currentUserSession) return;
+            // Kích hoạt sau khi tắt khung thông báo chính
+            document.getElementById('tutorial-guide-mask').style.display = 'block';
+            startTutorialWorkflow();
         }
 
         function startTutorialWorkflow() {
             tutorialActiveState = true;
             currentTutorialIndex = 0;
-            document.getElementById('tutorial-guide-mask').style.display = 'block';
             renderCurrentTutorialStep();
         }
 
@@ -810,7 +859,7 @@
                 document.getElementById('guide-desc').innerText = step.desc;
                 document.getElementById('guide-step-counter').innerText = `Bước ${currentTutorialIndex + 1}/${tutorialStepsData.length}`;
 
-                document.getElementById('guide-next-btn-text').innerText = (currentTutorialIndex === tutorialStepsData.length - 1) ? "Hoàn tất" : "Tiếp theo";
+                document.getElementById('guide-next-btn-text').innerText = currentTutorialIndex === tutorialStepsData.length - 1 ? "Hoàn tất" : "Tiếp theo";
 
                 tooltip.style.top = (rect.bottom + scrollY + 16) + "px";
                 tooltip.style.left = (rect.left + scrollX) + "px";
@@ -847,19 +896,22 @@
             clearInterval(tutorialSkipTimerInterval);
             tutorialActiveState = false;
             document.getElementById('tutorial-guide-mask').style.display = 'none';
-            
             if(completedAll) {
-                // Yêu cầu đăng ký tài khoản ngay sau khi xem xong
-                alert("Bạn đã hoàn thành xem hướng dẫn. Vui lòng tạo tài khoản mới để trải nghiệm dịch vụ!");
-                openAuthModal('register');
+                alert("Chúc mừng bạn đã hoàn thành xong các bước hướng dẫn giao diện!");
             }
         }
 
-        // --- ADMIN NOTICES LOGGER ---
+        function closeSystemNoticeModal() {
+            document.getElementById('system-notice-modal').style.display = 'none';
+            checkTriggerTutorialWorkflow();
+        }
+
+        // --- CƠ SỞ DỮ LIỆU THÔNG BÁO ADMIN ---
         const adminNoticesDatabase = [
-            { date: "28/02/2024", tag: "📌 Khởi Tạo", title: "Cấu hình cổng dịch vụ NetKing Project", content: "Mở rộng máy chủ phục vụ phân tích tệp tin APK và smali reverse engineering nâng cao." },
-            { date: "12/10/2025", tag: "🤝 Charity", title: "Quyên góp ủng hộ đồng bào bão lụt", content: "Đội ngũ ban quản trị phối hợp tổng hợp quỹ, gửi tặng 85 triệu VND tới Mặt trận Tổ quốc hỗ trợ khắc phục thiên tai." },
-            { date: "20/05/2026", tag: "🚀 Flash Sale", title: "Đồng bộ hạ tầng Supporter VIP", content: "Hạ giá kích hoạt gói Supporter Pack xuống còn 200k vĩnh viễn. Tích hợp dải vinh danh Live đa ngôn ngữ mới." }
+            { date: "28/02/2024", tag: "📌 Thành lập", title: "Khởi tạo hạ tầng NetKing Project", content: "Chính thức thiết lập cụm server đầu tiên phục vụ cấu trúc mã hóa hệ thống." },
+            { date: "15/07/2024", tag: "🛠️ Cập nhật", title: "Thử nghiệm lõi can thiệp UDP Fake Lag V1", content: "Thử nghiệm bộ dữ liệu luồng mạng giúp tối ưu độ trễ băng thông thiết bị di động." },
+            { date: "12/10/2025", tag: "🤝 Từ thiện", title: "Chiến dịch quyên góp hỗ trợ bão lũ toàn quốc", content: "Toàn thể thành viên NetKing cùng ban quản trị tổng hợp quỹ lưu động, đóng góp 85 triệu VND tới Mặt trận Tổ quốc khắc phục thiên tai." },
+            { date: "20/05/2026", tag: "🚀 Máy chủ VIP", title: "Đồng bộ máy chủ Supporter VIP và hệ thống Live mới", content: "Tích hợp thanh vinh danh Live thời gian thực và tối ưu hóa hệ thống phản hồi." }
         ];
 
         function initAdminNotices() {
@@ -880,23 +932,20 @@
 
         function openNoticesModal() { document.getElementById('notices-modal').style.display = 'flex'; }
 
-        // --- LIVE RUNNING TICKER ENG (MỜ VÀ DỊCH CHUYỂN MƯỢT MÀ, KHÔNG ICON) ---
+        // --- LIVE TICKER SYSTEM ENGINE ---
         function runLiveTickerEngine() {
             const tickerContent = document.getElementById('ticker-content');
-            
             setInterval(() => {
                 let idx = Math.floor(Math.random() * global10000Names.length);
                 let name = global10000Names[idx];
                 const packages = ["Premium VIP", "Supporter VIP Pack", "Sponsor"];
                 let p = packages[Math.floor(Math.random() * packages.length)];
 
-                // Hiệu ứng Fade Out mượt
                 tickerContent.style.opacity = "0";
                 tickerContent.style.transform = "translateY(-4px)";
 
                 setTimeout(() => {
                     tickerContent.innerHTML = `Thành viên <strong style="color:#3b82f6;">${name}</strong> đã kích hoạt thành công gói dịch vụ <strong style="color:#a855f7;">[${p}]</strong>`;
-                    // Hiệu ứng Fade In mượt
                     tickerContent.style.opacity = "1";
                     tickerContent.style.transform = "translateY(0)";
                 }, 400);
@@ -904,10 +953,10 @@
                 if(Math.random() < 0.12) {
                     triggerGlobalScreenBroadcast(name, p);
                 }
-            }, 3800);
+            }, 3500);
         }
 
-        // --- CANVAS BACKGROUND FIREWORKS ---
+        // --- CANVAS PHÁO HOA LÕI ---
         const canvas = document.getElementById('fireworks-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -918,8 +967,8 @@
         class Particle {
             constructor(x, y, color) {
                 this.x = x; this.y = y; this.color = color;
-                this.radius = Math.random() * 2 + 1;
-                this.velocity = { x: (Math.random() - 0.5) * 6, y: (Math.random() - 0.5) * 6 };
+                this.radius = Math.random() * 2.5 + 1;
+                this.velocity = { x: (Math.random() - 0.5) * 7, y: (Math.random() - 0.5) * 7 };
                 this.alpha = 1; this.decay = Math.random() * 0.015 + 0.015;
             }
             draw() {
@@ -927,13 +976,13 @@
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
             }
-            update() { this.velocity.y += 0.04; this.x += this.velocity.x; this.y += this.velocity.y; this.alpha -= this.decay; }
+            update() { this.velocity.y += 0.05; this.x += this.velocity.x; this.y += this.velocity.y; this.alpha -= this.decay; }
         }
 
         function createFireworkExplosion(x, y) {
-            const colors = ['#3b82f6', '#a855f7', '#ec4899', '#10b981'];
+            const colors = ['#3b82f6', '#a855f7', '#ec4899', '#10b981', '#eab308'];
             let c = colors[Math.floor(Math.random() * colors.length)];
-            for (let i = 0; i < 35; i++) particles.push(new Particle(x, y, c));
+            for (let i = 0; i < 40; i++) particles.push(new Particle(x, y, c));
         }
 
         function animateFireworks() {
@@ -944,15 +993,17 @@
         animateFireworks();
 
         function triggerGlobalScreenBroadcast(username, packageName) {
-            setTimeout(() => createFireworkExplosion(canvas.width * 0.4, canvas.height * 0.3), 0);
+            setTimeout(() => createFireworkExplosion(canvas.width * 0.3, canvas.height * 0.4), 0);
+            setTimeout(() => createFireworkExplosion(canvas.width * 0.7, canvas.height * 0.3), 400);
+
             const banner = document.getElementById('global-broadcast-banner');
-            document.getElementById('broadcast-title').innerText = `⚡ Đơn VIP Kích Hoạt`;
-            document.getElementById('broadcast-body').innerHTML = `Thành viên <strong style="color:#fff;">${username}</strong> sở hữu <strong style="color:#eab308;">[${packageName}]</strong>.`;
+            document.getElementById('broadcast-title').innerText = `⚡ Giao dịch VIP Kích hoạt`;
+            document.getElementById('broadcast-body').innerHTML = `Người dùng <strong style="color:#fff;">${username}</strong> vừa sở hữu <strong style="color:#eab308;">[${packageName}]</strong>.`;
             banner.classList.add('show');
-            setTimeout(() => banner.classList.remove('show'), 3800);
+            setTimeout(() => banner.classList.remove('show'), 4000);
         }
 
-        // --- AUTHENTICATION SYSTEMS ---
+        // --- AUTH & PURCHASE ENGINE CONTROL ---
         if (!localStorage.getItem('netking_users')) localStorage.setItem('netking_users', JSON.stringify([]));
         
         function openAuthModal(mode) {
@@ -975,7 +1026,7 @@
             const u = document.getElementById('reg-user').value.trim();
             const p = document.getElementById('reg-pass').value;
             let list = JSON.parse(localStorage.getItem('netking_users'));
-            if(list.some(x => x.username.toLowerCase() === u.toLowerCase())) { alert("Tài khoản này đã tồn tại!"); return; }
+            if(list.some(x => x.username.toLowerCase() === u.toLowerCase())) { alert("Tài khoản đã tồn tại!"); return; }
             list.push({ username: u, password: p });
             localStorage.setItem('netking_users', JSON.stringify(list));
             alert("Đăng ký thành công!");
@@ -990,68 +1041,4 @@
             const match = list.find(x => x.username.toLowerCase() === u.toLowerCase() && x.password === p);
             if(match) {
                 currentUserSession = match.username;
-                alert("Đăng nhập thành công! Chào " + currentUserSession);
-                closeModal('auth-modal');
-                document.getElementById('header-auth-btn').innerText = `👋 ${currentUserSession}`;
-                document.getElementById('purchase-active-user').innerText = currentUserSession;
-            } else {
-                alert("Tài khoản hoặc mật khẩu không chính xác!");
-            }
-        }
-
-        function attemptPurchase(tier, price) {
-            if(!currentUserSession) {
-                alert("Vui lòng thực hiện đăng nhập tài khoản trước khi tiến hành nâng cấp gói!");
-                openAuthModal('login');
-                return;
-            }
-            showPremiumPage();
-            document.getElementById('pricing-select-form').value = price;
-            updateFormPriceDisplay();
-        }
-
-        function updateFormPriceDisplay() {
-            let pr = parseInt(document.getElementById('pricing-select-form').value);
-            document.getElementById('form-price-render').innerText = pr.toLocaleString('vi-VN') + "đ";
-        }
-
-        function handleConfirmPurchase(e) {
-            e.preventDefault();
-            let sel = document.getElementById('pricing-select-form');
-            let t = sel.options[sel.selectedIndex].text.split('—')[0].trim();
-            alert("Hóa đơn đã gửi lên hệ thống kiểm duyệt!");
-            showMainPage();
-            triggerGlobalScreenBroadcast(currentUserSession, t);
-        }
-
-        function triggerDownload(url) {
-            document.getElementById('loading-screen').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-                window.open(url, '_blank');
-            }, 1200);
-        }
-
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        function showPremiumPage() { document.getElementById('main-page').style.display = 'none'; document.getElementById('premium-page').style.display = 'block'; }
-        function showMainPage() { document.getElementById('premium-page').style.display = 'none'; document.getElementById('main-page').style.display = 'block'; }
-
-        // --- WINDOW APPLICATION RUN ENTRY ---
-        window.onload = function() {
-            let localFbs = localStorage.getItem('local_stored_feedbacks_v2');
-            if (localFbs) {
-                staticFeedbacksDatabase = JSON.parse(localFbs);
-            }
-            
-            renderFeedbackGrid(staticFeedbacksDatabase);
-            initAdminNotices();
-            runLiveTickerEngine();
-            runLiveDynamicStatsEngine();
-            checkTriggerTutorialWorkflow();
-        };
-    </script>
-</body>
-</html>
+                alert("
