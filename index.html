@@ -7,9 +7,7 @@
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/TheFish-cyber/Netking/main/ic_launcher.png">
     
     <style>
-        /* ==========================================================================
-           1. RESET & MODERN FONTS SYSTEM
-           ========================================================================== */
+        /* --- RESET & MODERN FONTS --- */
         * {
             margin: 0;
             padding: 0;
@@ -39,9 +37,7 @@
             transition: background 0.5s ease;
         }
 
-        /* ==========================================================================
-           2. BACKGROUND THEMES MATRIX (CANVAS & OVERLAYS)
-           ========================================================================== */
+        /* --- BACKGROUND THEMES MATRIX --- */
         #theme-canvas {
             position: fixed;
             top: 0;
@@ -64,47 +60,37 @@
             opacity: 0;
         }
 
-        /* --- Theme 1: Aurora --- */
-        body.theme-aurora { 
-            background-color: #031417; 
-        }
+        /* 1. Aurora Theme */
+        body.theme-aurora { background-color: #031417; }
         .theme-aurora .theme-overlay {
             opacity: 1;
             background: radial-gradient(circle at 50% -20%, rgba(4, 219, 133, 0.15) 0%, transparent 50%),
                         radial-gradient(circle at 10% 30%, rgba(0, 102, 255, 0.1) 0%, transparent 40%);
         }
 
-        /* --- Theme 2: Galaxy --- */
-        body.theme-galaxy { 
-            background-color: #0b031a; 
-        }
+        /* 2. Galaxy Theme */
+        body.theme-galaxy { background-color: #0b031a; }
         .theme-galaxy .theme-overlay {
             opacity: 1;
             background: radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
                         radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
         }
 
-        /* --- Theme 3: Stars --- */
-        body.theme-stars { 
-            background-color: #020617; 
-        }
+        /* 3. Stars Theme */
+        body.theme-stars { background-color: #020617; }
         .theme-stars .theme-overlay {
             opacity: 1;
             background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
         }
 
-        /* --- Theme 4: Snowflakes --- */
-        body.theme-snowflakes { 
-            background-color: #0b132b; 
-        }
+        /* 4. Snowflakes Theme */
+        body.theme-snowflakes { background-color: #0b132b; }
         .theme-snowflakes .theme-overlay {
             opacity: 1;
             background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
         }
 
-        /* ==========================================================================
-           3. ANIMATION MATRIX & EFFECTS
-           ========================================================================== */
+        /* --- SCROLL ANIMATIONS --- */
         .scroll-anim {
             opacity: 0;
             filter: blur(20px); 
@@ -114,21 +100,10 @@
                         transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: opacity, filter, transform;
         }
-        .scroll-anim.show { 
-            opacity: 1; 
-            filter: blur(0px); 
-            transform: translateY(0); 
-        }
+        .scroll-anim.show { opacity: 1; filter: blur(0px); transform: translateY(0); }
 
-        .scroll-fade { 
-            opacity: 0; 
-            filter: blur(15px); 
-            transition: opacity 0.7s ease-in-out, filter 0.7s ease-in-out; 
-        }
-        .scroll-fade.show { 
-            opacity: 1; 
-            filter: blur(0); 
-        }
+        .scroll-fade { opacity: 0; filter: blur(15px); transition: opacity 0.7s ease-in-out, filter 0.7s ease-in-out; }
+        .scroll-fade.show { opacity: 1; filter: blur(0); }
 
         @keyframes popupScale {
             from { opacity: 0; transform: scale(0.93); filter: blur(10px); }
@@ -147,19 +122,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.7; transform: scale(0.97); }
-            50% { opacity: 1; transform: scale(1.03); box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
-            100% { opacity: 0.7; transform: scale(0.97); }
-        }
-
-        @keyframes spin { 
-            to { transform: rotate(360deg); } 
-        }
-
-        /* ==========================================================================
-           4. GLOBAL LAYOUT & NEON CONTAINERS
-           ========================================================================== */
         .container {
             width: 100%;
             max-width: 1100px;
@@ -184,9 +146,7 @@
             box-shadow: 0 0 40px rgba(0, 102, 255, 0.4), inset 0 0 20px rgba(0, 102, 255, 0.1);
         }
 
-        /* ==========================================================================
-           5. NAVIGATION NAVIGATION HEADER
-           ========================================================================== */
+        /* --- HEADER --- */
         header {
             border-bottom: 1px solid rgba(0, 102, 255, 0.2);
             backdrop-filter: blur(16px);
@@ -221,9 +181,7 @@
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .logo:hover .logo-img { 
-            transform: rotate(360deg); 
-        }
+        .logo:hover .logo-img { transform: rotate(360deg); }
 
         .logo-text {
             font-size: 1.05rem;
@@ -243,11 +201,7 @@
             margin-top: -1px;
         }
 
-        .logo-text svg { 
-            width: 10px; 
-            height: 10px; 
-            fill: currentColor; 
-        }
+        .logo-text svg { width: 10px; height: 10px; fill: currentColor; }
 
         nav ul {
             display: flex;
@@ -277,14 +231,8 @@
             transition: width 0.3s ease;
         }
 
-        nav ul a:hover::after, nav ul a.active::after { 
-            width: 100%; 
-        }
-        
-        nav ul a:hover, nav ul a.active { 
-            color: #fff; 
-            text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); 
-        }
+        nav ul a:hover::after, nav ul a.active::after { width: 100%; }
+        nav ul a:hover, nav ul a.active { color: #fff; text-shadow: 0 0 8px rgba(59, 130, 246, 0.6); }
 
         .header-right-zone {
             display: flex;
@@ -292,14 +240,11 @@
             gap: 12px;
         }
 
-        /* ==========================================================================
-           6. INTERACTIVE COMPONENTS ELEMENTS
-           ========================================================================== */
+        /* --- THEME SELECTOR --- */
         .theme-select-wrapper {
             position: relative;
             display: inline-block;
         }
-        
         .theme-select-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -314,19 +259,11 @@
             gap: 6px;
             transition: all 0.3s;
         }
-        
         .theme-select-btn:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.25);
         }
-        
-        .theme-select-btn svg { 
-            width: 14px; 
-            height: 14px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
+        .theme-select-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
         
         .theme-dropdown {
             position: absolute;
@@ -343,11 +280,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             z-index: 110;
         }
-        
-        .theme-dropdown.show { 
-            display: flex; 
-        }
-        
+        .theme-dropdown.show { display: flex; }
         .theme-opt {
             background: transparent;
             border: none;
@@ -364,24 +297,9 @@
             align-items: center;
             gap: 8px;
         }
-        
-        .theme-opt:hover { 
-            background: rgba(0, 102, 255, 0.15); 
-            color: #fff; 
-        }
-        
-        .theme-opt.active { 
-            background: #0052cc; 
-            color: #fff; 
-        }
-        
-        .theme-opt svg { 
-            width: 12px; 
-            height: 12px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
+        .theme-opt:hover { background: rgba(0, 102, 255, 0.15); color: #fff; }
+        .theme-opt.active { background: #0052cc; color: #fff; }
+        .theme-opt svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
 
         .btn-login {
             background: rgba(59, 130, 246, 0.12);
@@ -397,24 +315,10 @@
             align-items: center;
             gap: 6px;
         }
-        
-        .btn-login svg { 
-            width: 14px; 
-            height: 14px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
-        
-        .btn-login:hover { 
-            background: #3b82f6; 
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); 
-            transform: scale(1.05); 
-        }
+        .btn-login svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .btn-login:hover { background: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); transform: scale(1.05); }
 
-        /* ==========================================================================
-           7. TICKER & ALERT PANELS
-           ========================================================================== */
+        /* --- TICKER BAR --- */
         .live-ticker-container {
             display: flex;
             justify-content: center;
@@ -452,14 +356,7 @@
             animation: pulse 1.5s infinite;
             flex-shrink: 0;
         }
-        
-        .live-badge::before { 
-            content: ''; 
-            width: 6px; 
-            height: 6px; 
-            background: #fff; 
-            border-radius: 50%; 
-        }
+        .live-badge::before { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; }
 
         #ticker-content {
             display: inline-block;
@@ -470,6 +367,13 @@
             text-overflow: ellipsis;
         }
 
+        @keyframes pulse {
+            0% { opacity: 0.7; transform: scale(0.97); }
+            50% { opacity: 1; transform: scale(1.03); box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
+            100% { opacity: 0.7; transform: scale(0.97); }
+        }
+
+        /* --- GUEST ALERT FRAME --- */
         .guest-alert-frame {
             background: rgba(239, 68, 68, 0.08);
             border: 1px dashed rgba(239, 68, 68, 0.4);
@@ -480,7 +384,6 @@
             flex-direction: column;
             gap: 10px;
         }
-        
         .guest-alert-header {
             display: flex;
             align-items: center;
@@ -489,15 +392,7 @@
             font-weight: 700;
             font-size: 0.9rem;
         }
-        
-        .guest-alert-header svg { 
-            width: 16px; 
-            height: 16px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
-        
+        .guest-alert-header svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
         .guest-tutorial-box {
             background: rgba(2, 6, 23, 0.5);
             padding: 12px;
@@ -506,22 +401,10 @@
             color: #94a3b8;
             line-height: 1.5;
         }
-        
-        .guest-tutorial-box span { 
-            color: #3b82f6; 
-            font-weight: 600; 
-            cursor: pointer; 
-            text-decoration: underline; 
-        }
+        .guest-tutorial-box span { color: #3b82f6; font-weight: 600; cursor: pointer; text-decoration: underline; }
 
-        /* ==========================================================================
-           8. HERO HERO COMPONENT SECTION
-           ========================================================================== */
-        .hero { 
-            padding: 50px 0 30px 0; 
-            text-align: center; 
-        }
-        
+        /* --- HERO --- */
+        .hero { padding: 50px 0 30px 0; text-align: center; }
         .welcome-tag {
             background: rgba(0, 102, 255, 0.1);
             color: #3b82f6;
@@ -550,1138 +433,212 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-subtitle { 
-            font-size: 1rem; 
-            color: #94a3b8; 
-            margin-bottom: 16px; 
-            font-weight: 500; 
-            letter-spacing: 0.5px; 
-        }
+        .hero-subtitle { font-size: 1rem; color: #94a3b8; margin-bottom: 16px; font-weight: 500; letter-spacing: 0.5px; }
+        .hero-desc { max-width: 600px; color: #64748b; font-size: 0.85rem; line-height: 1.6; margin: 0 auto 28px auto; }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; }
         
-        .hero-desc { 
-            max-width: 600px; 
-            color: #64748b; 
-            font-size: 0.85rem; 
-            line-height: 1.6; 
-            margin: 0 auto 28px auto; 
-        }
+        .btn-discord, .btn-view-apps { padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .btn-discord { background: #5865f2; color: white; box-shadow: 0 4px 14px rgba(88, 101, 242, 0.3); }
+        .btn-discord:hover { background: #4752c4; transform: translateY(-3px); }
+        .btn-discord svg { width: 16px; height: 16px; fill: currentColor; }
         
-        .hero-buttons { 
-            display: flex; 
-            gap: 12px; 
-            justify-content: center; 
-        }
-        
-        .btn-discord, .btn-view-apps { 
-            padding: 12px 24px; 
-            border-radius: 8px; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            text-decoration: none; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-        }
-        
-        .btn-discord { 
-            background: #5865f2; 
-            color: white; 
-            box-shadow: 0 4px 14px rgba(88, 101, 242, 0.3); 
-        }
-        
-        .btn-discord:hover { 
-            background: #4752c4; 
-            transform: translateY(-3px); 
-        }
-        
-        .btn-discord svg { 
-            width: 16px; 
-            height: 16px; 
-            fill: currentColor; 
-        }
-        
-        .btn-view-apps { 
-            background: rgba(255, 255, 255, 0.04); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            color: white; 
-        }
-        
-        .btn-view-apps:hover { 
-            background: rgba(255, 255, 255, 0.1); 
-            transform: translateY(-3px); 
-        }
-        
-        .btn-view-apps svg { 
-            width: 16px; 
-            height: 16px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
+        .btn-view-apps { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: white; }
+        .btn-view-apps:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-3px); }
+        .btn-view-apps svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
 
-        /* ==========================================================================
-           9. REALTIME SYSTEM STATS & NOTICES
-           ========================================================================== */
-        .dashboard-row { 
-            display: grid; 
-            grid-template-columns: 1.2fr 1fr; 
-            gap: 20px; 
-            margin-bottom: 40px; 
-        }
+        /* --- DASHBOARD --- */
+        .dashboard-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; margin-bottom: 40px; }
+        .card-panel { padding: 24px; }
+        .panel-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 0.8px; margin-bottom: 18px; display: flex; align-items: center; gap: 6px; }
+        .panel-title svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
         
-        .card-panel { 
-            padding: 24px; 
-        }
-        
-        .panel-title { 
-            font-size: 0.8rem; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            color: #3b82f6; 
-            letter-spacing: 0.8px; 
-            margin-bottom: 18px; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-        }
-        
-        .panel-title svg { 
-            width: 14px; 
-            height: 14px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
-        
-        .notice-box { 
-            background: rgba(255, 255, 255, 0.02); 
-            border-left: 4px solid #ff416c; 
-            border-radius: 0 8px 8px 0; 
-            position: relative; 
-            overflow: hidden; 
-            padding: 16px; 
-        }
-        
-        .notice-date { 
-            font-size: 0.7rem; 
-            color: #ff416c; 
-            margin-bottom: 6px; 
-            font-weight: 700; 
-            letter-spacing: 0.5px;
-        }
-        
-        .notice-content h4 { 
-            font-size: 0.9rem; 
-            color: #fff; 
-            margin-bottom: 4px;
-        }
-        
-        .notice-content p { 
-            font-size: 0.8rem; 
-            color: #94a3b8; 
-            line-height: 1.5; 
-        }
+        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 4px solid #ff416c; border-radius: 0 8px 8px 0; position: relative; overflow: hidden; padding: 16px; }
+        .notice-date { font-size: 0.7rem; color: #ff416c; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.5px;}
+        .notice-content h4 { font-size: 0.9rem; color: #fff; margin-bottom: 4px;}
+        .notice-content p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
 
-        .stats-container { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 12px; 
-            text-align: center; 
-        }
-        
-        .stats-wrapper-row { 
-            display: contents; 
-        }
-        
-        .stat-item { 
-            background: rgba(255,255,255,0.01); 
-            padding: 10px; 
-            border-radius: 8px; 
-            border: 1px solid rgba(255,255,255,0.02); 
-            transition: all 0.3s; 
-        }
-        
-        .stat-item:hover { 
-            background: rgba(59, 130, 246, 0.05); 
-            border-color: rgba(59, 130, 246, 0.2); 
-        }
-        
-        .stat-number { 
-            font-size: 1.3rem; 
-            font-weight: 700; 
-            color: #fff; 
-        }
-        
-        .stat-label { 
-            font-size: 0.7rem; 
-            color: #64748b; 
-            margin-top: 4px; 
-            font-weight: 500; 
-        }
-        
-        .stats-footer { 
-            text-align: center; 
-            font-size: 0.75rem; 
-            color: #3b82f6; 
-            margin-top: 18px; 
-            padding-top: 12px; 
-            border-top: 1px solid rgba(255, 255, 255, 0.04); 
-            font-weight: 500; 
-        }
+        .stats-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
+        .stats-wrapper-row { display: contents; }
+        .stat-item { background: rgba(255,255,255,0.01); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); transition: all 0.3s; }
+        .stat-item:hover { background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.2); }
+        .stat-number { font-size: 1.3rem; font-weight: 700; color: #fff; }
+        .stat-label { font-size: 0.7rem; color: #64748b; margin-top: 4px; font-weight: 500; }
+        .stats-footer { text-align: center; font-size: 0.75rem; color: #3b82f6; margin-top: 18px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.04); font-weight: 500; }
 
-        /* ==========================================================================
-           10. TECH FEATURES SHOWCASE
-           ========================================================================== */
-        .intro-section { 
-            margin-bottom: 50px; 
-        }
+        /* --- FEATURES --- */
+        .intro-section { margin-bottom: 50px; }
+        .section-headline { font-size: 1.65rem; font-weight: 800; color: #fff; margin-bottom: 8px; text-align: center !important; width: 100%; display: block; letter-spacing: -0.5px; }
+        .section-subheadline { font-size: 0.85rem; color: #64748b; text-align: center !important; width: 100%; display: block; margin-bottom: 30px; font-weight: 500; }
         
-        .section-headline { 
-            font-size: 1.65rem; 
-            font-weight: 800; 
-            color: #fff; 
-            margin-bottom: 8px; 
-            text-align: center !important; 
-            width: 100%; 
-            display: block; 
-            letter-spacing: -0.5px; 
-        }
-        
-        .section-subheadline { 
-            font-size: 0.85rem; 
-            color: #64748b; 
-            text-align: center !important; 
-            width: 100%; 
-            display: block; 
-            margin-bottom: 30px; 
-            font-weight: 500; 
-        }
-        
-        .features-showcase-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; 
-            margin-bottom: 30px; 
-        }
-        
-        .feature-detail-card { 
-            padding: 24px; 
-        }
-        
-        .feature-tag-row { 
-            display: flex; 
-            gap: 8px; 
-            margin-bottom: 14px; 
-        }
-        
-        .feat-tag { 
-            font-size: 0.65rem; 
-            font-weight: 700; 
-            padding: 3px 10px; 
-            border-radius: 4px; 
-            background: rgba(59, 130, 246, 0.1); 
-            color: #3b82f6; 
-            border: 1px solid rgba(59, 130, 246, 0.2); 
-        }
-        
-        .feature-detail-card h4 { 
-            font-size: 1.1rem; 
-            color: #fff; 
-            margin-bottom: 10px; 
-        }
-        
-        .feature-detail-card p { 
-            font-size: 0.82rem; 
-            color: #94a3b8; 
-            line-height: 1.6; 
-        }
+        .features-showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
+        .feature-detail-card { padding: 24px; }
+        .feature-tag-row { display: flex; gap: 8px; margin-bottom: 14px; }
+        .feat-tag { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 4px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .feature-detail-card h4 { font-size: 1.1rem; color: #fff; margin-bottom: 10px; }
+        .feature-detail-card p { font-size: 0.82rem; color: #94a3b8; line-height: 1.6; }
 
-        /* ==========================================================================
-           11. CONSULTING & ARCHITECTURE FAQS
-           ========================================================================== */
-        .consulting-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px; 
-            margin-bottom: 50px; 
-        }
-        
-        .consult-card { 
-            padding: 24px; 
-        }
-        
-        .consult-question { 
-            font-size: 1rem; 
-            font-weight: 700; 
-            color: #eab308; 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-        }
-        
-        .consult-question svg { 
-            width: 16px; 
-            height: 16px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
-        
-        .consult-answer { 
-            font-size: 0.85rem; 
-            color: #94a3b8; 
-            line-height: 1.6; 
-        }
+        /* --- CONSULTING --- */
+        .consulting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 50px; }
+        .consult-card { padding: 24px; }
+        .consult-question { font-size: 1rem; font-weight: 700; color: #eab308; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;}
+        .consult-question svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .consult-answer { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; }
 
-        /* ==========================================================================
-           12. BILLING & TIERS MATRIX
-           ========================================================================== */
-        .pricing-section { 
-            margin-bottom: 50px; 
-        }
+        /* --- PRICING --- */
+        .pricing-section { margin-bottom: 50px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .price-tier-card { padding: 24px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;}
         
-        .pricing-grid { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 16px; 
-        }
+        .price-tier-card.popular { border-color: rgba(59, 130, 246, 0.4); }
+        .price-tier-card.popular:hover { box-shadow: 0 0 35px rgba(59, 130, 246, 0.45); border-color: #3b82f6; }
+        .price-tier-card.supporter-tier { border-color: rgba(168, 85, 247, 0.4); }
+        .price-tier-card.supporter-tier:hover { box-shadow: 0 0 35px rgba(168, 85, 247, 0.45); border-color: #a855f7; }
         
-        .price-tier-card { 
-            padding: 24px; 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            position: relative; 
-            overflow: hidden;
-        }
-        
-        .price-tier-card.popular { 
-            border-color: rgba(59, 130, 246, 0.4); 
-        }
-        
-        .price-tier-card.popular:hover { 
-            box-shadow: 0 0 35px rgba(59, 130, 246, 0.45); 
-            border-color: #3b82f6; 
-        }
-        
-        .price-tier-card.supporter-tier { 
-            border-color: rgba(168, 85, 247, 0.4); 
-        }
-        
-        .price-tier-card.supporter-tier:hover { 
-            box-shadow: 0 0 35px rgba(168, 85, 247, 0.45); 
-            border-color: #a855f7; 
-        }
-        
-        .pop-badge, .supp-badge { 
-            position: absolute; 
-            top: 12px; 
-            right: -35px; 
-            transform: rotate(45deg); 
-            color: #fff; 
-            font-size: 0.55rem; 
-            font-weight: 800; 
-            padding: 4px 40px; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
-        }
-        
+        .pop-badge, .supp-badge { position: absolute; top: 12px; right: -35px; transform: rotate(45deg); color: #fff; font-size: 0.55rem; font-weight: 800; padding: 4px 40px; text-transform: uppercase; letter-spacing: 0.5px; }
         .pop-badge { background: #3b82f6; }
         .supp-badge { background: #a855f7; }
         
-        .tier-name { 
-            font-size: 1rem; 
-            font-weight: 700; 
-            color: #fff; 
-            margin-bottom: 10px; 
-            text-align: left; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-        }
-        
-        .tier-name svg { 
-            width: 16px; 
-            height: 16px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
-        
-        .tier-price { 
-            font-size: 1.4rem; 
-            font-weight: 800; 
-            color: #3b82f6; 
-            margin-bottom: 16px; 
-            text-align: left; 
-        }
-        
-        .tier-price span { 
-            font-size: 0.75rem; 
-            color: #64748b; 
-            font-weight: 400; 
-        }
-        
-        .tier-features { 
-            list-style: none; 
-            text-align: left; 
-            font-size: 0.78rem; 
-            color: #94a3b8; 
-            margin-bottom: 24px; 
-            flex-grow: 1;
-        }
-        
-        .tier-features li { 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-        }
-        
-        .tier-features svg { 
-            width: 12px; 
-            height: 12px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2.5; 
-            flex-shrink: 0; 
-        }
+        .tier-name { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; text-align: left; display: flex; align-items: center; gap: 6px; }
+        .tier-name svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .tier-price { font-size: 1.4rem; font-weight: 800; color: #3b82f6; margin-bottom: 16px; text-align: left; }
+        .tier-price span { font-size: 0.75rem; color: #64748b; font-weight: 400; }
+        .tier-features { list-style: none; text-align: left; font-size: 0.78rem; color: #94a3b8; margin-bottom: 24px; flex-grow: 1;}
+        .tier-features li { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .tier-features svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; flex-shrink: 0; }
 
-        /* ==========================================================================
-           13. SOFTWARE APPLICATION GRID
-           ========================================================================== */
-        .apps-section { 
-            margin-bottom: 50px; 
-        }
+        /* --- APPS GRID --- */
+        .apps-section { margin-bottom: 50px; }
+        .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .app-card { padding: 24px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; position: relative;}
+        .app-card:hover { transform: translateY(-6px); border-color: rgba(0, 102, 255, 0.7); box-shadow: 0 12px 40px rgba(0, 102, 255, 0.35); }
+        .app-icon-wrapper { width: 64px; height: 64px; margin: 0 auto 16px auto; position: relative; }
         
-        .apps-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 20px; 
-        }
-        
-        .app-card { 
-            padding: 24px; 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            position: relative;
-        }
-        
-        .app-card:hover { 
-            transform: translateY(-6px); 
-            border-color: rgba(0, 102, 255, 0.7); 
-            box-shadow: 0 12px 40px rgba(0, 102, 255, 0.35); 
-        }
-        
-        .app-icon-wrapper { 
-            width: 64px; 
-            height: 64px; 
-            margin: 0 auto 16px auto; 
-            position: relative; 
-        }
-        
-        .app-icon-vector { 
-            width: 100%; 
-            height: 100%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        
-        .app-icon-vector svg { 
-            width: 38px; 
-            height: 38px; 
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8)); 
-        }
+        .app-icon-vector { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .app-icon-vector svg { width: 38px; height: 38px; filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8)); }
 
-        .badges-row { 
-            display: flex; 
-            justify-content: center; 
-            gap: 6px; 
-            margin-bottom: 10px; 
-            flex-wrap: wrap; 
-        }
-        
-        .badge { 
-            font-size: 0.6rem; 
-            font-weight: 700; 
-            padding: 2px 6px; 
-            border-radius: 4px; 
-            text-transform: uppercase; 
-            letter-spacing: 0.3px; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 3px; 
-        }
-        
-        .badge svg { 
-            width: 8px; 
-            height: 8px; 
-            fill: currentColor; 
-        }
-        
+        .badges-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+        .badge { font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.3px; display: inline-flex; align-items: center; gap: 3px; }
+        .badge svg { width: 8px; height: 8px; fill: currentColor; }
         .bg-verified { background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
         .bg-risk { background: rgba(234, 88, 12, 0.12); color: #ea580c; border: 1px solid rgba(234, 88, 12, 0.2); }
         .bg-hot { background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
         .bg-insanity { background: linear-gradient(135deg, #3b82f6, #a855f7, #ec4899); color: #fff; background-size: 200% 200%; animation: gradientBg 3s ease infinite; }
         
-        .app-card h3 { 
-            font-size: 1.1rem; 
-            color: #fff; 
-            margin-bottom: 6px; 
-            font-weight: 700; 
-        }
-        
-        .app-version { 
-            font-size: 0.7rem; 
-            color: #94a3b8; 
-            background: rgba(255, 255, 255, 0.05); 
-            padding: 2px 8px; 
-            border-radius: 4px; 
-            display: inline-block; 
-            margin-bottom: 12px; 
-            font-weight: 600; 
-        }
-        
-        .app-desc { 
-            font-size: 0.8rem; 
-            color: #94a3b8; 
-            line-height: 1.5; 
-            margin-bottom: 20px; 
-            text-align: left; 
-        }
-        
-        .app-card-footer { 
-            border-top: 1px solid rgba(255, 255, 255, 0.04); 
-            padding-top: 16px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 8px; 
-        }
+        .app-card h3 { font-size: 1.1rem; color: #fff; margin-bottom: 6px; font-weight: 700; }
+        .app-version { font-size: 0.7rem; color: #94a3b8; background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 12px; font-weight: 600; }
+        .app-desc { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; text-align: left; }
+        .app-card-footer { border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 16px; display: flex; flex-direction: column; gap: 8px; }
 
-        .btn-download { 
-            background: #0052cc; 
-            color: #fff; 
-            text-decoration: none; 
-            padding: 10px; 
-            border-radius: 8px; 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            border: 1px solid rgba(0, 102, 255, 0.3); 
-            box-shadow: 0 4px 10px rgba(0, 82, 204, 0.2); 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 6px; 
-        }
-        
-        .btn-download svg { 
-            width: 14px; 
-            height: 14px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2.5; 
-        }
-        
-        .btn-download:hover:not(:disabled) { 
-            background: #0066ff; 
-            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5); 
-            transform: translateY(-2px); 
-        }
-        
-        .btn-download.risk-style { 
-            background: rgba(234, 88, 12, 0.08); 
-            color: #ea580c; 
-            border: 1px solid rgba(234, 88, 12, 0.25); 
-            box-shadow: none; 
-        }
-        
-        .btn-download.risk-style:hover { 
-            background: #ea580c; 
-            color: #fff; 
-        }
-        
-        .btn-key-style { 
-            background: rgba(255, 255, 255, 0.03); 
-            color: #94a3b8; 
-            border: 1px solid rgba(255, 255, 255, 0.06); 
-            box-shadow: none; 
-        }
-        
-        .btn-key-style:hover { 
-            background: rgba(255, 255, 255, 0.08); 
-            color: #fff; 
-            border-color: rgba(255,255,255,0.2); 
-        }
+        .btn-download { background: #0052cc; color: #fff; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(0, 102, 255, 0.3); box-shadow: 0 4px 10px rgba(0, 82, 204, 0.2); display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-download svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+        .btn-download:hover:not(:disabled) { background: #0066ff; box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5); transform: translateY(-2px); }
+        .btn-download.risk-style { background: rgba(234, 88, 12, 0.08); color: #ea580c; border: 1px solid rgba(234, 88, 12, 0.25); box-shadow: none; }
+        .btn-download.risk-style:hover { background: #ea580c; color: #fff; }
+        .btn-download.btn-key-style { background: rgba(255, 255, 255, 0.03); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); box-shadow: none; }
+        .btn-download.btn-key-style:hover { background: rgba(255, 255, 255, 0.08); color: #fff; border-color: rgba(255,255,255,0.2); }
 
-        /* ==========================================================================
-           14. STEP-BY-STEP USER MANUALS
-           ========================================================================== */
-        .tutorials-section { 
-            margin-bottom: 50px; 
-        }
-        
-        .tutorial-steps-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 20px; 
-        }
-        
-        .step-card { 
-            padding: 24px; 
-            position: relative; 
-            overflow: hidden;
-        }
-        
-        .step-num-badge { 
-            position: absolute; 
-            top: -10px; 
-            right: -5px; 
-            font-size: 3rem; 
-            font-weight: 900; 
-            color: rgba(59, 130, 246, 0.06); 
-            user-select: none; 
-            transition: all 0.3s ease; 
-        }
-        
-        .step-card:hover .step-num-badge { 
-            color: rgba(59, 130, 246, 0.12); 
-            transform: scale(1.1) translateX(-5px); 
-        }
-        
-        .step-card h4 { 
-            font-size: 1rem; 
-            color: #fff; 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-        }
-        
-        .step-card h4 svg { 
-            width: 16px; 
-            height: 16px; 
-            fill: none; 
-            stroke: currentColor; 
-            stroke-width: 2; 
-        }
-        
-        .step-card p { 
-            font-size: 0.8rem; 
-            color: #94a3b8; 
-            line-height: 1.5; 
-        }
+        /* --- TUTORIALS --- */
+        .tutorials-section { margin-bottom: 50px; }
+        .tutorial-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .step-card { padding: 24px; position: relative; overflow: hidden;}
+        .step-num-badge { position: absolute; top: -10px; right: -5px; font-size: 3rem; font-weight: 900; color: rgba(59, 130, 246, 0.06); user-select: none; transition: all 0.3s ease; }
+        .step-card:hover .step-num-badge { color: rgba(59, 130, 246, 0.12); transform: scale(1.1) translateX(-5px); }
+        .step-card h4 { font-size: 1rem; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .step-card h4 svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .step-card p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
 
-        /* ==========================================================================
-           15. REVIEWS & COMMUNITY MATRIX
-           ========================================================================== */
-        .reviews-section { 
-            margin-bottom: 50px; 
-        }
-        
-        .reviews-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; 
-            margin-bottom: 30px; 
-        }
-        
-        .review-card { 
-            padding: 20px; 
-        }
-        
-        .reviewer { 
-            font-size: 0.85rem; 
-            font-weight: 700; 
-            color: #fff; 
-            margin-bottom: 6px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-        }
-        
-        .review-stars { 
-            color: #eab308; 
-            display: flex; 
-            gap: 2px; 
-        }
-        
-        .review-stars svg { 
-            width: 10px; 
-            height: 10px; 
-            fill: currentColor; 
-        }
-        
-        .review-text { 
-            font-size: 0.8rem; 
-            color: #64748b; 
-            line-height: 1.5; 
-            font-style: italic; 
-        }
+        /* --- REVIEWS --- */
+        .reviews-section { margin-bottom: 50px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
+        .review-card { padding: 20px; }
+        .reviewer { font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .review-stars { color: #eab308; display: flex; gap: 2px; }
+        .review-stars svg { width: 10px; height: 10px; fill: currentColor; }
+        .review-text { font-size: 0.8rem; color: #64748b; line-height: 1.5; font-style: italic; }
 
-        .feedback-box { 
-            padding: 28px; 
-            margin-top: 20px; 
-        }
-        
-        .feedback-box h4 { 
-            font-size: 1.1rem; 
-            color: #fff; 
-            margin-bottom: 16px; 
-        }
-        
-        .feedback-box textarea { 
-            width: 100%; 
-            height: 110px; 
-            background: #020617; 
-            border: 1px solid rgba(0, 102, 255, 0.2); 
-            border-radius: 8px; 
-            padding: 14px; 
-            color: #fff; 
-            font-size: 0.85rem; 
-            resize: none; 
-            margin-bottom: 16px; 
-            transition: border-color 0.3s; 
-        }
-        
-        .feedback-box textarea:focus { 
-            outline: none; 
-            border-color: #3b82f6; 
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); 
-        }
+        .feedback-box { padding: 28px; margin-top: 20px; }
+        .feedback-box h4 { font-size: 1.1rem; color: #fff; margin-bottom: 16px; }
+        .feedback-box textarea { width: 100%; height: 110px; background: #020617; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 8px; padding: 14px; color: #fff; font-size: 0.85rem; resize: none; margin-bottom: 16px; transition: border-color 0.3s; }
+        .feedback-box textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
 
-        /* ==========================================================================
-           16. SECURE GATE PAYMENT DESIGNS
-           ========================================================================== */
-        #premium-page { 
-            display: none; 
-            padding: 40px 0; 
-        }
-        
-        .premium-form-card { 
-            max-width: 520px; 
-            margin: 0 auto; 
-            padding: 30px; 
-            text-align: center; 
-        }
-        
-        .flash-sale-badge { 
-            background: #ef4444; 
-            color: #fff; 
-            font-size: 0.7rem; 
-            font-weight: 800; 
-            padding: 4px 10px; 
-            border-radius: 4px; 
-            display: inline-block; 
-            margin-bottom: 14px; 
-            letter-spacing: 0.5px; 
-            animation: pulse 2s infinite; 
-        }
-        
-        .price-row { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            margin: 16px 0; 
-        }
-        
-        .new-price { 
-            color: #ef4444; 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-        }
-        
-        .qr-placeholder { 
-            background: #fff; 
-            color: #0f172a; 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin: 20px 0; 
-            font-weight: bold; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
-        }
-        
-        .form-group { 
-            margin-bottom: 16px; 
-            text-align: left; 
-        }
-        
-        .form-group label { 
-            display: block; 
-            font-size: 0.8rem; 
-            color: #94a3b8; 
-            margin-bottom: 6px; 
-            font-weight: 600; 
-        }
-        
-        .form-group input, .form-group select { 
-            width: 100%; 
-            padding: 12px; 
-            background: #020617; 
-            border: 1px solid rgba(0, 102, 255, 0.2); 
-            border-radius: 8px; 
-            color: #fff; 
-            font-size: 0.85rem; 
-        }
-        
-        .form-group input:focus, .form-group select:focus { 
-            outline: none; 
-            border-color: #3b82f6; 
-        }
+        /* --- SUBSCRIPTION --- */
+        #premium-page { display: none; padding: 40px 0; }
+        .premium-form-card { max-width: 520px; margin: 0 auto; padding: 30px; text-align: center; }
+        .flash-sale-badge { background: #ef4444; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 14px; letter-spacing: 0.5px; animation: pulse 2s infinite; }
+        .price-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0; }
+        .new-price { color: #ef4444; font-size: 1.8rem; font-weight: 800; }
+        .qr-placeholder { background: #fff; color: #0f172a; padding: 20px; border-radius: 12px; margin: 20px 0; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .form-group { margin-bottom: 16px; text-align: left; }
+        .form-group label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 6px; font-weight: 600; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; background: #020617; border: 1px solid rgba(0, 102, 255, 0.2); border-radius: 8px; color: #fff; font-size: 0.85rem; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #3b82f6; }
 
-        /* ==========================================================================
-           17. MODAL ENGINE WINDOW STRUCTURES
-           ========================================================================== */
-        .modal-overlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(2, 6, 23, 0.8); 
-            backdrop-filter: blur(8px); 
-            z-index: 1000; 
-            display: none; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 16px; 
-            transition: all 0.3s ease; 
-        }
-        
-        .modal-box { 
-            max-width: 400px; 
-            width: 100%; 
-            padding: 28px; 
-            text-align: center; 
-            position: relative; 
-            animation: popupScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
-        }
-        
-        #jump-modal .modal-box { 
-            max-width: 500px; 
-            text-align: left; 
-        }
-        
-        .jump-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
-            margin-top: 20px; 
-        }
-        
-        .jump-btn { 
-            background: rgba(255,255,255,0.02); 
-            border: 1px solid rgba(0,102,255,0.15); 
-            border-radius: 10px; 
-            padding: 14px; 
-            color: #fff; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            text-align: left; 
-            display: flex; 
-            flex-direction: column;
-        }
-        
-        .jump-btn:hover { 
-            background: rgba(0,102,255,0.12); 
-            border-color: #3b82f6; 
-            transform: translateX(4px); 
-        }
-        
-        .jump-btn span { 
-            display: block; 
-            font-size: 0.7rem; 
-            color: #64748b; 
-            font-weight: 400; 
-            margin-top: 4px;
-        }
-        
-        .btn-close { 
-            position: absolute; 
-            top: 16px; 
-            right: 16px; 
-            background: transparent; 
-            border: none; 
-            color: #64748b; 
-            font-size: 1.2rem; 
-            cursor: pointer; 
-        }
-        
-        .btn-close:hover { 
-            color: #fff; 
-        }
-        
-        .modal-box h3 { 
-            margin-bottom: 16px; 
-            color: #fff; 
-            font-size: 1.2rem; 
-            font-weight: 700; 
-        }
-        
-        .modal-switch { 
-            font-size: 0.8rem; 
-            color: #64748b; 
-            margin-top: 16px; 
-        }
-        
-        .modal-switch span { 
-            color: #3b82f6; 
-            cursor: pointer; 
-            text-decoration: underline; 
-            font-weight: 500; 
-        }
-        
-        .btn-download:disabled { 
-            background: #1e293b !important; 
-            color: #64748b !important; 
-            border-color: rgba(255,255,255,0.05) !important; 
-            cursor: not-allowed; 
-            box-shadow: none !important; 
-            transform: none !important; 
-        }
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; transition: all 0.3s ease; }
+        .modal-box { max-width: 400px; width: 100%; padding: 28px; text-align: center; position: relative; animation: popupScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        #jump-modal .modal-box { max-width: 500px; text-align: left; }
+        .jump-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .jump-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(0,102,255,0.15); border-radius: 10px; padding: 14px; color: #fff; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); text-align: left; display: flex; flex-direction: column;}
+        .jump-btn:hover { background: rgba(0,102,255,0.12); border-color: #3b82f6; transform: translateX(4px); }
+        .jump-btn span { display: block; font-size: 0.7rem; color: #64748b; font-weight: 400; margin-top: 4px;}
+        .btn-close { position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: #64748b; font-size: 1.2rem; cursor: pointer; }
+        .btn-close:hover { color: #fff; }
+        .modal-box h3 { margin-bottom: 16px; color: #fff; font-size: 1.2rem; font-weight: 700; }
+        .modal-switch { font-size: 0.8rem; color: #64748b; margin-top: 16px; }
+        .modal-switch span { color: #3b82f6; cursor: pointer; text-decoration: underline; font-weight: 500; }
+        .btn-download:disabled { background: #1e293b !important; color: #64748b !important; border-color: rgba(255,255,255,0.05) !important; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
 
-        #guest-modal .modal-box { 
-            border: 1px solid #ff416c; 
-            box-shadow: 0 0 30px rgba(255, 65, 108, 0.25); 
-        }
-        
-        #guest-modal h3 { 
-            color: #ff416c; 
-        }
+        #guest-modal .modal-box { border: 1px solid #ff416c; box-shadow: 0 0 30px rgba(255, 65, 108, 0.25); }
+        #guest-modal h3 { color: #ff416c; }
 
-        #lang-modal .modal-box { 
-            border: 1px solid rgba(0, 102, 255, 0.5); 
-            box-shadow: 0 0 35px rgba(0, 102, 255, 0.3); 
-        }
-        
-        .lang-grid { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            margin-top: 20px; 
-        }
-        
-        .lang-btn { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 14px 20px; 
-            background: rgba(255,255,255,0.02); 
-            border: 1px solid rgba(0,102,255,0.2); 
-            border-radius: 10px; 
-            color: #fff; 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: all 0.25s; 
-        }
-        
-        .lang-btn:hover { 
-            background: rgba(0,102,255,0.15); 
-            border-color: #3b82f6; 
-            transform: translateY(-2px); 
-        }
-        
-        .lang-btn span.flag { 
-            font-size: 1.2rem; 
-        }
+        /* --- LANGUAGE MODAL STYLE --- */
+        #lang-modal .modal-box { border: 1px solid rgba(0, 102, 255, 0.5); box-shadow: 0 0 35px rgba(0, 102, 255, 0.3); }
+        .lang-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .lang-btn { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(0,102,255,0.2); border-radius: 10px; color: #fff; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.25s; }
+        .lang-btn:hover { background: rgba(0,102,255,0.15); border-color: #3b82f6; transform: translateY(-2px); }
+        .lang-btn span.flag { font-size: 1.2rem; }
 
-        /* ==========================================================================
-           18. REALTIME SYSTEM SPINNER & ACCENTS
-           ========================================================================== */
-        #loading-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(2, 6, 23, 0.95); 
-            z-index: 2000; 
-            display: none; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        
-        .spinner { 
-            width: 48px; 
-            height: 48px; 
-            border: 4px solid rgba(0, 102, 255, 0.1); 
-            border-top-color: #3b82f6; 
-            border-radius: 50%; 
-            animation: spin 0.8s linear infinite; 
-            margin-bottom: 16px; 
-        }
+        /* --- LOADING ENGINE --- */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.95); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 48px; height: 48px; border: 4px solid rgba(0, 102, 255, 0.1); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 16px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .success-accent-bar { 
-            width: 100%; 
-            height: 4px; 
-            background: #10b981; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            border-radius: 14px 14px 0 0; 
-        }
-        
-        .success-icon-circle { 
-            width: 54px; 
-            height: 54px; 
-            background: rgba(16, 185, 129, 0.1); 
-            border: 2px solid #10b981; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #10b981; 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            margin: 0 auto 16px auto; 
-        }
+        /* --- SUCCESS FRAME --- */
+        .success-accent-bar { width: 100%; height: 4px; background: #10b981; position: absolute; top: 0; left: 0; border-radius: 14px 14px 0 0; }
+        .success-icon-circle { width: 54px; height: 54px; background: rgba(16, 185, 129, 0.1); border: 2px solid #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.5rem; font-weight: bold; margin: 0 auto 16px auto; }
 
-        /* ==========================================================================
-           19. SITE FOOTER STYLES
-           ========================================================================== */
-        footer { 
-            margin-top: 60px; 
-            background: #010409; 
-            border-top: 1px solid rgba(0, 102, 255, 0.15); 
-            padding: 40px 0 24px 0; 
-        }
-        
-        .footer-grid { 
-            display: grid; 
-            grid-template-columns: 1.2fr 1fr 1fr; 
-            gap: 30px; 
-            padding-bottom: 24px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04); 
-        }
-        
-        .footer-brand p { 
-            font-size: 0.8rem; 
-            color: #64748b; 
-            line-height: 1.6; 
-            margin-top: 12px; 
-        }
-        
-        .footer-links h5, .footer-stats h5 { 
-            font-size: 0.85rem; 
-            text-transform: uppercase; 
-            color: #fff; 
-            margin-bottom: 16px; 
-            letter-spacing: 0.8px; 
-            font-weight: 700; 
-        }
-        
-        .footer-links ul { 
-            list-style: none; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-        }
-        
-        .footer-links ul a { 
-            color: #64748b; 
-            text-decoration: none; 
-            font-size: 0.8rem; 
-            cursor: pointer; 
-            transition: color 0.2s; 
-        }
-        
-        .footer-links ul a:hover { 
-            color: #3b82f6; 
-        }
-        
-        .footer-stat-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding-bottom: 10px; 
-            margin-bottom: 10px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02); 
-            font-size: 0.8rem; 
-            color: #64748b; 
-        }
-        
-        .footer-stat-row strong { 
-            color: #fff; 
-        }
-        
-        .dot-online { 
-            width: 6px; 
-            height: 6px; 
-            background: #10b981; 
-            border-radius: 50%; 
-            display: inline-block; 
-            margin-right: 6px; 
-            animation: pulse 1.5s infinite; 
-        }
-        
-        .copyright-bar { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding-top: 20px; 
-            font-size: 0.75rem; 
-            color: #475569; 
-        }
+        /* --- FOOTER --- */
+        footer { margin-top: 60px; background: #010409; border-top: 1px solid rgba(0, 102, 255, 0.15); padding: 40px 0 24px 0; }
+        .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 30px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+        .footer-brand p { font-size: 0.8rem; color: #64748b; line-height: 1.6; margin-top: 12px; }
+        .footer-links h5, .footer-stats h5 { font-size: 0.85rem; text-transform: uppercase; color: #fff; margin-bottom: 16px; letter-spacing: 0.8px; font-weight: 700; }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links ul a { color: #64748b; text-decoration: none; font-size: 0.8rem; cursor: pointer; transition: color 0.2s; }
+        .footer-links ul a:hover { color: #3b82f6; }
+        .footer-stat-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.02); font-size: 0.8rem; color: #64748b; }
+        .footer-stat-row strong { color: #fff; }
+        .dot-online { width: 6px; height: 6px; background: #10b981; border-radius: 50%; display: inline-block; margin-right: 6px; animation: pulse 1.5s infinite; }
+        .copyright-bar { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; font-size: 0.75rem; color: #475569; }
 
-        /* ==========================================================================
-           20. RESPONSIVE LAYER ADAPTATION MATRIX
-           ========================================================================== */
-        @media (max-width: 1024px) { 
-            .pricing-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 16px; 
-            } 
-        }
-        
+        /* --- RESPONSIVE MATRIX --- */
+        @media (max-width: 1024px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
         @media (max-width: 768px) {
-            .apps-grid, .features-showcase-grid, .consulting-grid, .reviews-grid, .tutorial-steps-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 16px; 
-            }
-            .dashboard-row { 
-                grid-template-columns: 1fr; 
-                gap: 16px; 
-            }
-            nav { 
-                display: none; 
-            }
+            .apps-grid, .features-showcase-grid, .consulting-grid, .reviews-grid, .tutorial-steps-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .dashboard-row { grid-template-columns: 1fr; gap: 16px; }
+            nav { display: none; }
         }
-        
         @media (max-width: 520px) {
-            .apps-grid, .features-showcase-grid, .consulting-grid, .pricing-grid, .reviews-grid, .tutorial-steps-grid { 
-                grid-template-columns: 1fr; 
-            }
-            .hero h2 { 
-                font-size: 2.2rem; 
-            }
-            .footer-grid { 
-                grid-template-columns: 1fr; 
-                gap: 24px; 
-            }
+            .apps-grid, .features-showcase-grid, .consulting-grid, .pricing-grid, .reviews-grid, .tutorial-steps-grid { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 2.2rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
         }
     </style>
 </head>
 <body class="theme-aurora">
 
-    <!-- CANVAS ELEMENT FOR GRAPHICAL LAYERS -->
     <canvas id="theme-canvas"></canvas>
     <div class="theme-overlay"></div>
 
-    <!-- MAIN HEADER BAR SECTION -->
     <header class="scroll-fade">
         <div class="container nav-container">
             <a onclick="openQuickJump()" class="logo" title="Bấm để mở bảng điều hướng nhanh">
@@ -1720,7 +677,6 @@
         </div>
     </header>
 
-    <!-- HORIZONTAL TICKER STATUS WINDOW -->
     <div class="live-ticker-container">
         <div class="live-ticker-bar">
             <span class="live-badge" data-lang-key="live_badge">Live</span>
@@ -1728,11 +684,9 @@
         </div>
     </div>
 
-    <!-- MAIN INTERACTIVE HUB CONTENT -->
     <div id="main-page" class="container">
         <div id="guest-notification-frame"></div>
 
-        <!-- HERO BRAND INTRO SECTION -->
         <section class="hero scroll-anim">
             <div class="welcome-tag" data-lang-key="welcome_tag">Welcome to my website</div>
             <h2>NetKing <span data-lang-key="hero_team">Team</span></h2>
@@ -1750,7 +704,6 @@
             </div>
         </section>
 
-        <!-- DASHBOARD MANAGEMENT PANELS -->
         <section class="dashboard-row" id="notice-section">
             <div class="card-panel neon-box scroll-anim">
                 <div class="panel-title">
@@ -1795,7 +748,6 @@
             </div>
         </section>
         
-        <!-- TECHNOLOGY SPEC SHEET DESCRIPTIONS -->
         <section class="intro-section" id="features-section">
             <h3 class="section-headline scroll-anim" data-lang-key="feat_headline">Làm Chủ Kết Nối, Làm Chủ Trận Đấu</h3>
             <p class="section-subheadline scroll-anim" data-lang-key="feat_subheadline">Giải pháp can thiệp UDP packet chuyên sâu dành cho mobile</p>
@@ -1814,7 +766,6 @@
             </div>
         </section>
 
-        <!-- TECHNICAL COUNSELING / GUIDANCE -->
         <section class="intro-section" id="consulting-section">
             <h3 class="section-headline scroll-anim" data-lang-key="consult_headline">Góc Tư Vấn & Hỗ Trợ Kỹ Thuật</h3>
             <p class="section-subheadline scroll-anim" data-lang-key="consult_subheadline">Giải đáp thắc mắc và định hướng cấu hình tối ưu thiết bị</p>
@@ -1837,7 +788,6 @@
             </div>
         </section>
 
-        <!-- SOFTWARE DEPLOYMENT GRID FROM CLIENT DATA -->
         <section class="apps-section" id="files-section">
             <div class="panel-title scroll-anim" style="color: #fff; margin-bottom: 14px;">
                 <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg>
@@ -1846,7 +796,6 @@
             <div class="apps-grid" id="apps-list-dom"></div>
         </section>
 
-        <!-- TRANSACTION PREMIUM PACKAGES -->
         <section class="pricing-section" id="pricing-section">
             <h3 class="section-headline scroll-anim" data-lang-key="pricing_headline">Gói Thành Viên VIP & Tài Trợ</h3>
             <p class="section-subheadline scroll-anim" data-lang-key="pricing_subheadline">Yêu cầu Đăng nhập hệ thống trước khi thực hiện giao dịch nâng cấp</p>
@@ -1907,7 +856,6 @@
             </div>
         </section>
 
-        <!-- USER MANUALS FOR APPS AND ROUTERS -->
         <section class="tutorials-section" id="tutorials-section">
             <h3 class="section-headline scroll-anim" data-lang-key="tutor_headline">Hướng Dẫn Sử Dụng Cho Thành Viên Mới</h3>
             <p class="section-subheadline scroll-anim" data-lang-key="tutor_subheadline">Làm theo chính xác 3 bước sau để tối ưu hóa công cụ NetKing trên thiết bị</p>
@@ -1931,7 +879,6 @@
             </div>
         </section>
 
-        <!-- USER FEEDBACK MODULE -->
         <section class="reviews-section" id="reviews-section">
             <h3 class="section-headline scroll-anim" data-lang-key="review_headline">Đánh Giá & Phản Hồi</h3>
             <p class="section-subheadline scroll-anim" data-lang-key="review_subheadline">Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến</p>
@@ -1971,7 +918,6 @@
         </section>
     </div>
 
-    <!-- PREMIUM CHECKOUT INTERFACE PAGE -->
     <div id="premium-page" class="container">
         <div class="premium-form-card neon-box">
             <div class="flash-sale-badge" data-lang-key="flash_sale_badge">CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT</div>
@@ -2002,7 +948,6 @@
         </div>
     </div>
 
-    <!-- LANGUAGE SELECTION REGION MODAL -->
     <div id="lang-modal" class="modal-overlay">
         <div class="modal-box neon-box" style="max-width:360px;">
             <h3 style="color:#3b82f6; margin-bottom: 8px;">🌐 Select Language</h3>
@@ -2018,7 +963,6 @@
         </div>
     </div>
 
-    <!-- JUMP NAVIGATION MAP PANEL MODAL -->
     <div id="jump-modal" class="modal-overlay" onclick="withLoading(() => closeModal('jump-modal'))">
         <div class="modal-box neon-box" onclick="event.stopPropagation()">
             <button class="btn-close" onclick="withLoading(() => closeModal('jump-modal'))">✕</button>
@@ -2033,9 +977,7 @@
         </div>
     </div>
 
-    <!-- AUTH MATRIX GATE CONTROL MODALS -->
     <div id="auth-modal" class="modal-overlay">
-        <!-- Sign-In Node Box -->
         <div class="modal-box neon-box" id="login-form-box">
             <button class="btn-close" onclick="withLoading(() => closeModal('auth-modal'))">✕</button>
             <h3 data-lang-key="login_title">Đăng Nhập Hệ Thống</h3>
@@ -2053,7 +995,6 @@
             <div class="modal-switch"><span data-lang-key="no_account">Chưa có tài khoản?</span> <span onclick="withLoading(() => toggleAuthMode('register'))" data-lang-key="reg_now">Đăng ký ngay</span></div>
         </div>
 
-        <!-- Account Registration Node Box -->
         <div class="modal-box neon-box" id="register-form-box" style="display:none;">
             <button class="btn-close" onclick="withLoading(() => closeModal('auth-modal'))">✕</button>
             <h3 data-lang-key="reg_title">Đăng Ký Thành Viên</h3>
@@ -2072,7 +1013,6 @@
         </div>
     </div>
 
-    <!-- ACCESS CONTROLLER DENIED ALERT MODAL -->
     <div id="guest-modal" class="modal-overlay">
         <div class="modal-box neon-box">
             <button class="btn-close" onclick="withLoading(() => closeModal('guest-modal'))">✕</button>
@@ -2087,7 +1027,6 @@
         </div>
     </div>
 
-    <!-- SUCCESS MATRIX TRANSACTIONS DISPATCHER -->
     <div id="success-modal" class="modal-overlay">
         <div class="modal-box neon-box" style="max-width: 340px;">
             <div class="success-accent-bar"></div>
@@ -2098,13 +1037,11 @@
         </div>
     </div>
 
-    <!-- ASYNC SCREEN DEFER LOADING LOOPS -->
     <div id="loading-screen">
         <div class="spinner"></div>
         <p style="color: #fff; font-size: 0.85rem;" id="loading-screen-text">Loading...</p>
     </div>
 
-    <!-- LEGAL SITE ARCHITECTURE FOOTER -->
     <footer class="scroll-fade">
         <div class="container footer-grid">
             <div class="footer-brand">
@@ -2112,247 +1049,125 @@
                 <p data-lang-key="hero_desc">Chia sẻ ứng dụng Android chất lượng cao và hoàn toàn miễn phí cho cộng đồng.</p>
             </div>
             <div class="footer-links">
-                <h5 data-lang-key="footer_quick_links">Liên kết nhanh</h5>
+                <h5>Liên kết</h5>
                 <ul>
-                    <li><a onclick="scrollToSection('body')">Đầu trang</a></li>
-                    <li><a onclick="scrollToSection('files-section')">Kho ứng dụng</a></li>
-                    <li><a onclick="scrollToSection('pricing-section')">Bảng giá thành viên</a></li>
-                    <li><a onclick="scrollToSection('tutorials-section')">Hướng dẫn sử dụng</a></li>
+                    <li><a onclick="withLoading(() => scrollToSection('body'))">Trang chủ</a></li>
+                    <li><a onclick="withLoading(() => scrollToSection('files-section'))">Kho ứng dụng</a></li>
+                    <li><a onclick="withLoading(() => scrollToSection('pricing-section'))">Bảng giá</a></li>
                 </ul>
             </div>
             <div class="footer-stats">
-                <h5 data-lang-key="footer_system_status">Trạng thái hệ thống</h5>
-                <div class="footer-stat-row">
-                    <span>Lượt truy cập:</span>
-                    <strong id="footer-view">0</strong>
-                </div>
-                <div class="footer-stat-row">
-                    <span>Thành viên hệ thống:</span>
-                    <strong id="footer-user">0</strong>
-                </div>
-                <div class="footer-stat-row">
-                    <span>Tải xuống an toàn:</span>
-                    <strong id="footer-dl">0</strong>
-                </div>
-                <div class="footer-stat-row">
-                    <span>Trạng thái máy chủ:</span>
-                    <strong><span class="dot-online"></span><span style="color:#10b981;">Online</span></strong>
-                </div>
+                <h5>Thống kê</h5>
+                <div class="footer-stat-row">Lượt xem: <strong id="footer-view">0</strong></div>
+                <div class="footer-stat-row">Thành viên: <strong id="footer-user">0</strong></div>
+                <div class="footer-stat-row">Trực tuyến: <span><span class="dot-online"></span><strong id="footer-online">0</strong></span></div>
+                <div class="footer-stat-row">Tải xuống: <strong id="footer-dl">0</strong></div>
             </div>
         </div>
         <div class="container copyright-bar">
-            <div>&copy; 2026 NetKing Team. All Rights Reserved. Powered by Secure Core Platform Core v4.1.</div>
-            <div style="font-size:0.7rem; color:#334155;">Security verified with Smali Tracer API System.</div>
+            <span>&copy; 2026 NetKing Team. All rights reserved.</span>
+            <span>Thiết kế bởi NetKing Developer</span>
         </div>
     </footer>
 
-    <!-- ==========================================================================
-         21. JAVASCRIPT LOGIC CONTROLLER ENGINE
-         ========================================================================== -->
     <script>
-        /* --- LOCALE DICTIONARY TRANSLATIONS SYSTEM MATRIX --- */
+        // --- TRANSLATIONS DICTIONARY MATRIX ---
         const translations = {
             en: {
-                nav_home: "Home Base",
-                nav_download: "Repository",
-                nav_consult: "Consultation",
-                nav_pricing: "Premium Tier",
-                nav_guide: "Documentation",
-                theme_btn: "Visual Theme",
-                live_badge: "Live Telemetry",
-                ticker_init: "Initialising data pool matrix from global nodes...",
-                welcome_tag: "SECURE ANDROID HUB PLATFORM v4.0",
-                hero_team: "Development Squad",
-                hero_subtitle: "Sub-layer UDP Inspection • Secure Delivery Architecture",
-                hero_desc: "Distributing high-fidelity mobile utilities and modified architectures. Cleaned, decompiled and structurally authorized via Smali analysis.",
-                btn_view_apps: "Inspect Packages",
-                admin_notice_title: "Security Operations Notice",
-                notice_header: "Core Security Upgrades Initiated",
-                notice_body: "The cryptographic network infrastructure is establishing sandboxed sessions. Unverified clients face resource restrictions. Authenticate below.",
-                realtime_stats_title: "Live Cloud Metrics Tracker",
-                stat_views: "Server Requests",
-                stat_members: "Registered Accounts",
-                stat_online: "Active Nodes",
-                stat_downloads: "Payload Dispatches",
-                stats_footer: "Data stream synchronization 2026 UTC",
-                feat_headline: "Deep UDP Manipulation Architectures",
-                feat_subheadline: "Intercepting low-level protocol packets via tunneled client sockets",
-                feat_1_desc: "Aggregates and queues all outgoing location data vectors, broadcasting them concurrently to flash coordinate relays.",
-                feat_2_desc: "Replicates stale coordinates back into the routing table, anchoring an isolated ghost model while your local position advances.",
-                consult_headline: "Technical Inquiry & Core Analytics",
-                consult_subheadline: "System triage and runtime optimization parameter assignments",
-                q1: "Selecting between NetPlus or Fake Lag Engine?",
-                a1: "Deploy NetPlus for deep virtualization routines integrated with high anti-ban compliance (88-90%). Choose Fake Lag OG for standalone stateless operations without authentication.",
-                q2: "Are unverified third-party binaries secure?",
-                a2: "Modified packages are labeled with warning tags. NetKing reverse-engineers structures for research, but advises executing payloads inside sandbox emulators first.",
-                app_list_title: "Available Applications (Secure Session Authorization Required)",
-                pricing_headline: "Membership Classification & Corporate Grants",
-                pricing_subheadline: "Establish an authorized session prior to initializing upgrade checkout loops",
-                tier_free: "Standard Access Tier",
-                tier_free_price: "0 VND <span>/ Perpetual</span>",
-                tier_free_f1: "Public repository availability",
-                tier_free_f2: "Throttled connection speed",
-                tier_free_f3: "Daily gate key verification",
-                tier_free_btn: "Default Public Account",
-                badge_recommended: "RECOMMENDED",
-                tier_vip_price: "55,000 VND <span>/ Month</span>",
-                tier_vip_f1: "Direct content delivery (Zero Ads)",
-                tier_vip_f2: "Bypass verification key walls",
-                tier_vip_f3: "Access to private beta builds",
-                btn_upgrade: "Initialize Upgrade",
-                tier_sup_price: "<span style='text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;'>300k</span> 200,000 VND <span>/ Perpetual</span>",
-                tier_sup_f1: "Lifetime premium allocation",
-                tier_sup_f2: "Global dashboard recognition",
-                tier_sup_f3: "Priority engineering support 1-1",
-                btn_buy_pack: "Acquire Package",
-                tier_sponsor: "Corporate Sponsor Tier",
-                tier_sponsor_price: "150,000 VND <span>/ Perpetual</span>",
-                tier_spo_f1: "Brand placement in layout footers",
-                tier_spo_f2: "On-demand reverse engineering requests",
-                btn_sponsor: "Grant Subsidy",
-                tutor_headline: "New User Initialization Sequences",
-                tutor_subheadline: "Execute these configuration procedures to avoid kernel process termination",
-                step1_title: "Step 1: Cryptographic Key Procurement",
-                step1_desc: "For public packages, initialize the 'Get Key' sequence to navigate verification loops. Copy the unique hash token into the application boot script.",
-                step2_title: "Step 2: Initialize Local Loopback VPN",
-                step2_desc: "The socket manipulation engine will prompt for network routing configurations. Authorize local VPN loopbacks; no outbound data leakage occurs.",
-                step3_title: "Step 3: Revoke Battery Throttle Restrictions",
-                step3_desc: "Navigate to Android Settings -> Applications -> NetKing -> Power. Reconfigure parameters from 'Optimized' to 'Unrestricted' to prevent runtime killing.",
-                review_headline: "User Review System Logs",
-                review_subheadline: "Verified reports transmitted directly via automated server socket relays",
-                rev1_text: "\"The NetPlus V18 binary runs seamless bypass loops. Ghost mode packet delivery responses match theoretical limits with zero jitter.\"",
-                rev2_text: "\"The UI layout is cleanly optimized. Free of adware vectors or malicious payloads common across alternative index lists.\"",
-                feedback_title: "Transmit System Feedback Logs",
-                btn_send_feedback: "Dispatch Telemetry Data",
-                login_title: "Secure Portal Authentication",
-                login_user_lbl: "Account Identifier",
-                login_pass_lbl: "Cryptographic Password",
-                btn_login_submit: "Authorize Session",
-                no_account: "Identity absent from node registry?",
-                reg_now: "Register Credentials",
-                reg_title: "Register New Cryptographic Profile",
-                reg_user_lbl: "Desired Account Username",
-                btn_reg_submit: "Confirm Registration",
-                has_account: "Possess existing terminal credentials?",
-                login_back: "Return to Sign In Portal",
-                blocked_title: "🔒 CRITICAL ALERT: SESSION RESTRICTED!",
-                blocked_desc: "Your terminal profile is executing under Guest state limits. Payload downlinks and telemetry transmissions are deactivated. Authenticate immediately.",
-                nav_login_action: "Execute Sign In",
-                dl_success_title: "Payload Pipeline Established",
-                footer_quick_links: "Quick Navigation Links",
-                footer_system_status: "Global Network Status",
-                dl_success_desc: "Đường dẫn tải tệp tin an toàn đã được khởi tạo.",
-                btn_done: "Hoàn tất",
-                j1: "🏠 Trang Chủ", j1_sub: "Đầu trang",
-                j2: "⚡ Bảng Thông Báo", j2_sub: "Số liệu thực",
-                j3: "📥 Kho Tải Ứng Dụng", j3_sub: "Download APK",
-                j4: "💎 Bảng Giá Thành Viên", j4_sub: "Gói Supporter",
-                j5: "📚 Hướng Dẫn Sử Dụng", j5_sub: "Dành cho Newbie",
-                jump_title: "Compass Bảng Điều Hướng Nhanh Website",
-                flash_sale_badge: "CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT",
-                billing_title: "Cổng Thanh Toán Hóa Đơn VIP",
-                billing_user: "Tài khoản đang thực hiện:",
-                billing_select_lbl: "Gói dịch vụ đã chọn",
-                opt_vip: "Gói Premium VIP — 55.000đ / Tháng",
-                opt_sup: "Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)",
-                opt_spo: "Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn",
-                qr_title: "QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN",
-                qr_memo: "Nội dung: NETKING VIP [Tên tài khoản]",
-                trans_id_lbl: "Mã giao dịch ngân hàng / Ví điện tử",
-                btn_confirm_billing: "Xác nhận hoàn tất giao dịch",
-                btn_cancel_billing: "➔ Hủy bỏ, quay lại Trang Chủ",
-                guest_notice_head: "🔒 BẠN ĐANG TRUY CẬP VỚI TƯ CÁCH KHÁCH",
-                guest_notice_body: "Bạn chưa đăng nhập. Tính năng tải xuống bị khóa. Bấm vào đây để đăng nhập hệ thống ngay."
+                nav_home: "Home", nav_download: "Downloads", nav_consult: "Consulting", nav_pricing: "Pricing", nav_guide: "Guide",
+                theme_btn: "Theme", live_badge: "Live", ticker_init: "Initializing global honoree list...",
+                welcome_tag: "Welcome to my website", hero_team: "Team", hero_subtitle: "Premium Android Apps • Secure Downloads",
+                hero_desc: "Share high-quality Android apps & games, free and thoroughly reviewed by the NetKing Team.",
+                btn_view_apps: "View Apps", admin_notice_title: "Notice from Admin",
+                notice_header: "Welcome to Team NetKing!",
+                notice_body: "The system is updating new, more optimized security features. Members please log in to unlock full download privileges.",
+                realtime_stats_title: "Realtime Statistics", stat_views: "Total Visits", stat_members: "Members", stat_online: "Online", stat_downloads: "Downloads",
+                stats_footer: "Normalized Data 2026", feat_headline: "Master Connections, Master Matches",
+                feat_subheadline: "Deep UDP packet manipulation solution built for mobile",
+                feat_1_desc: "Accumulates all UDP packet data within a predetermined timeframe, then releases them simultaneously to optimize location targeting.",
+                feat_2_desc: "Clones and continuously plays back packets at the old position, keeping the character image temporarily stationary while you move freely.",
+                consult_headline: "Consulting Corner & Tech Support", consult_subheadline: "Answering queries and directing optimal device configuration",
+                q1: "Should I choose NetPlus or Netking Fake Lag?",
+                a1: "If you need deep intervention with a high Anti-ban rate (88-90%), prioritize NetPlus. If you need a lightweight, run-instantly tool without cumbersome key fetching, Fake Lag OG is the best solution.",
+                q2: "Are unverified (Modern) applications safe?",
+                a2: "Third-party Mod/Cracked versions are always warned in orange by the system. NetKing Team cracked them to study Smali structure but recommends testing on emulators or secondary devices before widespread use.",
+                app_list_title: "Featured App List (Login Required)", pricing_headline: "VIP Membership & Sponsor Packages",
+                pricing_subheadline: "System Login required before performing upgrade transactions",
+                tier_free: "Free Member", tier_free_price: "0đ <span>/ lifetime</span>", tier_free_f1: "Download full public archive", tier_free_f2: "Standard speed limit", tier_free_f3: "Bypass links for daily keys", tier_free_btn: "Public Default",
+                tier_vip_price: "55,000đ <span>/ month</span>", tier_vip_f1: "Direct link (No Ads)", tier_vip_f2: "No need to pass key gates", tier_vip_f3: "Early Beta file updates", btn_upgrade: "Upgrade",
+                tier_sup_price: "<span style='text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;'>300k</span> 200,000đ <span>/ lifetime</span>", tier_sup_f1: "Lifetime Premium Privileges", tier_sup_f2: "Name Honored on Live Show", tier_sup_f3: "Priority 1-1 Private Support", btn_buy_pack: "Buy Base Pack",
+                tier_sponsor: "Sponsor - Partner", tier_sponsor_price: "150,000đ <span>/ lifetime</span>", tier_spo_f1: "Place honoring logo in footer", tier_spo_f2: "Request private app cracking/Mod", btn_sponsor: "Sponsor",
+                tutor_headline: "User Guide for Newbies", tutor_subheadline: "Follow these exact 3 steps to optimize NetKing tools on your device",
+                step1_title: "Step 1: Get Authentication Key", step1_desc: "For free Apps (like NetPlus), click 'Get Key' to pass the secure link. Copy the key string and paste it into the startup box inside the App.",
+                step2_title: "Step 2: Enable Local VPN Configuration", step2_desc: "When opening the Fake Lag app, the system will request permission to configure a local VPN. Select 'Agree/Allow'. This does not expose your personal data.",
+                step3_title: "Step 3: Disable Battery Optimization", step3_desc: "Go to Android Settings -> Apps -> Select NetKing -> Battery -> Switch from 'Optimized' to 'Unrestricted' to prevent the system from force-closing background apps while playing games.",
+                review_headline: "Reviews & Feedback", review_subheadline: "Actual feedback from members and online submission form",
+                rev1_text: '"NetPlus V18 runs bypass extremely smoothly, adjusting Ghost mode responds with great signals without lag."',
+                rev2_text: '"The interface is very cleanly optimized, free of viruses or dirty pop-up ads like other sites."',
+                feedback_title: "Send Feedback to System", btn_send_feedback: "Submit Direct Feedback",
+                login_title: "System Login", login_user_lbl: "Username", login_pass_lbl: "Password", btn_login_submit: "Enter System", no_account: "Don't have an account?", reg_now: "Register now",
+                reg_title: "Member Registration", reg_user_lbl: "New Account", btn_reg_submit: "Confirm Registration", has_account: "Already have an account?", login_back: "Back to Login",
+                blocked_title: "🔒 ACCESS BLOCKED!", blocked_desc: "You are currently in Guest mode. You only have permission to view information and cannot download files or send feedback. Please Log In or create a new account.",
+                nav_login_action: "Sign In", dl_success_title: "Downloaded Successfully",
+                dl_success_desc: "Secure file download path has been initialized.",
+                btn_done: "Done",
+                j1: "🏠 Home", j1_sub: "Top page",
+                j2: "⚡ Announcement Board", j2_sub: "Real data",
+                j3: "📥 App Store", j3_sub: "Download APK",
+                j4: "💎 Member Pricing", j4_sub: "Supporter Pack",
+                j5: "📚 Instruction Manual", j5_sub: "For Newbies",
+                jump_title: "Compass Quick Website Navigation Menu",
+                flash_sale_badge: "FLASH SALE PRICE SUPPORT PROGRAM IS ACTIVE",
+                billing_title: "VIP Invoice Payment Gateway",
+                billing_user: "Current Account performing:",
+                billing_select_lbl: "Selected service package",
+                opt_vip: "Premium VIP Pack — 55,000đ / Month",
+                opt_sup: "Supporter VIP Pack — 200,000đ / Lifetime (Orig 300k)",
+                opt_spo: "Sponsor - Partner Pack — 150,000đ / Permanent",
+                qr_title: "SCAN QR CODE FOR AUTOMATIC BANK TRANSFER",
+                qr_memo: "Content: NETKING VIP [Username]",
+                trans_id_lbl: "Bank / E-wallet Transaction ID",
+                btn_confirm_billing: "Confirm Transaction Completion",
+                btn_cancel_billing: "➔ Cancel, return to Home Page",
+                guest_notice_head: "🔒 YOU ARE ACCESSING AS GUEST",
+                guest_notice_body: "You are not logged in. Download feature is locked. Click here to log into the system now."
             },
             vi: {
-                nav_home: "Trang chủ",
-                nav_download: "Tải xuống",
-                nav_consult: "Tư vấn",
-                nav_pricing: "Bảng giá",
-                nav_guide: "Hướng dẫn",
-                theme_btn: "Giao diện",
-                live_badge: "Live",
-                ticker_init: "Đang khởi tạo danh sách vinh danh toàn cầu...",
-                welcome_tag: "CHÀO MỪNG TỚI WEBSITE NETKING v4.0",
-                hero_team: "Team",
-                hero_subtitle: "Premium Android Apps • Secure Downloads",
+                nav_home: "Trang chủ", nav_download: "Tải xuống", nav_consult: "Tư vấn", nav_pricing: "Bảng giá", nav_guide: "Hướng dẫn",
+                theme_btn: "Giao diện", live_badge: "Live", ticker_init: "Đang khởi tạo danh sách vinh danh toàn cầu...",
+                welcome_tag: "Welcome to my website", hero_team: "Team", hero_subtitle: "Premium Android Apps • Secure Downloads",
                 hero_desc: "Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team.",
-                btn_view_apps: "Xem ứng dụng",
-                admin_notice_title: "Thông báo từ Admin",
+                btn_view_apps: "Xem ứng dụng", admin_notice_title: "Thông báo từ Admin",
                 notice_header: "Chào mừng tới Team NetKing!",
                 notice_body: "Hệ thống đang cập nhật các tính năng bảo mật mới tối ưu hơn. Thành viên vui lòng đăng nhập để mở khóa đầy đủ quyền hạn tải xuống ứng dụng.",
-                realtime_stats_title: "Số liệu thời gian thực",
-                stat_views: "Lượt truy cập",
-                stat_members: "Thành viên",
-                stat_online: "Trực tuyến",
-                stat_downloads: "Tải xuống",
-                stats_footer: "Dữ liệu chuẩn hóa 2026",
-                feat_headline: "Làm Chủ Kết Nối, Làm Chủ Trận Đấu",
+                realtime_stats_title: "Số liệu thời gian thực", stat_views: "Lượt truy cập", stat_members: "Thành viên", stat_online: "Trực tuyến", stat_downloads: "Tải xuống",
+                stats_footer: "Dữ liệu chuẩn hóa 2026", feat_headline: "Làm Chủ Kết Nối, Làm Chủ Trận Đấu",
                 feat_subheadline: "Giải pháp can thiệp UDP packet chuyên sâu dành cho mobile",
                 feat_1_desc: "Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, sau đó giải phóng đồng loạt giúp tối ưu hóa định vị vị trí.",
                 feat_2_desc: "Nhân bản và phát lại liên tục các packet tại vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời trong khi bạn tự do di chuyển.",
-                consult_headline: "Góc Tư Vấn & Hỗ Trợ Kỹ Thuật",
-                consult_subheadline: "Giải đáp thắc mắc và định hướng cấu hình tối ưu thiết bị",
+                consult_headline: "Góc Tư Vấn & Hỗ Trợ Kỹ Thuật", consult_subheadline: "Giải đáp thắc mắc và định hướng cấu hình tối ưu thiết bị",
                 q1: "Nên chọn NetPlus hay Netking Fake Lag?",
-                a1: "Nếu bạn cần can thiệp sâu có tích hợp Anti-ban tỷ lệ cao (88-90%), hãy ưu tiên dùng NetPlus. Nếu cần sự gọn nhẹ, chạy ngay không cần lấy key rườm rà, Fake Lag OG là giải pháp tốt nhất.",
+                a1: "If you need deep intervention with a high Anti-ban rate (88-90%), prioritize NetPlus. If you need a lightweight, run-instantly tool without cumbersome key fetching, Fake Lag OG is the best solution.",
                 q2: "Ứng dụng chưa xác minh (Modern) có an toàn không?",
                 a2: "Các bản Mod/Cracked từ bên thứ ba luôn được hệ thống cảnh báo màu cam. NetKing Team đã bẻ khóa để nghiên cứu cấu trúc Smali nhưng khuyến cáo test trên giả lập hoặc máy phụ trước khi dùng diện rộng.",
-                app_list_title: "Danh sách ứng dụng nổi bật (Yêu cầu tài khoản đăng nhập)",
-                pricing_headline: "Gói Thành Viên VIP & Tài Trợ",
+                app_list_title: "Danh sách ứng dụng nổi bật (Yêu cầu tài khoản đăng nhập)", pricing_headline: "Gói Thành Viên VIP & Tài Trợ",
                 pricing_subheadline: "Yêu cầu Đăng nhập hệ thống trước khi thực hiện giao dịch nâng cấp",
-                tier_free: "Thành Viên Thường",
-                tier_free_price: "0đ <span>/ vĩnh viễn</span>",
-                tier_free_f1: "Tải full kho công khai",
-                tier_free_f2: "Tốc độ giới hạn chuẩn",
-                tier_free_f3: "Vượt link lấy key hàng ngày",
-                tier_free_btn: "Mặc Định công khai",
-                badge_recommended: "KHUYÊN DÙNG",
-                tier_vip_price: "55.000đ <span>/ tháng</span>",
-                tier_vip_f1: "Link trực tiếp (No Ads)",
-                tier_vip_f2: "Không cần vượt cổng lấy Key",
-                tier_vip_f3: "Cập nhật file sớm Beta",
-                btn_upgrade: "Nâng Cấp",
-                tier_sup_price: "<span style='text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;'>300k</span> 200.000đ <span>/ vĩnh viễn</span>",
-                tier_sup_f1: "Trọn đời Premium Đặc quyền",
-                tier_sup_f2: "Vinh danh Tên lên Live Show",
-                tier_sup_f3: "Ưu tiên Support riêng 1-1",
-                btn_buy_pack: "Mua Gói Gốc",
-                tier_sponsor: "Sponsor - Đối Tác",
-                tier_sponsor_price: "150.000đ <span>/ vĩnh viễn</span>",
-                tier_spo_f1: "Treo logo vinh danh chân trang",
-                tier_spo_f2: "Yêu cầu bẻ khóa/Mod app riêng",
-                btn_sponsor: "Tài Trợ",
-                tutor_headline: "Hướng Dẫn Sử Dụng Cho Thành Viên Mới",
-                tutor_subheadline: "Làm theo chính xác 3 bước sau để tối ưu hóa công cụ NetKing trên thiết bị",
-                step1_title: "Bước 1: Lấy Key Xác Thực",
-                step1_desc: "Đối với các bản App miễn phí (như NetPlus), hãy bấm nút 'Lấy Key' để vượt liên kết an toàn bảo mật. Sao chép chuỗi mã và dán vào ô khởi động trong App.",
-                step2_title: "Bước 2: Bật Cấu Định VPN cục bộ",
-                step2_desc: "Khi mở ứng dụng Fake Lag, hệ thống sẽ yêu cầu cấp quyền cấu hình VPN cục bộ. Hãy chọn 'Đồng ý/Cho phép'. Điều này không làm lộ dữ liệu cá nhân của bạn.",
-                step3_title: "Bước 3: Tắt Tối Ưu Hóa Pin",
-                step3_desc: "Vào Cài đặt Android -> Ứng dụng -> Chọn NetKing -> Pin -> Chuyển từ 'Tối ưu hóa' sang 'Không giới hạn' để tránh bị hệ thống ép đóng ứng dụng chạy ngầm khi đang chơi game.",
-                review_headline: "Đánh Giá & Phản Hồi",
-                review_subheadline: "Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến",
+                tier_free: "Thành Viên Thường", tier_free_price: "0đ <span>/ vĩnh viễn</span>", tier_free_f1: "Tải full kho công khai", tier_free_f2: "Tốc độ giới hạn chuẩn", tier_free_f3: "Vượt link lấy key hàng ngày", tier_free_btn: "Mặc Định công khai",
+                tier_vip_price: "55.000đ <span>/ tháng</span>", tier_vip_f1: "Link trực tiếp (No Ads)", tier_vip_f2: "Không cần vượt cổng lấy Key", tier_vip_f3: "Cập nhật file sớm Beta", btn_upgrade: "Nâng Cấp",
+                tier_sup_price: "<span style='text-decoration:line-through; color:#64748b; font-size:0.8rem; font-weight:400;'>300k</span> 200.000đ <span>/ vĩnh viễn</span>", tier_sup_f1: "Trọn đời Premium Đặc quyền", tier_sup_f2: "Vinh danh Tên lên Live Show", tier_sup_f3: "Ưu tiên Support riêng 1-1", btn_buy_pack: "Mua Gói Gốc",
+                tier_sponsor: "Sponsor - Đối Tác", tier_sponsor_price: "150.000đ <span>/ vĩnh viễn</span>", tier_spo_f1: "Treo logo vinh danh chân trang", tier_spo_f2: "Yêu cầu bẻ khóa/Mod app riêng", btn_sponsor: "Tài Trợ",
+                tutor_headline: "Hướng Dẫn Sử Dụng Cho Thành Viên Mới", tutor_subheadline: "Làm theo chính xác 3 bước sau để tối ưu hóa công cụ NetKing trên thiết bị",
+                step1_title: "Bước 1: Lấy Key Xác Thực", step1_desc: "Đối với các bản App miễn phí (như NetPlus), hãy bấm nút \"Lấy Key\" để vượt liên kết an toàn bảo mật. Sao chép chuỗi mã và dán vào ô khởi động trong App.",
+                step2_title: "Bước 2: Bật Cấu Định VPN cục bộ", step2_desc: "Khi mở ứng dụng Fake Lag, hệ thống sẽ yêu cầu cấp quyền cấu hình VPN cục bộ. Hãy chọn \"Đồng ý/Cho phép\". Điều này không làm lộ dữ liệu cá nhân của bạn.",
+                step3_title: "Bước 3: Tắt Tối Ưu Hóa Pin", step3_desc: "Vào Cài đặt Android -> Ứng dụng -> Chọn NetKing -> Pin -> Chuyển từ \"Tối ưu hóa\" sang \"Không giới hạn\" để tránh bị hệ thống ép đóng ứng dụng chạy ngầm khi đang chơi game.",
+                review_headline: "Đánh Giá & Phản Hồi", review_subheadline: "Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến",
                 rev1_text: '"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag."',
                 rev2_text: '"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác."',
-                feedback_title: "Gửi Phản Hồi Lên Hệ Thống",
-                btn_send_feedback: "Gửi Phản Hồi Trực Tiếp",
-                login_title: "Đăng Nhập Hệ Thống",
-                login_user_lbl: "Tài khoản",
-                login_pass_lbl: "Mật khẩu",
-                btn_login_submit: "Vào Hệ Thống",
-                no_account: "Chưa có tài khoản?",
-                reg_now: "Đăng ký ngay",
-                reg_title: "Đăng Ký Thành Viên",
-                reg_user_lbl: "Tài khoản mới",
-                btn_reg_submit: "Xác Nhận Đăng Ký",
-                has_account: "Đã có tài khoản?",
-                login_back: "Quay lại Đăng nhập",
-                blocked_title: "🔒 QUYỀN TRUY CẬP BỊ CHẶN!",
-                blocked_desc: "Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.",
-                nav_login_action: "Đăng Nhập",
-                dl_success_title: "Tải Xuống Thành Công",
-                footer_quick_links: "Liên kết nhanh",
-                footer_system_status: "Trạng thái hệ thống",
+                feedback_title: "Gửi Phản Hồi Lên Hệ Thống", btn_send_feedback: "Gửi Phản Hồi Trực Tiếp",
+                login_title: "Đăng Nhập Hệ Thống", login_user_lbl: "Tài khoản", login_pass_lbl: "Mật khẩu", btn_login_submit: "Vào Hệ Thống", no_account: "Chưa có tài khoản?", reg_now: "Đăng ký ngay",
+                reg_title: "Đăng Ký Thành Viên", reg_user_lbl: "Tài khoản mới", btn_reg_submit: "Xác Nhận Đăng Ký", has_account: "Đã có tài khoản?", login_back: "Quay lại Đăng nhập",
+                blocked_title: "🔒 QUYỀN TRUY CẬP BỊ CHẶN!", blocked_desc: "Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.",
+                nav_login_action: "Đăng Nhập", dl_success_title: "Tải Xuống Thành Công",
                 dl_success_desc: "Đường dẫn tải tệp tin an toàn đã được khởi tạo.",
                 btn_done: "Hoàn tất",
                 j1: "🏠 Trang Chủ", j1_sub: "Đầu trang",
@@ -2378,7 +1193,7 @@
             }
         };
 
-        /* --- ENGINE HOÃN 3 GIÂY CHO MỌI HÀNH ĐỘNG (LOADING TRG 3S) --- */
+        // --- ENGINE HOÃN 3 GIÂY CHO MỌI HÀNH ĐỘNG (LOADING TRG 3S) ---
         function withLoading(actionFunction, customMessage = "Loading...") {
             const screen = document.getElementById('loading-screen');
             const text = document.getElementById('loading-screen-text');
@@ -2393,7 +1208,7 @@
             }, 3000); // Trì hoãn chuẩn 3 giây
         }
 
-        /* --- Hàm đổi ngôn ngữ toàn web --- */
+        // Hàm đổi ngôn ngữ toàn web
         function changeLanguage(lang) {
             localStorage.setItem('netking_lang', lang);
             document.getElementById('current-lang-label').innerText = lang.toUpperCase();
@@ -2416,7 +1231,7 @@
             closeModalDirect('lang-modal');
         }
 
-        /* --- AUDIO SOUND ENGINE --- */
+        // --- AUDIO SOUND ENGINE ---
         const audioUrl = "https://raw.githubusercontent.com/TheFish-cyber/Netking/main/creatorshome-sharp-pop-328170.mp3";
         const clickAudio = new Audio(audioUrl);
         clickAudio.volume = 0.65;
@@ -2444,7 +1259,7 @@
             }
         });
 
-        /* --- CANVAS PARTICLES ANIMATION ENGINE --- */
+        // --- CANVAS ENGINE ---
         const canvas = document.getElementById('theme-canvas');
         const ctx = canvas.getContext('2d');
         let currentTheme = 'aurora';
@@ -2544,10 +1359,11 @@
         }
 
         document.addEventListener('click', () => {
-            document.getElementById('theme-dropdown-menu').classList.remove('show');
+            const menu = document.getElementById('theme-dropdown-menu');
+            if (menu) menu.classList.remove('show');
         });
 
-        /* --- CLOUD DATABASE SYSTEM APPS --- */
+        // --- APP ENGINE ---
         const liveMembersPool = [
             { name: "Kha_Gamer_2K", tier: "Sponsor", msg_vi: "vừa gia hạn gói Tài Trợ hệ thống!", msg_en: "just renewed Corporate Sponsor package!" },
             { name: "Hoang_Sniper", tier: "Supporter VIP", msg_vi: "đã mua gói Supporter Pack.", msg_en: "acquired the Supporter Pack entry level." },
@@ -2597,6 +1413,7 @@
         function renderAppsSystem() {
             const currentLang = localStorage.getItem('netking_lang') || 'en';
             const container = document.getElementById('apps-list-dom');
+            if(!container) return;
             
             container.innerHTML = appsDatabase.map(app => {
                 let textDesc = currentLang === 'vi' ? app.desc_vi : app.desc_en;
@@ -2606,7 +1423,7 @@
                 let keyBtn = app.keyUrl ? `<div onclick="withLoading(() => triggerKeyGate('${app.keyUrl}'))" class="btn-download btn-key-style"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5M14 6l3 3"/></svg> ${btnKeyText}</div>` : '';
                 
                 return `
-                    <div class="app-card neon-box scroll-anim">
+                    <div class="app-card neon-box scroll-anim show">
                         <div>
                             <div class="app-icon-wrapper">
                                 <div class="app-icon-vector">
@@ -2650,7 +1467,7 @@
             }
         }
 
-        /* --- AUTH MATRIX CONTROLLER --- */
+        // --- AUTH MATRIX CONTROLLER ---
         function updateAuthDynamicUI() {
             const currentLang = localStorage.getItem('netking_lang') || 'en';
             const zone = document.getElementById('auth-btn-area');
@@ -2810,25 +1627,25 @@
             }
         }
 
-        /* --- CORE INITIALIZATIONS --- */
+        // --- CORE INITS ---
         window.addEventListener('DOMContentLoaded', () => {
             resizeCanvas();
             animateThemeBackground();
             
-            // Đọc cấu hình ngôn ngữ lưu trữ từ trước
+            // Đọc cấu hình ngôn ngữ từ trước
             const savedLang = localStorage.getItem('netking_lang') || 'vi';
             changeLanguage(savedLang);
 
-            // Mock statistical counters
-            document.getElementById('view-count').innerText = "284,910";
-            document.getElementById('user-count').innerText = "14,029";
-            document.getElementById('online-count').innerText = "381";
-            document.getElementById('dl-count').innerText = "94,112";
+            // --- RESET THÔNG SỐ VỀ THỰC TẾ (REAL) ---
+            document.getElementById('view-count').innerText = "0";
+            document.getElementById('user-count').innerText = "0";
+            document.getElementById('online-count').innerText = "0";
+            document.getElementById('dl-count').innerText = "0";
 
-            document.getElementById('footer-view').innerText = "284,910";
-            document.getElementById('footer-user').innerText = "14,029";
-            document.getElementById('footer-online').innerText = "381";
-            document.getElementById('footer-dl').innerText = "94,112";
+            document.getElementById('footer-view').innerText = "0";
+            document.getElementById('footer-user').innerText = "0";
+            document.getElementById('footer-online').innerText = "0";
+            document.getElementById('footer-dl').innerText = "0";
 
             updateAuthDynamicUI();
 
@@ -2836,7 +1653,7 @@
             triggerLiveTickerCycle();
         });
 
-        /* --- SCROLL ANIM MATRIX INTERSECTION OBSERVER --- */
+        // --- SCROLL ANIM MATRIX INTERSECTION ---
         const scrollObjects = document.querySelectorAll('.scroll-anim, .scroll-fade');
         const observerOptions = { threshold: 0.05, rootMargin: "0px 0px -40px 0px" };
         
