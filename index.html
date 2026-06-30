@@ -90,7 +90,7 @@
             background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
         }
 
-        /* --- SCROLL ANIMATIONS (MÀN HÌNH CHÍNH) --- */
+        /* --- SCROLL ANIMATIONS --- */
         .scroll-anim {
             opacity: 0;
             filter: blur(20px); 
@@ -114,12 +114,6 @@
             0% { box-shadow: 0 0 15px rgba(0, 102, 255, 0.2), inset 0 0 10px rgba(0, 102, 255, 0.05); border-color: rgba(0, 102, 255, 0.25); }
             50% { box-shadow: 0 0 30px rgba(0, 102, 255, 0.45), inset 0 0 15px rgba(0, 102, 255, 0.15); border-color: rgba(0, 102, 255, 0.5); }
             100% { box-shadow: 0 0 15px rgba(0, 102, 255, 0.2), inset 0 0 10px rgba(0, 102, 255, 0.05); border-color: rgba(0, 102, 255, 0.25); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-15px) scale(1.05); }
-            100% { transform: translateY(0px) scale(1); }
         }
 
         @keyframes gradientBg {
@@ -246,7 +240,7 @@
             gap: 12px;
         }
 
-        /* --- THEME SELECTOR CONTROLLER --- */
+        /* --- THEME SELECTOR --- */
         .theme-select-wrapper {
             position: relative;
             display: inline-block;
@@ -458,7 +452,7 @@
         .panel-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 0.8px; margin-bottom: 18px; display: flex; align-items: center; gap: 6px; }
         .panel-title svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
         
-        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 4px solid #ff416c; padding: 16px; border-radius: 0 8px 8px 0; position: relative; overflow: hidden; }
+        .notice-box { background: rgba(255, 255, 255, 0.02); border-left: 4px solid #ff416c; padding: 166px; border-radius: 0 8px 8px 0; position: relative; overflow: hidden; padding: 16px; }
         .notice-date { font-size: 0.7rem; color: #ff416c; margin-bottom: 6px; font-weight: 700; letter-spacing: 0.5px;}
         .notice-content h4 { font-size: 0.9rem; color: #fff; margin-bottom: 4px;}
         .notice-content p { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
@@ -1053,17 +1047,16 @@
     </footer>
 
     <script>
-        // --- ENGINE 1: CUSTOM POP SOUND EFFECT VIA AUDIO ELEMENT ---
+        // --- AUDIO SOUND ENGINE ---
         const audioUrl = "https://raw.githubusercontent.com/TheFish-cyber/Netking/main/creatorshome-sharp-pop-328170.mp3";
         const clickAudio = new Audio(audioUrl);
         clickAudio.volume = 0.65;
 
         function playCustomPopSound() {
             clickAudio.currentTime = 0;
-            clickAudio.play().catch(e => console.log("Sound error background context state auto-blocked:", e));
+            clickAudio.play().catch(e => console.log("Sound context state auto-blocked:", e));
         }
 
-        // Tự động gán âm thanh cho toàn bộ các nút bấm, khung và phần tử tương tác
         document.addEventListener('click', function(e) {
             const target = e.target;
             if (
@@ -1081,7 +1074,7 @@
             }
         });
 
-        // --- ENGINE 2: CANVAS BACKGROUNDS MATRIX GENERATOR FOR 4 THEMES ---
+        // --- CANVAS ENGINE ---
         const canvas = document.getElementById('theme-canvas');
         const ctx = canvas.getContext('2d');
         let currentTheme = 'aurora';
@@ -1134,7 +1127,6 @@
                     p.y += p.speedY;
                     if (p.y > canvas.height) p.y = -5;
                 } else if (currentTheme === 'aurora' || currentTheme === 'galaxy') {
-                    // Vẽ các dải đốm sáng blur mờ ảo lớn
                     let grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 30);
                     grad.addColorStop(0, p.color);
                     grad.addColorStop(1, 'transparent');
@@ -1147,7 +1139,7 @@
                     p.y += p.speedY;
                     if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
                     if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-                } else { // Stars theme
+                } else {
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                     ctx.fill();
@@ -1185,7 +1177,7 @@
             document.getElementById('theme-dropdown-menu').classList.remove('show');
         });
 
-        // --- ENGINE 3: LIVE REFRESH ENGINE ---
+        // --- APP ENGINE ---
         const liveMembersPool = [
             { name: "Kha_Gamer_2K", tier: "Sponsor", msg: "vừa gia hạn gói Tài Trợ hệ thống!" },
             { name: "Hoang_Sniper", tier: "Supporter VIP", msg: "đã mua gói Supporter Pack." },
@@ -1197,7 +1189,6 @@
             { name: "Gamer_Hanoi2026", tier: "Supporter VIP", msg: "đã tham gia Supporter trọn đời." }
         ];
 
-        // --- ENGINE 4: APPS SYSTEM WITH SVG VECTOR ICONS ---
         const appsDatabase = [
             {
                 name: "Netking Launcher",
@@ -1317,7 +1308,7 @@
             }, 3500);
         }
 
-        // --- INTERSECTION OBSERVER FOR PAGE CARDS ---
+        // --- INTERSECTION OBSERVER ---
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1400,7 +1391,7 @@
 
         function logoutSystem() {
             currentUserSession = null;
-            alert('Đã đăng xuất tài khoản chế độ khách được kích hoạt.');
+            alert('Đã đăng xuất tài khoản, chế độ khách được kích hoạt.');
             updateUserSessionUI();
         }
 
@@ -1447,7 +1438,6 @@
             }, 1500);
         }
 
-        // --- CORE SMOOTH SCROLL MECHANIC ---
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
