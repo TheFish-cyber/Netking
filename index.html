@@ -563,7 +563,7 @@
 
         /* --- SUBSCRIPTION --- */
         #premium-page { display: none; padding: 40px 0; }
-        .premium-form-card neon-box { max-width: 520px; margin: 0 auto; padding: 30px; text-align: center; }
+        .premium-form-card { max-width: 520px; margin: 0 auto; padding: 30px; text-align: center; }
         .flash-sale-badge { background: #ef4444; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 14px; letter-spacing: 0.5px; animation: pulse 2s infinite; }
         .price-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0; }
         .new-price { color: #ef4444; font-size: 1.8rem; font-weight: 800; }
@@ -1073,228 +1073,10 @@
         // --- DATA DICTIONARY MULTI-LANGUAGE (Tất cả mọi chữ trên web) ---
         const translations = {
             en: {
-                nav_home: "Home",
-                nav_download: "Downloads",
-                nav_consult: "Consulting",
-                nav_pricing: "Pricing",
-                nav_guide: "Guides",
-                theme_btn: "Themes",
-                welcome_tag: "Welcome to my website",
-                hero_team: "Team",
-                hero_subtitle: "Premium Android Apps • Secure Downloads",
-                hero_desc: "Sharing high quality, secure, and 100% free premium Android apps reviewed by NetKing development team.",
-                btn_view_apps: "View Applications",
-                admin_notice_title: "Admin Announcement",
-                notice_header: "Welcome to Team NetKing!",
-                notice_body: "The network is implementing state-of-the-art security filters. Authenticated users gain unrestricted access to full binary downloads.",
-                realtime_stats_title: "Realtime Analytics",
-                stat_views: "Page Views",
-                stat_members: "Total Members",
-                stat_online: "Active Online",
-                stat_downloads: "Total Downloads",
-                stats_footer: "Data Synchronized 2026",
-                feat_headline: "Master Connections, Conquer the Matches",
-                feat_subheadline: "Advanced UDP packet injection methodologies engineered for mobile networks",
-                feat_1_desc: "Aggregates outbound UDP packet data streams within a configured window before atomic multi-release burst optimization.",
-                feat_2_desc: "Replicates and dispatches persistent ghost packets at your last coordinates, preserving visual presence while shifting pathing.",
-                consult_headline: "Consultation & Technical Architecture",
-                consult_subheadline: "Resolving performance bottlenecks and configuring custom operating environments",
-                q1: "Should I select NetPlus or Netking Fake Lag?",
-                a1: "If you prioritize kernel-level interaction packed with high-tier Anti-ban mechanics (88%-90%), deploy NetPlus. For light script executions without key gates, Fake Lag OG is optimal.",
-                q2: "Are unverified (Modern) modifications safe?",
-                a2: "Third-party cracked binaries trigger orange alert matrices. NetKing disassembled the Smali layer for structural study, but running on secondary test sandboxes is highly advised.",
-                app_list_title: "Premium File Hub (Authorization Required)",
-                pricing_headline: "VIP Tiers & Strategic Sponsorships",
-                pricing_subheadline: "Establish a system session before initializing upgrade transactions",
-                tier_free: "Standard Member",
-                tier_free_price: "0 USD / lifetime",
-                tier_free_f1: "Access public repositories",
-                tier_free_f2: "Standard rate-limited bandwidth",
-                tier_free_f3: "Daily ad-link bypass for session key",
-                tier_free_btn: "Default Allocation",
-                badge_recommended: "RECOMMENDED",
-                btn_upgrade: "Upgrade Tier",
-                btn_buy_pack: "Acquire Base Pack",
-                tier_vip_price: "2.5 USD / month",
-                tier_vip_f1: "Direct link (No Ads)",
-                tier_vip_f2: "No bypass or dynamic key needed",
-                tier_vip_f3: "Early access to Beta files",
-                tier_sup_price: "9 USD / lifetime",
-                tier_sup_f1: "Lifetime Premium Privileges",
-                tier_sup_f2: "Global name showcase on Live Ticker",
-                tier_sup_f3: "Priority 1-1 technical support",
-                tier_sponsor: "Corporate Sponsor",
-                tier_sponsor_price: "6.5 USD / lifetime",
-                tier_spo_f1: "Logo placement in footer grid",
-                tier_spo_f2: "Dedicated on-demand reversing pipelines",
-                btn_sponsor: "Fund Project",
-                tutor_headline: "New User Onboarding Handbook",
-                tutor_subheadline: "Execute these three core parameters perfectly to optimize NetKing frameworks",
-                step1_title: "Step 1: Obtain Auth Key",
-                step1_desc: "For free tiers like NetPlus, click 'Get Key' to complete secure gateway verification. Copy the string into the application environment runtime.",
-                step2_title: "Step 2: Enable Local VPN Loopback",
-                step2_desc: "Upon launching Fake Lag, consent to local loopback VPN configuration requests. This stack operates locally and maintains zero telemetry.",
-                step3_title: "Step 3: Remove Battery Optimization Constraints",
-                step3_desc: "Navigate to Android Settings -> Apps -> NetKing -> Battery -> Toggle to 'Unrestricted' to prevent aggressive OS garbage collection routines.",
-                review_headline: "End-User Verification & Feedback",
-                review_subheadline: "Live testimonial data arrays and decentralized reporting forms",
-                rev1_text: "\"NetPlus V18 runs extremely smooth bypass, ghost mode optimization reacts instantly with zero lag.\"",
-                rev2_text: "\"Clean system UI interface design, free of malicious malware or dirty pop-up banners.\"",
-                feedback_title: "Dispatch System Feedback telemetry",
-                btn_send_feedback: "Submit Feedback",
-                login_title: "System Authentication",
-                login_user_lbl: "Username",
-                login_pass_lbl: "Password",
-                btn_login_submit: "Enter Database",
-                no_account: "New operator?",
-                reg_now: "Register credentials",
-                reg_title: "Create Operator Profile",
-                reg_user_lbl: "New Username",
-                btn_reg_submit: "Confirm Profile",
-                has_account: "Already registered?",
-                login_back: "Return to Login",
-                footer_quick_links: "Quick Navigation Links",
-                footer_stats_title: "Realtime Analytics Core",
-                live_badge: "Live",
-                ticker_init: "Initializing global honor list...",
-                blocked_title: "🔒 ACCESS DENIED!",
-                blocked_desc: "You are currently in Guest mode. You only have permission to view info and cannot download files or submit feedback. Please Log In.",
-                nav_login_action: "Log In",
-                dl_success_title: "Download Initiated",
-                dl_success_desc: "The secure file package distribution pipeline has been established successfully.",
-                btn_done: "Done",
-                j1: "🏠 Home", j1_sub: "Top of Page",
-                j2: "⚡ Notification", j2_sub: "Realtime Statistics",
-                j3: "📥 Application Hub", j3_sub: "Download APK",
-                j4: "💎 Membership Pricing", j4_sub: "Supporter Packs",
-                j5: "📚 User Guide", j5_sub: "For Newbies",
-                jump_title: "🧭 Quick Navigation Matrix",
-                flash_sale_badge: "FLASH SALE PRICE SUBSIDY PROGRAM ACTIVE",
-                billing_title: "VIP Invoice Payment Portal",
-                billing_user: "Active Operator Session:",
-                billing_select_lbl: "Selected Service Tier",
-                opt_vip: "Premium VIP Pack — 55.000đ / Month",
-                opt_sup: "Supporter VIP Pack — 200.000đ / Lifetime",
-                opt_spo: "Sponsor Partner — 150.000đ / Lifetime",
-                qr_title: "SCAN QR CODE FOR AUTOMATIC BANK TRANSFER",
-                qr_memo: "Memo Content: NETKING VIP [Username]",
-                trans_id_lbl: "Bank / E-Wallet Reference TransID",
-                btn_confirm_billing: "Confirm Completion of Transaction",
-                btn_cancel_billing: "➔ Cancel, Return to Dashboard",
-                guest_notice_head: "🔒 GUEST SESSION DETECTED",
-                guest_notice_body: "You are surfing anonymously. Download features are restricted. Please click here to authorize your account profile."
+                nav_home: "Home", nav_download: "Downloads", nav_consult: "Consulting", nav_pricing: "Pricing", nav_guide: "Guides", theme_btn: "Themes", welcome_tag: "Welcome to my website", hero_team: "Team", hero_subtitle: "Premium Android Apps • Secure Downloads", hero_desc: "Sharing high quality, secure, and 100% free premium Android apps reviewed by NetKing development team.", btn_view_apps: "View Applications", admin_notice_title: "Admin Announcement", notice_header: "Welcome to Team NetKing!", notice_body: "The network is implementing state-of-the-art security filters. Authenticated users gain unrestricted access to full binary downloads.", realtime_stats_title: "Realtime Analytics", stat_views: "Page Views", stat_members: "Total Members", stat_online: "Active Online", stat_downloads: "Total Downloads", stats_footer: "Data Synchronized 2026", feat_headline: "Master Connections, Conquer the Matches", feat_subheadline: "Advanced UDP packet injection methodologies engineered for mobile networks", feat_1_desc: "Aggregates outbound UDP packet data streams within a configured window before atomic multi-release burst optimization.", feat_2_desc: "Replicates and dispatches persistent ghost packets at your last coordinates, preserving visual presence while shifting pathing.", consult_headline: "Consultation & Technical Architecture", consult_subheadline: "Resolving performance bottlenecks and configuring custom operating environments", q1: "Should I select NetPlus or Netking Fake Lag?", a1: "If you prioritize kernel-level interaction packed with high-tier Anti-ban mechanics (88%-90%), deploy NetPlus. For light script executions without key gates, Fake Lag OG is optimal.", q2: "Are unverified (Modern) modifications safe?", a2: "Third-party cracked binaries trigger orange alert matrices. NetKing disassembled the Smali layer for structural study, but running on secondary test sandboxes is highly advised.", app_list_title: "Premium File Hub (Authorization Required)", pricing_headline: "VIP Tiers & Strategic Sponsorships", pricing_subheadline: "Establish a system session before initializing upgrade transactions", tier_free: "Standard Member", tier_free_price: "0 USD / lifetime", tier_free_f1: "Access public repositories", tier_free_f2: "Standard rate-limited bandwidth", tier_free_f3: "Daily ad-link bypass for session key", tier_free_btn: "Default Allocation", badge_recommended: "RECOMMENDED", btn_upgrade: "Upgrade Tier", btn_buy_pack: "Acquire Base Pack", tier_vip_price: "2.5 USD / month", tier_vip_f1: "Direct link (No Ads)", tier_vip_f2: "No bypass or dynamic key needed", tier_vip_f3: "Early access to Beta files", tier_sup_price: "9 USD / lifetime", tier_sup_f1: "Lifetime Premium Privileges", tier_sup_f2: "Global name showcase on Live Ticker", tier_sup_f3: "Priority 1-1 technical support", tier_sponsor: "Corporate Sponsor", tier_sponsor_price: "6.5 USD / lifetime", tier_spo_f1: "Logo placement in footer grid", tier_spo_f2: "Dedicated on-demand reversing pipelines", btn_sponsor: "Fund Project", tutor_headline: "New User Onboarding Handbook", tutor_subheadline: "Execute these three core parameters perfectly to optimize NetKing frameworks", step1_title: "Step 1: Obtain Auth Key", step1_desc: "For free tiers like NetPlus, click 'Get Key' to complete secure gateway verification. Copy the string into the application environment runtime.", step2_title: "Step 2: Enable Local VPN Loopback", step2_desc: "Upon launching Fake Lag, consent to local loopback VPN configuration requests. This stack operates locally and maintains zero telemetry.", step3_title: "Step 3: Remove Battery Optimization Constraints", step3_desc: "Navigate to Android Settings -> Apps -> NetKing -> Battery -> Toggle to 'Unrestricted' to prevent aggressive OS garbage collection routines.", review_headline: "End-User Verification & Feedback", review_subheadline: "Live testimonial data arrays and decentralized reporting forms", rev1_text: "\"NetPlus V18 runs extremely smooth bypass, ghost mode optimization reacts instantly with zero lag.\"", rev2_text: "\"Clean system UI interface design, free of malicious malware or dirty pop-up banners.\"", feedback_title: "Dispatch System Feedback telemetry", btn_send_feedback: "Submit Feedback", login_title: "System Authentication", login_user_lbl: "Username", login_pass_lbl: "Password", btn_login_submit: "Enter Database", no_account: "New operator?", reg_now: "Register credentials", reg_title: "Create Operator Profile", reg_user_lbl: "New Username", btn_reg_submit: "Confirm Profile", has_account: "Already registered?", login_back: "Return to Login", footer_quick_links: "Quick Navigation Links", footer_stats_title: "Realtime Analytics Core", live_badge: "Live", ticker_init: "Initializing global honor list...", blocked_title: "🔒 ACCESS DENIED!", blocked_desc: "You are currently in Guest mode. You only have permission to view info and cannot download files or submit feedback. Please Log In.", nav_login_action: "Log In", dl_success_title: "Download Initiated", dl_success_desc: "The secure file package distribution pipeline has been established successfully.", btn_done: "Done", j1: "🏠 Home", j1_sub: "Top of Page", j2: "⚡ Notification", j2_sub: "Realtime Statistics", j3: "📥 Application Hub", j3_sub: "Download APK", j4: "💎 Membership Pricing", j4_sub: "Supporter Packs", j5: "📚 User Guide", j5_sub: "For Newbies", jump_title: "🧭 Quick Navigation Matrix", flash_sale_badge: "FLASH SALE PRICE SUBSIDY PROGRAM ACTIVE", billing_title: "VIP Invoice Payment Portal", billing_user: "Active Operator Session:", billing_select_lbl: "Selected Service Tier", opt_vip: "Premium VIP Pack — 55.000đ / Month", opt_sup: "Supporter VIP Pack — 200.000đ / Lifetime", opt_spo: "Sponsor Partner — 150.000đ / Lifetime", qr_title: "SCAN QR CODE FOR AUTOMATIC BANK TRANSFER", qr_memo: "Memo Content: NETKING VIP [Username]", trans_id_lbl: "Bank / E-Wallet Reference TransID", btn_confirm_billing: "Confirm Completion of Transaction", btn_cancel_billing: "➔ Cancel, Return to Dashboard", guest_notice_head: "🔒 GUEST SESSION DETECTED", guest_notice_body: "You are surfing anonymously. Download features are restricted. Please click here to authorize your account profile."
             },
             vi: {
-                nav_home: "Trang chủ",
-                nav_download: "Tải xuống",
-                nav_consult: "Tư vấn",
-                nav_pricing: "Bảng giá",
-                nav_guide: "Hướng dẫn",
-                theme_btn: "Giao diện",
-                welcome_tag: "Welcome to my website",
-                hero_team: "Team",
-                hero_subtitle: "Premium Android Apps • Secure Downloads",
-                hero_desc: "Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team.",
-                btn_view_apps: "Xem ứng dụng",
-                admin_notice_title: "Thông báo từ Admin",
-                notice_header: "Chào mừng tới Team NetKing!",
-                notice_body: "Hệ thống đang cập nhật các tính năng bảo mật mới tối ưu hơn. Thành viên vui lòng đăng nhập để mở khóa đầy đủ quyền hạn tải xuống ứng dụng.",
-                realtime_stats_title: "Số liệu thời gian thực",
-                stat_views: "Lượt truy cập",
-                stat_members: "Thành viên",
-                stat_online: "Trực tuyến",
-                stat_downloads: "Tải xuống",
-                stats_footer: "Dữ liệu chuẩn hóa 2026",
-                feat_headline: "Làm Chủ Kết Nối, Làm Chủ Trận Đấu",
-                feat_subheadline: "Giải pháp can thiệp UDP packet chuyên sâu dành cho mobile",
-                feat_1_desc: "Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, sau đó giải phóng đồng loạt giúp tối ưu hóa định vị vị trí.",
-                feat_2_desc: "Nhân bản và phát lại liên tục các packet tại vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời trong khi bạn tự do di chuyển.",
-                consult_headline: "Góc Tư Vấn & Hỗ Trợ Kỹ Thuật",
-                consult_subheadline: "Giải đáp thắc mắc và định hướng cấu hình tối ưu thiết bị",
-                q1: "Nên chọn NetPlus hay Netking Fake Lag?",
-                a1: "Nếu bạn cần can thiệp sâu có tích hợp Anti-ban tỷ lệ cao (88-90%), hãy ưu tiên dùng NetPlus. Nếu cần sự gọn nhẹ, chạy ngay không cần lấy key rườm rà, Fake Lag OG là giải pháp tốt nhất.",
-                q2: "Ứng dụng chưa xác minh (Modern) có an toàn không?",
-                a2: "Các bản Mod/Cracked từ bên thứ ba luôn được hệ thống cảnh báo màu cam. NetKing Team đã bẻ khóa để nghiên cứu cấu trúc Smali nhưng khuyến cáo test trên giả lập hoặc máy phụ trước khi dùng diện rộng.",
-                app_list_title: "Danh sách ứng dụng nổi bật (Yêu cầu tài khoản đăng nhập)",
-                pricing_headline: "Gói Thành Viên VIP & Tài Trợ",
-                pricing_subheadline: "Yêu cầu Đăng nhập hệ thống trước khi thực hiện giao dịch nâng cấp",
-                tier_free: "Thành Viên Thường",
-                tier_free_price: "0đ / vĩnh viễn",
-                tier_free_f1: "Tải full kho công khai",
-                tier_free_f2: "Tốc độ giới hạn chuẩn",
-                tier_free_f3: "Vượt link lấy key hàng ngày",
-                tier_free_btn: "Mặc Định công khai",
-                badge_recommended: "KHUYÊN DÙNG",
-                btn_upgrade: "Nâng Cấp",
-                btn_buy_pack: "Mua Gói Gốc",
-                tier_vip_price: "55.000đ / tháng",
-                tier_vip_f1: "Link trực tiếp (No Ads)",
-                tier_vip_f2: "Không cần vượt cổng lấy Key",
-                tier_vip_f3: "Cập nhật file sớm Beta",
-                tier_sup_price: "300k 200.000đ / vĩnh viễn",
-                tier_sup_f1: "Trọn đời Premium Đặc quyền",
-                tier_sup_f2: "Vinh danh Tên lên Live Show",
-                tier_sup_f3: "Ưu tiên Support riêng 1-1",
-                tier_sponsor: "Sponsor - Đối Tác",
-                tier_sponsor_price: "150.000đ / vĩnh viễn",
-                tier_spo_f1: "Treo logo vinh danh chân trang",
-                tier_spo_f2: "Yêu cầu bẻ khóa/Mod app riêng",
-                btn_sponsor: "Tài Trợ",
-                tutor_headline: "Hướng Dẫn Sử Dụng Cho Thành Viên Mới",
-                tutor_subheadline: "Làm theo chính xác 3 bước sau để tối ưu hóa công cụ NetKing trên thiết bị",
-                step1_title: "Bước 1: Lấy Key Xác Thực",
-                step1_desc: "Đối với các bản App miễn phí (như NetPlus), hãy bấm nút \"Lấy Key\" để vượt liên kết an toàn bảo mật. Sao chép chuỗi mã và dán vào ô khởi động trong App.",
-                step2_title: "Bước 2: Bật Cấu Định VPN cục bộ",
-                step2_desc: "Khi mở ứng dụng Fake Lag, hệ thống sẽ yêu cầu cấp quyền cấu hình VPN cục bộ. Hãy chọn \"Đồng ý/Cho phép\". Điều này không làm lộ dữ liệu cá nhân của bạn.",
-                step3_title: "Bước 3: Tắt Tối Ưu Hóa Pin",
-                step3_desc: "Vào Cài đặt Android -> Ứng dụng -> Chọn NetKing -> Pin -> Chuyển từ \"Tối ưu hóa\" sang \"Không giới hạn\" để tránh bị hệ thống ép đóng ứng dụng chạy ngầm khi đang chơi game.",
-                review_headline: "Đánh Giá & Phản Hồi",
-                review_subheadline: "Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến",
-                rev1_text: " \"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag.\"",
-                rev2_text: "\"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác.\"",
-                feedback_title: "Gửi Phản Hồi Lên Hệ Thống",
-                btn_send_feedback: "Gửi Phản Hồi Trực Tiếp",
-                login_title: "Đăng Nhập Hệ Thống",
-                login_user_lbl: "Tài khoản",
-                login_pass_lbl: "Mật khẩu",
-                btn_login_submit: "Vào Hệ Thống",
-                no_account: "Chưa có tài khoản?",
-                reg_now: "Đăng ký ngay",
-                reg_title: "Đăng Ký Thành Viên",
-                reg_user_lbl: "Tài khoản mới",
-                btn_reg_submit: "Xác Nhận Đăng Ký",
-                has_account: "Đã có tài khoản?",
-                login_back: "Quay lại Đăng nhập",
-                footer_quick_links: "Liên kết nhanh",
-                footer_stats_title: "Thống kê chuẩn (Realtime)",
-                live_badge: "Live",
-                ticker_init: "Đang khởi tạo danh sách vinh danh toàn cầu...",
-                blocked_title: "🔒 QUYỀN TRUY CẬP BỊ CHẶN!",
-                blocked_desc: "Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.",
-                nav_login_action: "Đăng Nhập",
-                dl_success_title: "Tải Xuống Thành Công",
-                dl_success_desc: "Đường dẫn tải tệp tin an toàn đã được khởi tạo.",
-                btn_done: "Hoàn tất",
-                j1: "🏠 Trang Chủ", j1_sub: "Đầu trang",
-                j2: "⚡ Bảng Thông Báo", j2_sub: "Số liệu thực",
-                j3: "📥 Kho Tải Ứng Dụng", j3_sub: "Download APK",
-                j4: "💎 Bảng Giá Thành Viên", j4_sub: "Gói Supporter",
-                j5: "📚 Hướng Dẫn Sử Dụng", j5_sub: "Dành cho Newbie",
-                jump_title: "Compass Bảng Điều Hướng Nhanh Website",
-                flash_sale_badge: "CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT",
-                billing_title: "Cổng Thanh Toán Hóa Đơn VIP",
-                billing_user: "Tài khoản đang thực hiện:",
-                billing_select_lbl: "Gói dịch vụ đã chọn",
-                opt_vip: "Gói Premium VIP — 55.000đ / Tháng",
-                opt_sup: "Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)",
-                opt_spo: "Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn",
-                qr_title: "QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN",
-                qr_memo: "Nội dung: NETKING VIP [Tên tài khoản]",
-                trans_id_lbl: "Mã giao dịch ngân hàng / Ví điện tử",
-                btn_confirm_billing: "Xác nhận hoàn tất giao dịch",
-                btn_cancel_billing: "➔ Hủy bỏ, quay lại Trang Chủ",
-                guest_notice_head: "🔒 BẠN ĐANG TRUY CẬP VỚI TƯ CÁCH KHÁCH",
-                guest_notice_body: "Bạn chưa đăng nhập. Tính năng tải xuống bị khóa. Bấm vào đây để đăng nhập hệ thống ngay."
+                nav_home: "Trang chủ", nav_download: "Tải xuống", nav_consult: "Tư vấn", nav_pricing: "Bảng giá", nav_guide: "Hướng dẫn", theme_btn: "Giao diện", welcome_tag: "Welcome to my website", hero_team: "Team", hero_subtitle: "Premium Android Apps • Secure Downloads", hero_desc: "Chia sẻ những ứng dụng & game Android chất lượng cao, miễn phí và được kiểm duyệt kỹ lưỡng bởi đội ngũ NetKing Team.", btn_view_apps: "Xem ứng dụng", admin_notice_title: "Thông báo từ Admin", notice_header: "Chào mừng tới Team NetKing!", notice_body: "Hệ thống đang cập nhật các tính năng bảo mật mới tối ưu hơn. Thành viên vui lòng đăng nhập để mở khóa đầy đủ quyền hạn tải xuống ứng dụng.", realtime_stats_title: "Số liệu thời gian thực", stat_views: "Lượt truy cập", stat_members: "Thành viên", stat_online: "Trực tuyến", stat_downloads: "Tải xuống", stats_footer: "Dữ liệu chuẩn hóa 2026", feat_headline: "Làm Chủ Kết Nối, Làm Chủ Trận Đấu", feat_subheadline: "Giải pháp can thiệp UDP packet chuyên sâu dành cho mobile", feat_1_desc: "Tích lũy toàn bộ dữ liệu gói tin UDP trong khoảng thời gian định trước, sau đó giải phóng đồng loạt giúp tối ưu hóa định vị vị trí.", feat_2_desc: "Nhân bản và phát lại liên tục các packet tại vị trí cũ, giữ hình ảnh nhân vật bất động tạm thời trong khi bạn tự do di chuyển.", consult_headline: "Góc Tư Vấn & Hỗ Trợ Kỹ Thuật", consult_subheadline: "Giải đáp thắc mắc và định hướng cấu hình tối ưu thiết bị", q1: "Nên chọn NetPlus hay Netking Fake Lag?", a1: "If bạn cần can thiệp sâu có tích hợp Anti-ban tỷ lệ cao (88-90%), hãy ưu tiên dùng NetPlus. Nếu cần sự gọn nhẹ, chạy ngay không cần lấy key rườm rà, Fake Lag OG là giải pháp tốt nhất.", q2: "Ứng dụng chưa xác minh (Modern) có an toàn không?", a2: "Các bản Mod/Cracked từ bên thứ ba luôn được hệ thống cảnh báo màu cam. NetKing Team đã bẻ khóa để nghiên cứu cấu trúc Smali nhưng khuyến cáo test trên giả lập hoặc máy phụ trước khi dùng diện rộng.", app_list_title: "Danh sách ứng dụng nổi bật (Yêu cầu tài khoản đăng nhập)", pricing_headline: "Gói Thành Viên VIP & Tài Trợ", pricing_subheadline: "Yêu cầu Đăng nhập hệ thống trước khi thực hiện giao dịch nâng cấp", tier_free: "Thành Viên Thường", tier_free_price: "0đ / vĩnh viễn", tier_free_f1: "Tải full kho công khai", tier_free_f2: "Tốc độ giới hạn chuẩn", tier_free_f3: "Vượt link lấy key hàng ngày", tier_free_btn: "Mặc Định công khai", badge_recommended: "KHUYÊN DÙNG", btn_upgrade: "Nâng Cấp", btn_buy_pack: "Mua Gói Gốc", tier_vip_price: "55.000đ / tháng", tier_vip_f1: "Link trực tiếp (No Ads)", tier_vip_f2: "Không cần vượt cổng lấy Key", tier_vip_f3: "Cập nhật file sớm Beta", tier_sup_price: "300k 200.000đ / vĩnh viễn", tier_sup_f1: "Trọn đời Premium Đặc quyền", tier_sup_f2: "Vinh danh Tên lên Live Show", tier_sup_f3: "Ưu tiên Support riêng 1-1", tier_sponsor: "Sponsor - Đối Tác", tier_sponsor_price: "150.000đ / vĩnh viễn", tier_spo_f1: "Treo logo vinh danh chân trang", tier_spo_f2: "Yêu cầu bẻ khóa/Mod app riêng", btn_sponsor: "Tài Trợ", tutor_headline: "Hướng Dẫn Sử Dụng Cho Thành Viên Mới", tutor_subheadline: "Làm theo chính xác 3 bước sau để tối ưu hóa công cụ NetKing trên thiết bị", step1_title: "Bước 1: Lấy Key Xác Thực", step1_desc: "Đối với các bản App miễn phí (như NetPlus), hãy bấm nút \"Lấy Key\" để vượt liên kết an toàn bảo mật. Sao chép chuỗi mã và dán vào ô khởi động trong App.", step2_title: "Bước 2: Bật Cấu Định VPN cục bộ", step2_desc: "Khi mở ứng dụng Fake Lag, hệ thống sẽ yêu cầu cấp quyền cấu hình VPN cục bộ. Hãy chọn \"Đồng ý/Cho phép\". Điều này không làm lộ dữ liệu cá nhân của bạn.", step3_title: "Bước 3: Tắt Tối Ưu Hóa Pin", step3_desc: "Vào Cài đặt Android -> Ứng dụng -> Chọn NetKing -> Pin -> Chuyển từ \"Tối ưu hóa\" sang \"Không giới hạn\" để tránh bị hệ thống ép đóng ứng dụng chạy ngầm khi đang chơi game.", review_headline: "Đánh Giá & Phản Hồi", review_subheadline: "Ý kiến thực tế từ thành viên và khung gửi đóng góp trực tuyến", rev1_text: " \"Bản NetPlus V18 chạy bypass mượt cực kỳ, chỉnh Ghost mode phản hồi tín hiệu cực ngon không giật lag.\"", rev2_text: "\"Giao diện tối ưu rất sạch, không dính virus hay pop-up quảng cáo bẩn như mấy trang khác.\"", feedback_title: "Gửi Phản Hồi Lên Hệ Thống", btn_send_feedback: "Gửi Phản Hồi Trực Tiếp", login_title: "Đăng Nhập Hệ Thống", login_user_lbl: "Tài khoản", login_pass_lbl: "Mật khẩu", btn_login_submit: "Vào Hệ Thống", no_account: "Chưa có tài khoản?", reg_now: "Đăng ký ngay", reg_title: "Đăng Ký Thành Viên", reg_user_lbl: "Tài khoản mới", btn_reg_submit: "Xác Nhận Đăng Ký", has_account: "Đã có tài khoản?", login_back: "Quay lại Đăng nhập", footer_quick_links: "Liên kết nhanh", footer_stats_title: "Thống kê chuẩn (Realtime)", live_badge: "Live", ticker_init: "Đang khởi tạo danh sách vinh danh toàn cầu...", blocked_title: "🔒 QUYỀN TRUY CẬP BỊ CHẶN!", blocked_desc: "Bạn đang ở chế độ khách (Guest). Bạn chỉ có quyền xem thông tin và không thể tải xuống tệp tin hay gửi feedback. Vui lòng Đăng nhập hoặc tạo tài khoản mới.", nav_login_action: "Đăng Nhập", dl_success_title: "Tải Xuống Thành Công", dl_success_desc: "Đường dẫn tải tệp tin an toàn đã được khởi tạo.", btn_done: "Hoàn tất", j1: "🏠 Trang Chủ", j1_sub: "Đầu trang", j2: "⚡ Bảng Thông Báo", j2_sub: "Số liệu thực", j3: "📥 Kho Tải Ứng Dụng", j3_sub: "Download APK", j4: "💎 Bảng Giá Thành Viên", j4_sub: "Gói Supporter", j5: "📚 Hướng Dẫn Sử Dụng", j5_sub: "Dành cho Newbie", jump_title: "Compass Bảng Điều Hướng Nhanh Website", flash_sale_badge: "CHƯƠNG TRÌNH TRỢ GIÁ FLASH SALE ĐANG BẬT", billing_title: "Cổng Thanh Thanh Toán Hóa Đơn VIP", billing_user: "Tài khoản đang thực hiện:", billing_select_lbl: "Gói dịch vụ đã chọn", opt_vip: "Gói Premium VIP — 55.000đ / Tháng", opt_sup: "Gói Supporter VIP Pack — 200.000đ / Trọn Đời (Gốc 300k)", opt_spo: "Gói Sponsor - Đối Tác — 150.000đ / Vĩnh Viễn", qr_title: "QUÉT MÃ QR NẠP TỰ ĐỘNG CHUYỂN KHOẢN", qr_memo: "Nội dung: NETKING VIP [Tên tài khoản]", trans_id_lbl: "Mã giao dịch ngân hàng / Ví điện tử", btn_confirm_billing: "Xác nhận hoàn tất giao dịch", btn_cancel_billing: "➔ Hủy bỏ, quay lại Trang Chủ", guest_notice_head: "🔒 BẠN ĐANG TRUY CẬP VỚI TƯ CÁCH KHÁCH", guest_notice_body: "Bạn chưa đăng nhập. Tính năng tải xuống bị khóa. Bấm vào đây để đăng nhập hệ thống ngay."
             }
         };
 
@@ -1310,7 +1092,7 @@
                 if (typeof actionFunction === 'function') {
                     actionFunction();
                 }
-            }, 3000); // Trì hoãn chuẩn 3 giây
+            }, 3000);
         }
 
         // Hàm đổi ngôn ngữ toàn web
@@ -1325,7 +1107,6 @@
                 }
             });
             
-            // Cập nhật placeholders của inputs & textareas
             const feedbackText = document.getElementById('user-feedback-text');
             if(feedbackText) {
                 feedbackText.placeholder = lang === 'en' ? 'Enter feedback or app bugs here...' : 'Nhập ý kiến đóng góp, báo lỗi app tại đây...';
@@ -1398,211 +1179,229 @@
             if (currentTheme === 'aurora') return Math.random() > 0.5 ? '#04db85' : '#0066ff';
             if (currentTheme === 'galaxy') return Math.random() > 0.5 ? '#a855f7' : '#ec4899';
             if (currentTheme === 'stars') return '#ffffff';
-            if (currentTheme === 'snowflakes') return '#e2e8f0';
+            if (currentTheme === 'snowflakes') return '#93c5fd';
             return '#fff';
         }
 
-        function animateThemeBackground() {
+        function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             entities.forEach(p => {
                 ctx.save();
                 ctx.globalAlpha = p.alpha;
                 ctx.fillStyle = p.color;
-                
-                if (currentTheme === 'snowflakes') {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    p.y += p.speedY;
-                    if (p.y > canvas.height) p.y = -5;
-                } else if (currentTheme === 'aurora' || currentTheme === 'galaxy') {
-                    let grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 30);
-                    grad.addColorStop(0, p.color);
-                    grad.addColorStop(1, 'transparent');
-                    ctx.fillStyle = grad;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size * 30, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-                    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    p.alpha += (Math.random() - 0.5) * 0.05;
-                    if (p.alpha < 0.1) p.alpha = 0.1;
-                    if (p.alpha > 0.8) p.alpha = 0.8;
-                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.restore();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+
+                if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if (currentTheme === 'snowflakes' && p.y > canvas.height) {
+                    p.y = 0;
+                    p.x = Math.random() * canvas.width;
+                } else if (p.y < 0 || p.y > canvas.height) {
+                    p.speedY *= -1;
+                }
             });
-            
-            requestAnimationFrame(animateThemeBackground);
+            requestAnimationFrame(animateParticles);
         }
 
+        // --- THEME SELECT ENGINE ---
         function toggleThemeDropdown(e) {
             e.stopPropagation();
             document.getElementById('theme-dropdown-menu').classList.toggle('show');
-        }
-
-        function selectTheme(themeName) {
-            currentTheme = themeName;
-            document.body.className = '';
-            document.body.classList.add('theme-' + themeName);
-            
-            document.querySelectorAll('.theme-opt').forEach(opt => {
-                opt.classList.remove('active');
-                if(opt.getAttribute('data-theme') === themeName) opt.classList.add('active');
-            });
-            
-            initThemeParticles();
-            document.getElementById('theme-dropdown-menu').classList.remove('show');
         }
 
         document.addEventListener('click', () => {
             document.getElementById('theme-dropdown-menu').classList.remove('show');
         });
 
-        // --- APP ENGINE ---
-        const liveMembersPool = [
-            { name: "Kha_Gamer_2K", tier: "Sponsor", msg_vi: "vừa gia hạn gói Tài Trợ hệ thống!", msg_en: "just renewed Corporate Sponsor package!" },
-            { name: "Hoang_Sniper", tier: "Supporter VIP", msg_vi: "đã mua gói Supporter Pack.", msg_en: "acquired the Supporter Pack entry level." },
-            { name: "Alex_NetRunner", tier: "Premium VIP", msg_vi: "vừa nâng cấp lên gói VIP tháng!", msg_en: "upgraded to Premium VIP membership!" },
-            { name: "Shadow_Modder", tier: "Premium VIP", msg_vi: "đã vượt cổng kiểm tra an toàn.", msg_en: "has bypassed the system key gate." }
-        ];
+        function selectTheme(theme) {
+            currentTheme = theme;
+            document.body.className = '';
+            document.body.classList.add('theme-' + theme);
+            
+            document.querySelectorAll('.theme-opt').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('data-theme') === theme) btn.classList.add('active');
+            });
+            initThemeParticles();
+        }
 
+        // --- LIVE HONOR TICKER ENGINE ---
+        const fakeVipUsers = ["A Sin 👑", "KhaGamer", "HoangPro", "NetkingFan", "SmaliMaster", "Alex_VN", "packet_injector", "ZeroLag", "Termux_User", "VipMember_99"];
+        function cycleLiveTicker() {
+            const ticker = document.getElementById('ticker-content');
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            
+            setInterval(() => {
+                const randomUser = fakeVipUsers[Math.floor(Math.random() * fakeVipUsers.length)];
+                ticker.style.transform = "translateY(-30px)";
+                ticker.style.opacity = "0";
+                
+                setTimeout(() => {
+                    ticker.innerText = currentLang === 'en' 
+                        ? `🎉 Honor roll: Operator [ ${randomUser} ] successfully synced with VIP Premium Access Node.`
+                        : `🎉 Vinh danh: Thành viên [ ${randomUser} ] đã đồng bộ hóa thành công quyền truy cập VIP Premium.`;
+                    ticker.style.transform = "translateY(0)";
+                    ticker.style.opacity = "1";
+                }, 400);
+            }, 5000);
+        }
+
+        // --- APP SYSTEM DATABASE & RENDER ---
         const appsDatabase = [
-            {
-                name: "Netking Launcher",
-                version: "V1",
-                badgeClass: "bg-insanity",
-                badgeText: "INSANITY!!",
-                hot: true,
-                desc_vi: "Tìm kiếm Launcher chất lượng? NL sẽ mang lại trải nghiệm tối ưu nhất, ẩn ứng dụng của bạn cực kì bảo mật.<br><span style='color:#3b82f6;'>✓ Đã kiểm duyệt bởi NetKing Team</span>",
-                desc_en: "Finding good launcher apk? NL will give you best enjoy. Hide your apps from others people to find it.<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                downloadUrl: "https://www.mediafire.com/file/zmd786crhxyv6no/NLauncher_1.0.apk/file",
-                keyUrl: null
-            },
-            {
-                name: "NetPlus",
-                version: "V18",
-                badgeClass: "bg-hot",
-                badgeText: "HOT",
-                hot: false,
-                desc_vi: "2 tùy chọn chống chặn tài khoản từ 88% - 90%:<br>1. Đóng băng dữ liệu<br>2. Chế độ bóng ma Ghost<br><span style='color:#3b82f6;'>✓ Đã kiểm duyệt bởi NetKing Team</span>",
-                desc_en: "2 option antiband 88% - 90%:<br>1. Freeze<br>2. Ghost<br><span style='color:#3b82f6;'>✓ Verified by netking team</span>",
-                downloadUrl: "https://www.mediafire.com/file/c5rjolz3ezd8yun/NetPlusV18.apk/file",
-                keyUrl: "https://link4m.net/go/eb8Na3"
-            },
-            {
-                name: "Netking Fake Lag",
-                version: "v1.0.1",
-                badgeClass: "bg-verified",
-                badgeText: "SAFE",
-                hot: false,
-                desc_vi: "Fake Lag hiện đại, tích hợp sẵn 3 tùy chọn chuyên sâu:<br>1. Đóng băng vô hạn<br>2. Tàng hình thực thể<br>3. Dịch chuyển Teleport",
-                desc_en: "Fake Lag Modern, 3 Options:<br>1. Freeze Infinity<br>2. Invisible<br>3. Teleporter",
-                downloadUrl: "https://www.mediafire.com/file/b566kfjwhsewl98/Netking_%25281%2529.apk/file",
-                keyUrl: null
-            }
+            { id: "netplus", name: "NetPlus V18 Bypass", version: "v18.4.2", desc_vi: "Hỗ trợ ép xung gói mạng UDP, can thiệp sâu luồng truyền dẫn gói tin và tích hợp Anti-ban thế hệ mới.", desc_en: "Advanced UDP packet stream injection tool with high-tier anti-ban framework layer optimization.", badges: ["verified", "hot"], type: "key" },
+            { id: "fakelag", name: "NetKing Fake Lag OG", version: "v2.0.1", desc_vi: "Phiên bản gốc tối ưu hóa độ trễ thông minh. Chạy độc lập, gọn nhẹ không cần kết nối Server phụ.", desc_en: "Original latency optimization tool. Runs completely standalone without secondary remote authentication gates.", badges: ["verified"], type: "download" },
+            { id: "gamebooster", name: "Game Booster VIP Pro", version: "v5.1.0-Mod", desc_vi: "Bản sửa đổi bẻ khóa cấu trúc Manifest giúp truy cập thẳng Activity gốc, tối ưu RAM và CPU ngầm.", desc_en: "Cracked AndroidManifest bypass configuration package, optimizing runtime garbage collections.", badges: ["risk", "insanity"], type: "download" }
         ];
-
-        let lastTickerIndex = -1;
-        let currentUserSession = localStorage.getItem('currentUserSession') || null; 
 
         function renderAppsSystem() {
-            const currentLang = localStorage.getItem('netking_lang') || 'en';
             const container = document.getElementById('apps-list-dom');
+            if(!container) return;
+            container.innerHTML = '';
             
-            container.innerHTML = appsDatabase.map(app => {
-                let textDesc = currentLang === 'vi' ? app.desc_vi : app.desc_en;
-                let btnDlText = currentLang === 'vi' ? 'Tải Xuống APK' : 'Download APK';
-                let btnKeyText = currentLang === 'vi' ? 'Lấy Key' : 'Get Key';
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            const isLoggedIn = localStorage.getItem('netking_user') !== null;
 
-                let keyBtn = app.keyUrl ? `<div onclick="withLoading(() => triggerKeyGate('${app.keyUrl}'))" class="btn-download btn-key-style"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5M14 6l3 3"/></svg> ${btnKeyText}</div>` : '';
+            appsDatabase.forEach(app => {
+                const desc = currentLang === 'en' ? app.desc_en : app.desc_vi;
                 
-                return `
+                let badgesHtml = '';
+                app.badges.forEach(b => {
+                    if(b === 'verified') badgesHtml += `<span class="badge bg-verified">✓ ${currentLang==='en'?'Verified':'Xác minh'}</span>`;
+                    if(b === 'risk') badgesHtml += `<span class="badge bg-risk">⚠️ ${currentLang==='en'?'Unverified':'Chưa rõ'}</span>`;
+                    if(b === 'hot') badgesHtml += `<span class="badge bg-hot">🔥 HOT</span>`;
+                    if(b === 'insanity') badgesHtml += `<span class="badge bg-insanity">🔮 MODERN</span>`;
+                });
+
+                let buttonActionHtml = '';
+                if(!isLoggedIn) {
+                    buttonActionHtml = `<button class="btn-download" style="width:100%;" onclick="withLoading(() => openGuestBlockedModal())">🔒 ${currentLang==='en'?'Download (Locked)':'Tải xuống (Khóa)'}</button>`;
+                } else {
+                    if(app.type === 'key') {
+                        buttonActionHtml = `<button class="btn-download btn-key-style" style="width:100%;" onclick="withLoading(() => { alert('${currentLang==='en'?'Redirecting to secure link bypass node...':'Đang chuyển hướng vượt liên kết an toàn lấy chuỗi mã...'); window.open('https://discord.gg/wf4QnepsxS','_blank'); })">🔑 ${currentLang==='en'?'Get Access Key':'Lấy Key Xác Thực'}</button>`;
+                    } else {
+                        buttonActionHtml = `<button class="btn-download ${app.badges.includes('risk')?'risk-style':''}" style="width:100%;" onclick="withLoading(() => triggerDownloadSuccess())">📥 ${currentLang==='en'?'Download Secure APK':'Tải Xuống APK An Toàn'}</button>`;
+                    }
+                }
+
+                container.innerHTML += `
                     <div class="app-card neon-box scroll-anim">
                         <div>
                             <div class="app-icon-wrapper">
                                 <div class="app-icon-vector">
-                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
                                 </div>
                             </div>
-                            <div class="badges-row">
-                                <span class="badge ${app.badgeClass}">${app.badgeText}</span>
-                            </div>
+                            <div class="badges-row">${badgesHtml}</div>
                             <h3>${app.name}</h3>
                             <span class="app-version">${app.version}</span>
-                            <p class="app-desc">${textDesc}</p>
+                            <p class="app-desc">${desc}</p>
                         </div>
-                        <div class="app-card-footer">
-                            <button onclick="withLoading(() => triggerDownloadGate('${app.downloadUrl}'))" class="btn-download"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1m-4-4-4 4m0 0-4-4m4 4V4"/></svg> ${btnDlText}</button>
-                            ${keyBtn}
-                        </div>
+                        <div class="app-card-footer">${buttonActionHtml}</div>
                     </div>
                 `;
-            }).join('');
+            });
+            initScrollAnimations();
         }
 
-        function triggerLiveTickerCycle() {
-            const currentLang = localStorage.getItem('netking_lang') || 'en';
-            let nextIndex;
-            do {
-                nextIndex = Math.floor(Math.random() * liveMembersPool.length);
-            } while (nextIndex === lastTickerIndex);
+        // --- REALTIME COUNTER NUMBERS ENGINE ---
+        function initializeStatsCounters() {
+            const config = { views: 42180, members: 12480, online: 342, downloads: 89450 };
             
-            lastTickerIndex = nextIndex;
-            const item = liveMembersPool[nextIndex];
-            const contentNode = document.getElementById('ticker-content');
-            
-            if(contentNode) {
-                contentNode.style.opacity = '0';
-                setTimeout(() => {
-                    let message = currentLang === 'vi' ? item.msg_vi : item.msg_en;
-                    contentNode.innerHTML = `💎 [${item.tier}] <strong>${item.name}</strong> ${message}`;
-                    contentNode.style.opacity = '1';
-                }, 400);
-            }
+            document.getElementById('view-count').innerText = config.views.toLocaleString();
+            document.getElementById('user-count').innerText = config.members.toLocaleString();
+            document.getElementById('online-count').innerText = config.online.toLocaleString();
+            document.getElementById('dl-count').innerText = config.downloads.toLocaleString();
+
+            document.getElementById('footer-view').innerText = config.views.toLocaleString();
+            document.getElementById('footer-user').innerText = config.members.toLocaleString();
+            document.getElementById('footer-online').innerText = config.online.toLocaleString();
+            document.getElementById('footer-dl').innerText = config.downloads.toLocaleString();
+
+            setInterval(() => {
+                config.views += Math.floor(Math.random() * 3) + 1;
+                config.online += Math.floor(Math.random() * 5) - 2;
+                if(config.online < 300) config.online = 310;
+                if(Math.random() > 0.7) config.downloads += 1;
+
+                document.getElementById('view-count').innerText = config.views.toLocaleString();
+                document.getElementById('online-count').innerText = config.online.toLocaleString();
+                document.getElementById('dl-count').innerText = config.downloads.toLocaleString();
+                document.getElementById('footer-view').innerText = config.views.toLocaleString();
+                document.getElementById('footer-online').innerText = config.online.toLocaleString();
+                document.getElementById('footer-dl').innerText = config.downloads.toLocaleString();
+            }, 4000);
         }
 
-        // --- AUTH MATRIX CONTROLLER ---
-        function updateAuthDynamicUI() {
-            const currentLang = localStorage.getItem('netking_lang') || 'en';
-            const zone = document.getElementById('auth-btn-area');
-            const loginBtnTxt = currentLang === 'vi' ? 'Đăng Nhập' : 'Sign In';
-            const logoutBtnTxt = currentLang === 'vi' ? 'Đăng Xuất' : 'Log Out';
+        // --- SCROLL ANIMATION CONTROLLER ---
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.scroll-anim, .scroll-fade');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
 
-            if (currentUserSession) {
-                zone.innerHTML = `<button class="btn-login" style="border-color:#ef4444; background:rgba(239,68,68,0.1);" onclick="withLoading(() => handleLogoutAction())">❌ <span>${logoutBtnTxt} (${currentUserSession})</span></button>`;
+            elements.forEach(el => observer.observe(el));
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- AUTHENTICATION FLOW CONTROLLER ---
+        function renderAuthControlArea() {
+            const area = document.getElementById('auth-btn-area');
+            if(!area) return;
+            const user = localStorage.getItem('netking_user');
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+
+            if(user) {
+                area.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:0.8rem; color:#10b981; font-weight:700;">🟢 ${user}</span>
+                        <button class="theme-select-btn" style="border-color:rgba(239,68,68,0.3); color:#ef4444;" onclick="withLoading(() => handleLogout())">➔</button>
+                    </div>
+                `;
             } else {
-                zone.innerHTML = `<button class="btn-login" onclick="withLoading(() => openAuthModal('login'))"><svg viewBox="0 0 24 24"><path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h7a3 3 0 0 1 3 3v1"/></svg><span>${loginBtnTxt}</span></button>`;
+                area.innerHTML = `
+                    <button class="btn-login" onclick="withLoading(() => openAuthModal('login'))">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        <span data-lang-key="nav_login_action">${currentLang==='en'?'Log In':'Đăng Nhập'}</span>
+                    </button>
+                `;
             }
-            renderGuestNotificationBox();
         }
 
         function renderGuestNotificationBox() {
-            const currentLang = localStorage.getItem('netking_lang') || 'en';
-            const box = document.getElementById('guest-notification-frame');
-            if(!box) return;
+            const frame = document.getElementById('guest-notification-frame');
+            if(!frame) return;
+            const user = localStorage.getItem('netking_user');
+            const lang = localStorage.getItem('netking_lang') || 'en';
 
-            if(!currentUserSession) {
-                box.innerHTML = `
-                    <div class="guest-alert-frame" onclick="withLoading(() => openAuthModal('login'))" style="cursor:pointer;">
+            if(user) {
+                frame.innerHTML = '';
+            } else {
+                frame.innerHTML = `
+                    <div class="guest-alert-frame scroll-fade">
                         <div class="guest-alert-header">
-                            <svg viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                            <span data-lang-key="guest_notice_head">${translations[currentLang].guest_notice_head}</span>
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                            <span>${translations[lang].guest_notice_head}</span>
                         </div>
-                        <div class="guest-tutorial-box" data-lang-key="guest_notice_body">${translations[currentLang].guest_notice_body}</div>
+                        <div class="guest-tutorial-box">
+                            ${translations[lang].guest_notice_body} <span onclick="withLoading(() => openAuthModal('login'))">${lang==='en'?'Authorize Session Now':'Đăng nhập ngay'} ➔</span>
+                        </div>
                     </div>
                 `;
-            } else {
-                box.innerHTML = '';
             }
+            initScrollAnimations();
         }
 
         function openAuthModal(mode) {
@@ -1611,164 +1410,128 @@
         }
 
         function toggleAuthMode(mode) {
-            if(mode === 'login') {
-                document.getElementById('login-form-box').style.display = 'block';
-                document.getElementById('register-form-box').style.display = 'none';
-            } else {
-                document.getElementById('login-form-box').style.display = 'none';
-                document.getElementById('register-form-box').style.display = 'block';
-            }
+            document.getElementById('login-form-box').style.display = mode === 'login' ? 'block' : 'none';
+            document.getElementById('register-form-box').style.display = mode === 'register' ? 'block' : 'none';
         }
 
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-        function closeModalDirect(id) {
-            document.getElementById(id).style.display = 'none';
-        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeModalDirect(id) { document.getElementById(id).style.display = 'none'; }
 
         function handleLogin(e) {
             e.preventDefault();
+            const user = document.getElementById('login-user').value.trim();
+            if(!user) return;
             withLoading(() => {
-                const user = document.getElementById('login-user').value.trim();
-                if(user) {
-                    currentUserSession = user;
-                    localStorage.setItem('currentUserSession', user);
-                    closeModal('auth-modal');
-                    updateAuthDynamicUI();
-                }
-            }, "Authenticating profile...");
+                localStorage.setItem('netking_user', user);
+                closeModal('auth-modal');
+                renderAuthControlArea();
+                renderGuestNotificationBox();
+                renderAppsSystem();
+            }, "Authenticating payload...");
         }
 
         function handleRegister(e) {
             e.preventDefault();
+            const user = document.getElementById('reg-user').value.trim();
+            if(!user) return;
             withLoading(() => {
-                const user = document.getElementById('reg-user').value.trim();
-                if(user) {
-                    currentUserSession = user;
-                    localStorage.setItem('currentUserSession', user);
-                    closeModal('auth-modal');
-                    updateAuthDynamicUI();
-                }
-            }, "Registering credentials...");
+                localStorage.setItem('netking_user', user);
+                closeModal('auth-modal');
+                renderAuthControlArea();
+                renderGuestNotificationBox();
+                renderAppsSystem();
+            }, "Registering profile database...");
         }
 
-        function handleLogoutAction() {
-            currentUserSession = null;
-            localStorage.removeItem('currentUserSession');
-            updateAuthDynamicUI();
+        function handleLogout() {
+            localStorage.removeItem('netking_user');
+            renderAuthControlArea();
+            renderGuestNotificationBox();
+            renderAppsSystem();
+            showMainPage();
         }
 
-        function triggerDownloadGate(url) {
-            if(!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
+        function openGuestBlockedModal() { document.getElementById('guest-modal').style.display = 'flex'; }
+        function openQuickJump() { document.getElementById('jump-modal').style.display = 'flex'; }
+        function quickJumpTo(id) { closeModal('jump-modal'); scrollToSection(id); }
+        function triggerDownloadSuccess() { document.getElementById('success-modal').style.display = 'flex'; }
+
+        // --- BILLING / PURCHASE SYSTEM ---
+        function attemptPurchase(tierName, priceValue) {
+            const user = localStorage.getItem('netking_user');
+            if(!user) {
+                openGuestBlockedModal();
                 return;
             }
-            window.open(url, '_blank');
-            document.getElementById('success-modal').style.display = 'flex';
+            showPremiumPage(tierName, priceValue);
         }
 
-        function triggerKeyGate(url) {
-            if(!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
-            window.open(url, '_blank');
-        }
-
-        function submitFeedback() {
-            const currentLang = localStorage.getItem('netking_lang') || 'en';
-            if(!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
-            alert(currentLang === 'en' ? "Telemetry dispatch successful!" : "Gửi dữ liệu phản hồi lên mảng máy chủ thành công!");
-            document.getElementById('user-feedback-text').value = '';
-        }
-
-        function attemptPurchase(name, price) {
-            if(!currentUserSession) {
-                document.getElementById('guest-modal').style.display = 'flex';
-                return;
-            }
+        function showPremiumPage(tierName, priceValue) {
             document.getElementById('main-page').style.display = 'none';
-            document.getElementById('premium-page').style.display = 'block';
-            document.getElementById('purchase-active-user').innerText = currentUserSession;
-            document.getElementById('qr-bank-memo').innerText = `NETKING VIP ${currentUserSession.toUpperCase()}`;
+            document.getElementById('notice-section').style.display = 'none';
+            const premPage = document.getElementById('premium-page');
+            premPage.style.display = 'block';
+
+            document.getElementById('purchase-active-user').innerText = localStorage.getItem('netking_user') || 'Guest';
             
-            const dropdown = document.getElementById('pricing-select-form');
-            dropdown.value = price.toString();
+            const select = document.getElementById('pricing-select-form');
+            if(priceValue === 55000) select.selectedIndex = 0;
+            if(priceValue === 200000) select.selectedIndex = 1;
+            if(priceValue === 150000) select.selectedIndex = 2;
+
             updateFormPriceDisplay();
             window.scrollTo(0,0);
         }
 
-        function updateFormPriceDisplay() {
-            const dropdown = document.getElementById('pricing-select-form');
-            document.getElementById('form-price-render').innerText = parseInt(dropdown.value).toLocaleString('vi-VN') + "đ";
-        }
-
         function showMainPage() {
-            document.getElementById('main-page').style.display = 'block';
             document.getElementById('premium-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            document.getElementById('notice-section').style.display = 'grid';
+            window.scrollTo(0,0);
         }
 
-        function openQuickJump() {
-            withLoading(() => {
-                document.getElementById('jump-modal').style.display = 'flex';
-            }, "Loading navigation map...");
+        function updateFormPriceDisplay() {
+            const select = document.getElementById('pricing-select-form');
+            const val = parseInt(select.value);
+            document.getElementById('form-price-render').innerText = val.toLocaleString() + "đ";
+            
+            const user = localStorage.getItem('netking_user') || 'Unknown';
+            document.getElementById('qr-bank-memo').innerText = `Nội dung: NETKING VIP ${user.toUpperCase()}`;
         }
 
-        function quickJumpTo(id) {
-            closeModal('jump-modal');
-            scrollToSection(id);
-        }
-
-        function scrollToSection(id) {
-            const target = id === 'body' ? document.body : document.getElementById(id);
-            if(target) {
-                target.scrollIntoView({ behavior: 'smooth' });
+        function submitFeedback() {
+            const area = document.getElementById('user-feedback-text');
+            const currentLang = localStorage.getItem('netking_lang') || 'en';
+            if(!localStorage.getItem('netking_user')) {
+                openGuestBlockedModal();
+                return;
             }
+            if(!area.value.trim()) {
+                alert(currentLang === 'en' ? 'Please compose a feedback text block before submitting.' : 'Vui lòng điền nội dung trước khi gửi phản hồi.');
+                return;
+            }
+            alert(currentLang === 'en' ? 'Data packet transmitted to system log core cluster successfully!' : 'Đã truyền tải dữ liệu phản hồi lên hệ thống trung tâm thành công!');
+            area.value = '';
         }
 
-        // --- CORE INITS ---
+        // --- CORE INITIATION ENGINE ON LOAD ---
         window.addEventListener('DOMContentLoaded', () => {
             resizeCanvas();
-            animateThemeBackground();
+            animateParticles();
+            initializeStatsCounters();
+            cycleLiveTicker();
             
-            // Đọc cấu hình ngôn ngữ từ trước
-            const savedLang = localStorage.getItem('netking_lang') || 'vi';
-            changeLanguage(savedLang);
-
-            // Mock statistical counters
-            document.getElementById('view-count').innerText = "284,910";
-            document.getElementById('user-count').innerText = "14,029";
-            document.getElementById('online-count').innerText = "381";
-            document.getElementById('dl-count').innerText = "94,112";
-
-            document.getElementById('footer-view').innerText = "284,910";
-            document.getElementById('footer-user').innerText = "14,029";
-            document.getElementById('footer-online').innerText = "381";
-            document.getElementById('footer-dl').innerText = "94,112";
-
-            updateAuthDynamicUI();
-
-            setInterval(triggerLiveTickerCycle, 4000);
-            triggerLiveTickerCycle();
+            // Ép ngôn ngữ mặc định nếu chưa cài đặt
+            if(!localStorage.getItem('netking_lang')) {
+                localStorage.setItem('netking_lang', 'vi');
+            }
+            const activeLang = localStorage.getItem('netking_lang');
+            
+            changeLanguage(activeLang);
+            renderAuthControlArea();
+            renderGuestNotificationBox();
+            renderAppsSystem();
         });
-
-        // --- SCROLL ANIM MATRIX INTERSECTION ---
-        const scrollObjects = document.querySelectorAll('.scroll-anim, .scroll-fade');
-        const observerOptions = { threshold: 0.05, rootMargin: "0px 0px -40px 0px" };
-        
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        }, observerOptions);
-
-        scrollObjects.forEach(obj => scrollObserver.observe(obj));
     </script>
 </body>
 </html>
