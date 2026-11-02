@@ -9,7 +9,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Chống cuộn trang mặc định của trình duyệt để vẽ và pan mượt hơn */
+        /* Chống cuộn trang mặc định của trình duyệt */
         body, html {
             touch-action: none;
             overflow: hidden;
@@ -18,11 +18,62 @@
             -webkit-user-select: none;
         }
 
+        /* --- VIỀN GRADIENT CHUYỂN ĐỘNG --- */
+        @keyframes gradient-border-spin {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .gradient-border-wrapper {
+            position: relative;
+            border-radius: 1.25rem;
+            padding: 1.5px;
+            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #3b82f6, #6366f1);
+            background-size: 300% 300%;
+            animation: gradient-border-spin 6s ease infinite;
+        }
+
+        .gradient-border-content {
+            background-color: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 1.15rem;
+        }
+
+        /* --- HIỆU ỨNG SHINE (ÁNH KIM BẢNG ĐIỀU KHIỂN) --- */
+        @keyframes shine-sweep {
+            0% { transform: translateX(-150%) skewX(-20deg); }
+            40%, 100% { transform: translateX(250%) skewX(-20deg); }
+        }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.18),
+                transparent
+            );
+            pointer-events: none;
+            animation: shine-sweep 5s infinite ease-in-out;
+        }
+
         /* Hiệu ứng mượt cho các nút */
         .btn-mode.active {
-            background-color: #4f46e5;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: #ffffff;
-            box-shadow: 0 0 12px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.5);
         }
 
         .cursor-grab { cursor: grab; }
@@ -33,35 +84,35 @@
 <body class="flex flex-col h-full font-sans antialiased bg-slate-950 select-none">
 
     <!-- Thanh Tiêu Đề (Header) -->
-    <header class="flex items-center justify-between px-3 py-2 bg-slate-900 border-b border-slate-800 z-30 shadow-md">
+    <header class="flex items-center justify-between px-3 py-2 bg-slate-900/90 border-b border-indigo-500/30 z-30 shadow-lg backdrop-blur-md">
         <div class="flex items-center gap-2">
-            <div class="p-1.5 bg-indigo-600 rounded-lg text-white">
+            <div class="p-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl text-white shadow-md shadow-indigo-500/20">
                 <i data-lucide="book-open" class="w-5 h-5"></i>
             </div>
             <div>
-                <h1 class="font-bold text-xs sm:text-sm text-white leading-tight">Học Tập & Chú Thích</h1>
-                <p class="text-[10px] sm:text-xs text-slate-400">Tài liệu tương tác</p>
+                <h1 class="font-bold text-xs sm:text-sm bg-gradient-to-r from-white via-slate-200 to-indigo-200 bg-clip-text text-transparent leading-tight">Học Tập & Chú Thích</h1>
+                <p class="text-[10px] sm:text-xs text-slate-400">Tài liệu tương tác trực tuyến</p>
             </div>
         </div>
 
-        <!-- Chế độ làm việc: Chuyển đổi VẼ và PHÓNG TO / DI CHUYỂN -->
-        <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800">
-            <button id="modeDraw" class="btn-mode active flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 transition-all">
+        <!-- Chế độ làm việc: VẼ vs PHÓNG TO / DỊCH CHUYỂN -->
+        <div class="flex items-center bg-slate-950/80 p-1 rounded-2xl border border-slate-800 shadow-inner">
+            <button id="modeDraw" class="btn-mode active flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 transition-all">
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
-                <span>Chế độ Vẽ</span>
+                <span>Vẽ & Chú thích</span>
             </button>
-            <button id="modeZoom" class="btn-mode flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 transition-all">
+            <button id="modeZoom" class="btn-mode flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-400 transition-all">
                 <i data-lucide="move" class="w-4 h-4"></i>
-                <span>Phóng to / Dịch chuyển</span>
+                <span>Phóng to / Di chuyển</span>
             </button>
         </div>
 
         <!-- Thao tác nhanh -->
         <div class="flex items-center gap-1.5">
-            <button id="btnResetZoom" title="Đặt lại kích thước chuẩn" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition-colors">
+            <button id="btnResetZoom" title="Khôi phục kích thước chuẩn" class="p-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 rounded-xl text-xs font-medium transition-all border border-slate-700/50 shadow">
                 <i data-lucide="maximize-2" class="w-4 h-4"></i>
             </button>
-            <button id="btnExport" title="Tải trang hiện tại về máy" class="flex items-center gap-1 px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium rounded-lg transition-colors">
+            <button id="btnExport" title="Tải trang hiện tại về máy" class="flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white text-xs font-semibold rounded-xl transition-all shadow-md shadow-emerald-900/30">
                 <i data-lucide="download" class="w-4 h-4"></i>
                 <span class="hidden md:inline">Tải về</span>
             </button>
@@ -69,90 +120,100 @@
     </header>
 
     <!-- Khu Vực Hiển Thị Canvas (Viewport) -->
-    <main id="viewport" class="flex-1 relative overflow-hidden bg-slate-950 flex items-center justify-center">
+    <main id="viewport" class="flex-1 relative overflow-hidden bg-slate-950 flex items-center justify-center cursor-draw">
         <!-- Loader Hiển thị khi chuyển trang -->
-        <div id="loader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-sm z-40 transition-opacity duration-300">
-            <div class="w-9 h-9 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="mt-2 text-xs font-medium text-slate-300">Đang tải trang...</p>
+        <div id="loader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-md z-40 transition-opacity duration-300">
+            <div class="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-3 text-xs font-medium text-indigo-300">Đang tải trang tài liệu...</p>
         </div>
 
-        <!-- Container chứa Canvas để áp dụng Thu phóng & Di chuyển (Transform Matrix) -->
-        <div id="transformContainer" class="absolute origin-center transition-transform duration-75">
-            <canvas id="mainCanvas" class="block rounded-lg shadow-2xl border border-slate-800 bg-slate-900 cursor-draw"></canvas>
+        <!-- Container chứa Canvas để áp dụng Thu phóng & Di chuyển -->
+        <div id="transformContainer" class="absolute origin-0 top-0 left-0">
+            <canvas id="mainCanvas" class="block rounded-lg shadow-2xl border border-slate-800/80 bg-slate-900"></canvas>
         </div>
     </main>
 
-    <!-- THANH CÔNG CỤ VẼ & ĐÁNH DẤU (Floating Toolbar) -->
-    <div id="drawingToolbar" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 p-2 bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-2xl shadow-2xl max-w-[95vw] overflow-x-auto transition-all duration-300">
-        <!-- Công cụ vẽ -->
-        <div class="flex items-center bg-slate-800 p-1 rounded-xl">
-            <button id="toolPen" title="Bút Thường" class="tool-btn flex items-center justify-center p-2 rounded-lg text-white bg-indigo-600 transition-all">
-                <i data-lucide="pen-tool" class="w-4 h-4"></i>
-            </button>
-            <button id="toolHighlight" title="Bút Đánh Dấu (Highlight)" class="tool-btn flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white transition-all">
-                <i data-lucide="highlighter" class="w-4 h-4"></i>
-            </button>
-            <button id="toolEraser" title="Tẩy / Xóa nét" class="tool-btn flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white transition-all">
-                <i data-lucide="eraser" class="w-4 h-4"></i>
-            </button>
+    <!-- THANH CÔNG CỤ VẼ & ĐÁNH DẤU (Gradient Border + Shine Effect) -->
+    <div id="drawingToolbar" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-30 transition-all duration-300 max-w-[95vw]">
+        <div class="gradient-border-wrapper shadow-2xl">
+            <div class="gradient-border-content shine-effect flex items-center gap-2 p-2 overflow-x-auto">
+                <!-- Công cụ vẽ -->
+                <div class="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+                    <button id="toolPen" title="Bút Thường" class="tool-btn flex items-center justify-center p-2 rounded-lg text-white bg-indigo-600 transition-all shadow-sm">
+                        <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                    </button>
+                    <button id="toolHighlight" title="Bút Đánh Dấu (Highlight)" class="tool-btn flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white transition-all">
+                        <i data-lucide="highlighter" class="w-4 h-4"></i>
+                    </button>
+                    <button id="toolEraser" title="Tẩy / Xóa nét" class="tool-btn flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white transition-all">
+                        <i data-lucide="eraser" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="h-5 w-px bg-slate-700/60"></div>
+
+                <!-- Chọn Màu Nét Vẽ -->
+                <div id="colorPickerGroup" class="flex items-center gap-1.5 px-1">
+                    <button data-color="#ef4444" class="color-btn w-6 h-6 rounded-full bg-red-500 ring-2 ring-white scale-110 transition-transform shadow"></button>
+                    <button data-color="#eab308" class="color-btn w-6 h-6 rounded-full bg-yellow-500 hover:scale-105 transition-transform shadow"></button>
+                    <button data-color="#22c55e" class="color-btn w-6 h-6 rounded-full bg-green-500 hover:scale-105 transition-transform shadow"></button>
+                    <button data-color="#3b82f6" class="color-btn w-6 h-6 rounded-full bg-blue-500 hover:scale-105 transition-transform shadow"></button>
+                    <button data-color="#a855f7" class="color-btn w-6 h-6 rounded-full bg-purple-500 hover:scale-105 transition-transform shadow"></button>
+                    <button data-color="#ffffff" class="color-btn w-6 h-6 rounded-full bg-white hover:scale-105 transition-transform shadow"></button>
+                </div>
+
+                <div class="h-5 w-px bg-slate-700/60"></div>
+
+                <!-- Size Nét Vẽ -->
+                <div class="flex items-center gap-2 px-1">
+                    <i data-lucide="circle-dot" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <input type="range" id="brushSize" min="2" max="40" value="4" class="w-16 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                    <span id="brushSizeValue" class="text-xs font-mono text-indigo-300 w-4 font-bold">4</span>
+                </div>
+
+                <div class="h-5 w-px bg-slate-700/60"></div>
+
+                <!-- Hoàn tác & Xóa tất cả -->
+                <div class="flex items-center gap-1">
+                    <button id="btnUndo" title="Hoàn tác (Ctrl+Z)" class="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 transition-colors active:scale-95 border border-slate-700/50">
+                        <i data-lucide="undo-2" class="w-4 h-4"></i>
+                    </button>
+                    <button id="btnClear" title="Xóa toàn bộ nét trên trang" class="p-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 transition-colors active:scale-95 border border-rose-800/40">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <div class="h-5 w-px bg-slate-700"></div>
-
-        <!-- Chọn Màu Nét Vẽ -->
-        <div id="colorPickerGroup" class="flex items-center gap-1.5">
-            <button data-color="#ef4444" class="color-btn w-6 h-6 rounded-full bg-red-500 ring-2 ring-white scale-110 transition-transform"></button>
-            <button data-color="#eab308" class="color-btn w-6 h-6 rounded-full bg-yellow-500 hover:scale-105 transition-transform"></button>
-            <button data-color="#22c55e" class="color-btn w-6 h-6 rounded-full bg-green-500 hover:scale-105 transition-transform"></button>
-            <button data-color="#3b82f6" class="color-btn w-6 h-6 rounded-full bg-blue-500 hover:scale-105 transition-transform"></button>
-            <button data-color="#a855f7" class="color-btn w-6 h-6 rounded-full bg-purple-500 hover:scale-105 transition-transform"></button>
-            <button data-color="#ffffff" class="color-btn w-6 h-6 rounded-full bg-white hover:scale-105 transition-transform"></button>
-        </div>
-
-        <div class="h-5 w-px bg-slate-700"></div>
-
-        <!-- Size Nét Vẽ -->
-        <div class="flex items-center gap-2 px-1">
-            <i data-lucide="circle-dot" class="w-3.5 h-3.5 text-slate-400"></i>
-            <input type="range" id="brushSize" min="2" max="30" value="4" class="w-16 accent-indigo-500 cursor-pointer">
-            <span id="brushSizeValue" class="text-xs font-mono text-slate-400 w-4">4</span>
-        </div>
-
-        <div class="h-5 w-px bg-slate-700"></div>
-
-        <!-- Hoàn tác & Xóa tất cả -->
-        <button id="btnUndo" title="Hoàn tác (Ctrl+Z)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
-            <i data-lucide="undo-2" class="w-4 h-4"></i>
-        </button>
-        <button id="btnClear" title="Xóa toàn bộ nét trên trang" class="p-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 transition-colors">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-        </button>
     </div>
 
-    <!-- CỤM NÚT CHUYỂN TRANG (Cố định ở góc dưới bên phải) -->
-    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 flex items-center gap-2 p-1.5 bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-2xl shadow-xl">
-        <button id="btnPrev" class="p-2 rounded-xl bg-slate-800 hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-slate-800 text-white transition-colors">
-            <i data-lucide="chevron-left" class="w-5 h-5"></i>
-        </button>
+    <!-- CỤM NÚT CHUYỂN TRANG (Gradient Border + Shine) -->
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
+        <div class="gradient-border-wrapper shadow-2xl">
+            <div class="gradient-border-content shine-effect flex items-center gap-2 p-1.5">
+                <button id="btnPrev" class="p-2 rounded-xl bg-slate-800/80 hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-slate-800 text-white transition-all active:scale-95">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
 
-        <div class="flex items-center gap-1 px-1 text-xs sm:text-sm font-semibold">
-            <select id="pageSelect" class="bg-slate-800 text-indigo-300 font-mono py-1 px-2 rounded-lg border border-slate-700 focus:outline-none focus:border-indigo-500 cursor-pointer">
-                <option value="1">Trang 1</option>
-                <option value="2">Trang 2</option>
-                <option value="3">Trang 3</option>
-                <option value="4">Trang 4</option>
-                <option value="5">Trang 5</option>
-            </select>
-            <span class="text-slate-400">/ 5</span>
+                <div class="flex items-center gap-1 px-1 text-xs sm:text-sm font-semibold">
+                    <select id="pageSelect" class="bg-slate-950/80 text-indigo-300 font-mono py-1 px-2 rounded-lg border border-indigo-500/30 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                        <option value="1">Trang 1</option>
+                        <option value="2">Trang 2</option>
+                        <option value="3">Trang 3</option>
+                        <option value="4">Trang 4</option>
+                        <option value="5">Trang 5</option>
+                    </select>
+                    <span class="text-slate-400 font-mono">/ 5</span>
+                </div>
+
+                <button id="btnNext" class="p-2 rounded-xl bg-slate-800/80 hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-slate-800 text-white transition-all active:scale-95">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+            </div>
         </div>
-
-        <button id="btnNext" class="p-2 rounded-xl bg-slate-800 hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-slate-800 text-white transition-colors">
-            <i data-lucide="chevron-right" class="w-5 h-5"></i>
-        </button>
     </div>
 
     <!-- Thông báo ngắn (Toast) -->
-    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2 bg-indigo-600 text-white text-xs font-medium rounded-full shadow-lg transition-all duration-300 opacity-0">
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-full shadow-xl transition-all duration-300 opacity-0 border border-indigo-400/40 backdrop-blur-md">
         Cập nhật thành công!
     </div>
 
@@ -167,22 +228,22 @@
         let currentColor = '#ef4444';
         let currentSize = 4;
 
-        // Trạng thái Thu phóng & Di chuyển (Pan / Zoom)
+        // Trạng thái Thu phóng & Di chuyển chuẩn hóa
         let scale = 1;
         let panX = 0;
         let panY = 0;
         let isPanning = false;
-        let startPanX = 0;
-        let startPanY = 0;
+        let startTouchX = 0;
+        let startTouchY = 0;
 
         // Trạng thái Vẽ
         let isDrawing = false;
 
-        // Lưu trữ nét vẽ riêng cho từng trang (Key: Page Number -> Array of Paths)
+        // Lưu trữ nét vẽ riêng cho từng trang
         const pageDrawings = {};
         for (let i = 1; i <= TOTAL_PAGES; i++) pageDrawings[i] = [];
 
-        // Cache lưu ảnh đã nạp
+        // Cache ảnh
         const imageCache = {};
 
         // DOM Elements
@@ -210,22 +271,21 @@
         const brushSizeInput = document.getElementById('brushSize');
         const brushSizeValue = document.getElementById('brushSizeValue');
 
-        // Khởi tạo icon Lucide
         lucide.createIcons();
 
-        // --- 2. XỬ LÝ CHUYỂN ĐỔI CHẾ ĐỘ (VẼ / PHÓNG TO) ---
+        // --- 2. CHUYỂN ĐỔI CHẾ ĐỘ (VẼ / PHÓNG TO) ---
         function setInteractionMode(mode) {
             activeMode = mode;
             if (mode === 'draw') {
                 modeDrawBtn.classList.add('active');
                 modeZoomBtn.classList.remove('active');
-                canvas.className = "block rounded-lg shadow-2xl border border-slate-800 bg-slate-900 cursor-draw";
+                viewport.className = "flex-1 relative overflow-hidden bg-slate-950 flex items-center justify-center cursor-draw";
                 drawingToolbar.style.opacity = '1';
                 drawingToolbar.style.pointerEvents = 'auto';
             } else {
                 modeZoomBtn.classList.add('active');
                 modeDrawBtn.classList.remove('active');
-                canvas.className = "block rounded-lg shadow-2xl border border-slate-800 bg-slate-900 cursor-grab";
+                viewport.className = "flex-1 relative overflow-hidden bg-slate-950 flex items-center justify-center cursor-grab";
                 drawingToolbar.style.opacity = '0.5';
                 drawingToolbar.style.pointerEvents = 'none';
             }
@@ -234,96 +294,114 @@
         modeDrawBtn.addEventListener('click', () => setInteractionMode('draw'));
         modeZoomBtn.addEventListener('click', () => setInteractionMode('zoom'));
 
-        // --- 3. XỬ LÝ THU PHÓNG VÀ DI CHUYỂN (PAN & ZOOM) ---
+        // --- 3. TOÁN HỌC PAN & ZOOM CHUẨN XÁC ---
         function applyTransform() {
-            transformContainer.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+            transformContainer.style.transform = `translate3d(${panX}px, ${panY}px, 0px) scale(${scale})`;
+        }
+
+        function centerCanvas() {
+            if (!canvas.displayWidth) return;
+            const vw = viewport.clientWidth;
+            const vh = viewport.clientHeight;
+            panX = (vw - canvas.displayWidth * scale) / 2;
+            panY = (vh - canvas.displayHeight * scale) / 2;
+            applyTransform();
         }
 
         function resetZoom() {
             scale = 1;
-            panX = 0;
-            panY = 0;
-            applyTransform();
+            centerCanvas();
         }
 
         btnResetZoom.addEventListener('click', resetZoom);
 
-        // Zoom bằng cuộn chuột (Mouse Wheel)
+        // Zoom bằng con trỏ chuột tại vị trí con trỏ
         viewport.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const zoomSensitivity = 0.0015;
-            const delta = -e.deltaY * zoomSensitivity;
-            const newScale = Math.min(Math.max(0.5, scale + delta), 5);
+            const zoomFactor = 1.12;
+            let newScale = e.deltaY < 0 ? scale * zoomFactor : scale / zoomFactor;
+            newScale = Math.min(Math.max(0.4, newScale), 6);
 
-            // Zoom tập trung theo vị trí con trỏ chuột
             const rect = viewport.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left - rect.width / 2;
-            const mouseY = e.clientY - rect.top - rect.height / 2;
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
 
-            panX -= (mouseX - panX) * (newScale / scale - 1);
-            panY -= (mouseY - panY) * (newScale / scale - 1);
-
+            panX = mouseX - (mouseX - panX) * (newScale / scale);
+            panY = mouseY - (mouseY - panY) * (newScale / scale);
             scale = newScale;
+
             applyTransform();
         }, { passive: false });
 
-        // Xử lý Cảm ứng Đa điểm (Pinch-to-zoom) & Pan trên Mobile/Desktop
-        let initialPinchDistance = null;
-        let initialScale = 1;
+        // Xử lý Cảm ứng Pinch-to-zoom & Pan di chuyển
+        let touchStartDist = 0;
+        let startScale = 1;
 
-        function getDistance(t1, t2) {
-            return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+        function getTouchDist(e) {
+            return Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
         }
 
         viewport.addEventListener('touchstart', (e) => {
             if (e.touches.length === 2) {
-                // Thao tác 2 ngón -> Tự động kích hoạt Pinch Zoom kể cả ở Draw mode
-                initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
-                initialScale = scale;
+                // 2 Ngón tay -> Tự động zoom kể cả ở Draw mode
+                touchStartDist = getTouchDist(e);
+                startScale = scale;
             } else if (e.touches.length === 1 && activeMode === 'zoom') {
                 isPanning = true;
-                startPanX = e.touches[0].clientX - panX;
-                startPanY = e.touches[0].clientY - panY;
-                canvas.classList.replace('cursor-grab', 'cursor-grabbing');
+                startTouchX = e.touches[0].clientX - panX;
+                startTouchY = e.touches[0].clientY - panY;
+                viewport.classList.replace('cursor-grab', 'cursor-grabbing');
             }
         }, { passive: false });
 
         viewport.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2 && initialPinchDistance) {
+            if (e.touches.length === 2 && touchStartDist > 0) {
                 e.preventDefault();
-                const currentDist = getDistance(e.touches[0], e.touches[1]);
-                scale = Math.min(Math.max(0.5, initialScale * (currentDist / initialPinchDistance)), 5);
+                const dist = getTouchDist(e);
+                const newScale = Math.min(Math.max(0.4, startScale * (dist / touchStartDist)), 6);
+                
+                const rect = viewport.getBoundingClientRect();
+                const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+                const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+
+                panX = midX - (midX - panX) * (newScale / scale);
+                panY = midY - (midY - panY) * (newScale / scale);
+                scale = newScale;
+
                 applyTransform();
             } else if (e.touches.length === 1 && isPanning && activeMode === 'zoom') {
                 e.preventDefault();
-                panX = e.touches[0].clientX - startPanX;
-                panY = e.touches[0].clientY - startPanY;
+                panX = e.touches[0].clientX - startTouchX;
+                panY = e.touches[0].clientY - startTouchY;
                 applyTransform();
             }
         }, { passive: false });
 
         viewport.addEventListener('touchend', (e) => {
-            if (e.touches.length < 2) initialPinchDistance = null;
+            if (e.touches.length < 2) touchStartDist = 0;
             if (e.touches.length === 0) {
                 isPanning = false;
-                canvas.classList.replace('cursor-grabbing', 'cursor-grab');
+                viewport.classList.replace('cursor-grabbing', 'cursor-grab');
             }
         });
 
-        // Pan bằng kéo chuột khi ở Chế độ Zoom
+        // Pan bằng kéo chuột PC
         viewport.addEventListener('mousedown', (e) => {
             if (activeMode === 'zoom' && e.button === 0) {
                 isPanning = true;
-                startPanX = e.clientX - panX;
-                startPanY = e.clientY - panY;
-                canvas.classList.replace('cursor-grab', 'cursor-grabbing');
+                startTouchX = e.clientX - panX;
+                startTouchY = e.clientY - panY;
+                viewport.classList.replace('cursor-grab', 'cursor-grabbing');
             }
         });
 
         window.addEventListener('mousemove', (e) => {
             if (isPanning && activeMode === 'zoom') {
-                panX = e.clientX - startPanX;
-                panY = e.clientY - startPanY;
+                panX = e.clientX - startTouchX;
+                panY = e.clientY - startTouchY;
                 applyTransform();
             }
         });
@@ -331,19 +409,19 @@
         window.addEventListener('mouseup', () => {
             if (isPanning) {
                 isPanning = false;
-                canvas.classList.replace('cursor-grabbing', 'cursor-grab');
+                viewport.classList.replace('cursor-grabbing', 'cursor-grab');
             }
         });
 
-        // --- 4. TẢI VÀ QUẢN LÝ ANH TỰ ĐỘNG ---
+        // --- 4. LOAD ANH VÀ KHỞI TẠO NỀN ---
         function setupCanvasSize(img) {
-            const containerWidth = viewport.clientWidth - 32;
-            const containerHeight = viewport.clientHeight - 32;
+            const vw = viewport.clientWidth;
+            const vh = viewport.clientHeight;
 
             const imgWidth = img.naturalWidth || 1000;
             const imgHeight = img.naturalHeight || 1400;
 
-            const ratio = Math.min(containerWidth / imgWidth, containerHeight / imgHeight, 1);
+            const ratio = Math.min((vw - 32) / imgWidth, (vh - 32) / imgHeight, 1);
 
             const displayWidth = Math.floor(imgWidth * ratio);
             const displayHeight = Math.floor(imgHeight * ratio);
@@ -351,7 +429,6 @@
             canvas.style.width = `${displayWidth}px`;
             canvas.style.height = `${displayHeight}px`;
 
-            // Fix nét vẽ bị mờ trên màn hình Retina/High DPI
             const dpr = window.devicePixelRatio || 1;
             canvas.width = displayWidth * dpr;
             canvas.height = displayHeight * dpr;
@@ -360,6 +437,7 @@
             canvas.displayWidth = displayWidth;
             canvas.displayHeight = displayHeight;
 
+            centerCanvas();
             redrawCanvas();
         }
 
@@ -390,18 +468,17 @@
                 };
 
                 img.onerror = () => {
-                    showToast('Không tải được ảnh! Hiển thị trang thay thế.');
-                    // Canvas giả lập nếu ảnh lỗi
+                    showToast('Không nạp được ảnh! Tạo trang chuẩn.');
                     const dummyCanvas = document.createElement('canvas');
                     dummyCanvas.width = 800;
-                    dummyCanvas.height = 1100;
+                    dummyCanvas.height = 1150;
                     const dCtx = dummyCanvas.getContext('2d');
-                    dCtx.fillStyle = '#1e293b';
-                    dCtx.fillRect(0, 0, 800, 1100);
-                    dCtx.fillStyle = '#94a3b8';
-                    dCtx.font = 'bold 30px sans-serif';
+                    dCtx.fillStyle = '#0f172a';
+                    dCtx.fillRect(0, 0, 800, 1150);
+                    dCtx.fillStyle = '#818cf8';
+                    dCtx.font = 'bold 36px sans-serif';
                     dCtx.textAlign = 'center';
-                    dCtx.fillText(`TÀI LIỆU HỌC TẬP - TRANG ${currentPage}`, 400, 550);
+                    dCtx.fillText(`TÀI LIỆU HỌC TẬP - TRANG ${currentPage}`, 400, 575);
 
                     const dummyImg = new Image();
                     dummyImg.src = dummyCanvas.toDataURL();
@@ -421,19 +498,17 @@
             }, 100);
         }
 
-        // --- 5. LOGIC VẼ VÀ ĐÁNH DẤU TRÊN CANVAS ---
+        // --- 5. HỆ THỐNG VẼ CỰC NHẠY ---
         function redrawCanvas() {
             if (!canvas.displayWidth) return;
 
             ctx.clearRect(0, 0, canvas.displayWidth, canvas.displayHeight);
 
-            // 1. Vẽ Ảnh Nền
             const img = imageCache[currentPage];
             if (img) {
                 ctx.drawImage(img, 0, 0, canvas.displayWidth, canvas.displayHeight);
             }
 
-            // 2. Vẽ tất cả các đường đã lưu của trang hiện tại
             const paths = pageDrawings[currentPage] || [];
             paths.forEach(path => drawPath(path));
         }
@@ -448,12 +523,12 @@
 
             if (path.tool === 'eraser') {
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.lineWidth = path.size * 1.5;
+                ctx.lineWidth = path.size * 1.8;
             } else if (path.tool === 'highlight') {
                 ctx.globalCompositeOperation = 'source-over';
                 ctx.strokeStyle = path.color;
-                ctx.globalAlpha = 0.35; // Trong suốt cho bút nhớ
-                ctx.lineWidth = path.size * 2.5;
+                ctx.globalAlpha = 0.38;
+                ctx.lineWidth = path.size * 2.8;
             } else {
                 ctx.globalCompositeOperation = 'source-over';
                 ctx.strokeStyle = path.color;
@@ -472,8 +547,9 @@
             ctx.restore();
         }
 
+        // Chuyển tọa độ màn hình/chạm sang tọa độ chuẩn Canvas (bất kể Zoom/Pan)
         function getCanvasCoordinates(e) {
-            const rect = canvas.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
             let clientX = e.clientX;
             let clientY = e.clientY;
 
@@ -482,9 +558,8 @@
                 clientY = e.touches[0].clientY;
             }
 
-            // Tính toán tọa độ theo tỉ lệ chuẩn 0->1 để không bị lệch khi Thu phóng (Zoom)
-            const x = (clientX - rect.left) / rect.width;
-            const y = (clientY - rect.top) / rect.height;
+            const x = (clientX - canvasRect.left) / canvasRect.width;
+            const y = (clientY - canvasRect.top) / canvasRect.height;
 
             return { x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)) };
         }
@@ -507,12 +582,11 @@
 
         function draw(e) {
             if (!isDrawing || activeMode !== 'draw') return;
-
             const coords = getCanvasCoordinates(e);
             const paths = pageDrawings[currentPage];
             if (paths.length > 0) {
                 paths[paths.length - 1].points.push(coords);
-                redrawCanvas();
+                requestAnimationFrame(redrawCanvas);
             }
         }
 
@@ -520,7 +594,6 @@
             isDrawing = false;
         }
 
-        // Sự kiện vẽ
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
         window.addEventListener('mouseup', stopDrawing);
@@ -533,7 +606,7 @@
 
         canvas.addEventListener('touchmove', (e) => {
             if (activeMode === 'draw' && e.touches.length === 1) {
-                e.preventDefault(); // Chống cuộn màn hình khi đang vẽ
+                e.preventDefault();
                 draw(e);
             }
         }, { passive: false });
@@ -544,13 +617,13 @@
         function setTool(tool) {
             currentTool = tool;
             [toolPen, toolHighlight, toolEraser].forEach(btn => {
-                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
                 btn.classList.add('text-slate-400');
             });
 
-            if (tool === 'pen') toolPen.classList.add('bg-indigo-600', 'text-white');
-            if (tool === 'highlight') toolHighlight.classList.add('bg-indigo-600', 'text-white');
-            if (tool === 'eraser') toolEraser.classList.add('bg-indigo-600', 'text-white');
+            if (tool === 'pen') toolPen.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+            if (tool === 'highlight') toolHighlight.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+            if (tool === 'eraser') toolEraser.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
         }
 
         toolPen.addEventListener('click', () => setTool('pen'));
@@ -582,19 +655,19 @@
             if (pageDrawings[currentPage].length > 0) {
                 pageDrawings[currentPage] = [];
                 redrawCanvas();
-                showToast('Đã xóa nét vẽ trang này');
+                showToast('Đã xóa toàn bộ nét vẽ trang này');
             }
         });
 
         btnExport.addEventListener('click', () => {
             const a = document.createElement('a');
-            a.download = `Document_Trang_${currentPage}.png`;
+            a.download = `TaiLieu_Trang_${currentPage}.png`;
             a.href = canvas.toDataURL('image/png');
             a.click();
-            showToast('Đã tải hình ảnh về máy!');
+            showToast('Đã tải trang ghi chú thành công!');
         });
 
-        // --- 7. CHUYỂN TRANG & PHÍM TẮT PC ---
+        // --- 7. CHUYỂN TRANG & PHÍM TẮT ---
         btnPrev.addEventListener('click', () => { if (currentPage > 1) loadPage(currentPage - 1); });
         btnNext.addEventListener('click', () => { if (currentPage < TOTAL_PAGES) loadPage(currentPage + 1); });
         pageSelect.addEventListener('change', (e) => loadPage(parseInt(e.target.value)));
