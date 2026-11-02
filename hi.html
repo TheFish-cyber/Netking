@@ -1,1 +1,629 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Web Học Tập - Đánh Dấu & Phóng To Tài Liệu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Chống cuộn trang mặc định của trình duyệt để vẽ và pan mượt hơn */
+        body, html {
+            touch-action: none;
+            overflow: hidden;
+            height: 100%;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
+        /* Hiệu ứng mượt cho các nút */
+        .btn-mode.active {
+            background-color: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(79, 70, 229, 0.4);
+        }
+
+        .cursor-grab { cursor: grab; }
+        .cursor-grabbing { cursor: grabbing; }
+        .cursor-draw { cursor: crosshair; }
+    </style>
+</head>
+<body class="flex flex-col h-full font-sans antialiased bg-slate-950 select-none">
+
+    <!-- Thanh Tiêu Đề (Header) -->
+    <header class="flex items-center justify-between px-3 py-2 bg-slate-900 border-b border-slate-800 z-30 shadow-md">
+        <div class="flex items-center gap-2">
+            <div class="p-1.5 bg-indigo-600 rounded-lg text-white">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-xs sm:text-sm text-white leading-tight">Học Tập & Chú Thích</h1>
+                <p class="text-[10px] sm:text-xs text-slate-400">Tài liệu tương tác</p>
+            </div>
+        </div>
+
+        <!-- Chế độ làm việc: Chuyển đổi VẼ và PHÓNG TO / DI CHUYỂN -->
+        <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800">
+            <button id="modeDraw" class="btn-mode active flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 transition-all">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                <span>Chế độ Vẽ</span>
+            </button>
+            <button id="modeZoom" class="btn-mode flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 transition-all">
+                <i data-lucide="move" class="w-4 h-4"></i>
+                <span>Phóng to / Dịch chuyển</span>
+            </button>
+        </div>
+
+        <!-- Thao tác nhanh -->
+        <div class="flex items-center gap-1.5">
+            <button id="btnResetZoom" title="Đặt lại kích thước chuẩn" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+            </button>
+            <button id="btnExport" title="Tải trang hiện tại về máy" class="flex items-center gap-1 px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium rounded-lg transition-colors">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span class="hidden md:inline">Tải về</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Khu Vực Hiển Thị Canvas (Viewport) -->
+    <main id="viewport" class="flex-1 relative overflow-hidden bg-slate-950 flex items-center justify-center">
+        <!-- Loader Hiển thị khi chuyển trang -->
+        <div id="loader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-sm z-40 transition-opacity duration-300">
+            <div class="w-9 h-9 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-2 text-xs font-medium text-slate-300">Đang tải trang...</p>
+        </div>
+
+        <!-- Container chứa Canvas để áp dụng Thu phóng & Di chuyển (Transform Matrix) -->
+        <div id="transformContainer" class="absolute origin-center transition-transform duration-75">
+            <canvas id="mainCanvas" class="block rounded-lg shadow-2xl border border-slate-800 bg-slate-900 cursor-draw"></canvas>
+        </div>
+    </main>
+
+    <!-- THANH CÔNG CỤ VẼ & ĐÁNH DẤU (Floating Toolbar) -->
+    <div id="drawingToolbar" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 p-2 bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-2xl shadow-2xl max-w-[95vw] overflow-x-auto transition-all duration-300">
+        <!-- Công cụ vẽ -->
+        <div class="flex items-center bg-slate-800 p-1 rounded-xl">
+            <button id="toolPen" title="Bút Thường" class="tool-btn flex items-center justify-center p-2 rounded-lg text-white bg-indigo-600 transition-all">
+                <i data-lucide="pen-tool" class="w-4 h-4"></i>
+            </button>
+            <button id="toolHighlight" title="Bút Đánh Dấu (Highlight)" class="tool-btn flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white transition-all">
+                <i data-lucide="highlighter" class="w-4 h-4"></i>
+            </button>
+            <button id="toolEraser" title="Tẩy / Xóa nét" class="tool-btn flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-white transition-all">
+                <i data-lucide="eraser" class="w-4 h-4"></i>
+            </button>
+        </div>
+
+        <div class="h-5 w-px bg-slate-700"></div>
+
+        <!-- Chọn Màu Nét Vẽ -->
+        <div id="colorPickerGroup" class="flex items-center gap-1.5">
+            <button data-color="#ef4444" class="color-btn w-6 h-6 rounded-full bg-red-500 ring-2 ring-white scale-110 transition-transform"></button>
+            <button data-color="#eab308" class="color-btn w-6 h-6 rounded-full bg-yellow-500 hover:scale-105 transition-transform"></button>
+            <button data-color="#22c55e" class="color-btn w-6 h-6 rounded-full bg-green-500 hover:scale-105 transition-transform"></button>
+            <button data-color="#3b82f6" class="color-btn w-6 h-6 rounded-full bg-blue-500 hover:scale-105 transition-transform"></button>
+            <button data-color="#a855f7" class="color-btn w-6 h-6 rounded-full bg-purple-500 hover:scale-105 transition-transform"></button>
+            <button data-color="#ffffff" class="color-btn w-6 h-6 rounded-full bg-white hover:scale-105 transition-transform"></button>
+        </div>
+
+        <div class="h-5 w-px bg-slate-700"></div>
+
+        <!-- Size Nét Vẽ -->
+        <div class="flex items-center gap-2 px-1">
+            <i data-lucide="circle-dot" class="w-3.5 h-3.5 text-slate-400"></i>
+            <input type="range" id="brushSize" min="2" max="30" value="4" class="w-16 accent-indigo-500 cursor-pointer">
+            <span id="brushSizeValue" class="text-xs font-mono text-slate-400 w-4">4</span>
+        </div>
+
+        <div class="h-5 w-px bg-slate-700"></div>
+
+        <!-- Hoàn tác & Xóa tất cả -->
+        <button id="btnUndo" title="Hoàn tác (Ctrl+Z)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
+            <i data-lucide="undo-2" class="w-4 h-4"></i>
+        </button>
+        <button id="btnClear" title="Xóa toàn bộ nét trên trang" class="p-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-300 transition-colors">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+        </button>
+    </div>
+
+    <!-- CỤM NÚT CHUYỂN TRANG (Cố định ở góc dưới bên phải) -->
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 flex items-center gap-2 p-1.5 bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-2xl shadow-xl">
+        <button id="btnPrev" class="p-2 rounded-xl bg-slate-800 hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-slate-800 text-white transition-colors">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+
+        <div class="flex items-center gap-1 px-1 text-xs sm:text-sm font-semibold">
+            <select id="pageSelect" class="bg-slate-800 text-indigo-300 font-mono py-1 px-2 rounded-lg border border-slate-700 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                <option value="1">Trang 1</option>
+                <option value="2">Trang 2</option>
+                <option value="3">Trang 3</option>
+                <option value="4">Trang 4</option>
+                <option value="5">Trang 5</option>
+            </select>
+            <span class="text-slate-400">/ 5</span>
+        </div>
+
+        <button id="btnNext" class="p-2 rounded-xl bg-slate-800 hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-slate-800 text-white transition-colors">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Thông báo ngắn (Toast) -->
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden px-4 py-2 bg-indigo-600 text-white text-xs font-medium rounded-full shadow-lg transition-all duration-300 opacity-0">
+        Cập nhật thành công!
+    </div>
+
+    <script>
+        // --- 1. KHỞI TẠO CẤU HÌNH & TRẠNG THÁI ---
+        const TOTAL_PAGES = 5;
+        const BASE_URL = "https://raw.githubusercontent.com/TheFish-cyber/Netking/refs/heads/main/Trang";
+
+        let currentPage = 1;
+        let activeMode = 'draw'; // 'draw' hoặc 'zoom'
+        let currentTool = 'pen'; // 'pen', 'highlight', 'eraser'
+        let currentColor = '#ef4444';
+        let currentSize = 4;
+
+        // Trạng thái Thu phóng & Di chuyển (Pan / Zoom)
+        let scale = 1;
+        let panX = 0;
+        let panY = 0;
+        let isPanning = false;
+        let startPanX = 0;
+        let startPanY = 0;
+
+        // Trạng thái Vẽ
+        let isDrawing = false;
+
+        // Lưu trữ nét vẽ riêng cho từng trang (Key: Page Number -> Array of Paths)
+        const pageDrawings = {};
+        for (let i = 1; i <= TOTAL_PAGES; i++) pageDrawings[i] = [];
+
+        // Cache lưu ảnh đã nạp
+        const imageCache = {};
+
+        // DOM Elements
+        const viewport = document.getElementById('viewport');
+        const transformContainer = document.getElementById('transformContainer');
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const loader = document.getElementById('loader');
+
+        const modeDrawBtn = document.getElementById('modeDraw');
+        const modeZoomBtn = document.getElementById('modeZoom');
+        const drawingToolbar = document.getElementById('drawingToolbar');
+
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const pageSelect = document.getElementById('pageSelect');
+        const btnResetZoom = document.getElementById('btnResetZoom');
+        const btnUndo = document.getElementById('btnUndo');
+        const btnClear = document.getElementById('btnClear');
+        const btnExport = document.getElementById('btnExport');
+
+        const toolPen = document.getElementById('toolPen');
+        const toolHighlight = document.getElementById('toolHighlight');
+        const toolEraser = document.getElementById('toolEraser');
+        const brushSizeInput = document.getElementById('brushSize');
+        const brushSizeValue = document.getElementById('brushSizeValue');
+
+        // Khởi tạo icon Lucide
+        lucide.createIcons();
+
+        // --- 2. XỬ LÝ CHUYỂN ĐỔI CHẾ ĐỘ (VẼ / PHÓNG TO) ---
+        function setInteractionMode(mode) {
+            activeMode = mode;
+            if (mode === 'draw') {
+                modeDrawBtn.classList.add('active');
+                modeZoomBtn.classList.remove('active');
+                canvas.className = "block rounded-lg shadow-2xl border border-slate-800 bg-slate-900 cursor-draw";
+                drawingToolbar.style.opacity = '1';
+                drawingToolbar.style.pointerEvents = 'auto';
+            } else {
+                modeZoomBtn.classList.add('active');
+                modeDrawBtn.classList.remove('active');
+                canvas.className = "block rounded-lg shadow-2xl border border-slate-800 bg-slate-900 cursor-grab";
+                drawingToolbar.style.opacity = '0.5';
+                drawingToolbar.style.pointerEvents = 'none';
+            }
+        }
+
+        modeDrawBtn.addEventListener('click', () => setInteractionMode('draw'));
+        modeZoomBtn.addEventListener('click', () => setInteractionMode('zoom'));
+
+        // --- 3. XỬ LÝ THU PHÓNG VÀ DI CHUYỂN (PAN & ZOOM) ---
+        function applyTransform() {
+            transformContainer.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+        }
+
+        function resetZoom() {
+            scale = 1;
+            panX = 0;
+            panY = 0;
+            applyTransform();
+        }
+
+        btnResetZoom.addEventListener('click', resetZoom);
+
+        // Zoom bằng cuộn chuột (Mouse Wheel)
+        viewport.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomSensitivity = 0.0015;
+            const delta = -e.deltaY * zoomSensitivity;
+            const newScale = Math.min(Math.max(0.5, scale + delta), 5);
+
+            // Zoom tập trung theo vị trí con trỏ chuột
+            const rect = viewport.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left - rect.width / 2;
+            const mouseY = e.clientY - rect.top - rect.height / 2;
+
+            panX -= (mouseX - panX) * (newScale / scale - 1);
+            panY -= (mouseY - panY) * (newScale / scale - 1);
+
+            scale = newScale;
+            applyTransform();
+        }, { passive: false });
+
+        // Xử lý Cảm ứng Đa điểm (Pinch-to-zoom) & Pan trên Mobile/Desktop
+        let initialPinchDistance = null;
+        let initialScale = 1;
+
+        function getDistance(t1, t2) {
+            return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+        }
+
+        viewport.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                // Thao tác 2 ngón -> Tự động kích hoạt Pinch Zoom kể cả ở Draw mode
+                initialPinchDistance = getDistance(e.touches[0], e.touches[1]);
+                initialScale = scale;
+            } else if (e.touches.length === 1 && activeMode === 'zoom') {
+                isPanning = true;
+                startPanX = e.touches[0].clientX - panX;
+                startPanY = e.touches[0].clientY - panY;
+                canvas.classList.replace('cursor-grab', 'cursor-grabbing');
+            }
+        }, { passive: false });
+
+        viewport.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && initialPinchDistance) {
+                e.preventDefault();
+                const currentDist = getDistance(e.touches[0], e.touches[1]);
+                scale = Math.min(Math.max(0.5, initialScale * (currentDist / initialPinchDistance)), 5);
+                applyTransform();
+            } else if (e.touches.length === 1 && isPanning && activeMode === 'zoom') {
+                e.preventDefault();
+                panX = e.touches[0].clientX - startPanX;
+                panY = e.touches[0].clientY - startPanY;
+                applyTransform();
+            }
+        }, { passive: false });
+
+        viewport.addEventListener('touchend', (e) => {
+            if (e.touches.length < 2) initialPinchDistance = null;
+            if (e.touches.length === 0) {
+                isPanning = false;
+                canvas.classList.replace('cursor-grabbing', 'cursor-grab');
+            }
+        });
+
+        // Pan bằng kéo chuột khi ở Chế độ Zoom
+        viewport.addEventListener('mousedown', (e) => {
+            if (activeMode === 'zoom' && e.button === 0) {
+                isPanning = true;
+                startPanX = e.clientX - panX;
+                startPanY = e.clientY - panY;
+                canvas.classList.replace('cursor-grab', 'cursor-grabbing');
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isPanning && activeMode === 'zoom') {
+                panX = e.clientX - startPanX;
+                panY = e.clientY - startPanY;
+                applyTransform();
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isPanning) {
+                isPanning = false;
+                canvas.classList.replace('cursor-grabbing', 'cursor-grab');
+            }
+        });
+
+        // --- 4. TẢI VÀ QUẢN LÝ ANH TỰ ĐỘNG ---
+        function setupCanvasSize(img) {
+            const containerWidth = viewport.clientWidth - 32;
+            const containerHeight = viewport.clientHeight - 32;
+
+            const imgWidth = img.naturalWidth || 1000;
+            const imgHeight = img.naturalHeight || 1400;
+
+            const ratio = Math.min(containerWidth / imgWidth, containerHeight / imgHeight, 1);
+
+            const displayWidth = Math.floor(imgWidth * ratio);
+            const displayHeight = Math.floor(imgHeight * ratio);
+
+            canvas.style.width = `${displayWidth}px`;
+            canvas.style.height = `${displayHeight}px`;
+
+            // Fix nét vẽ bị mờ trên màn hình Retina/High DPI
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = displayWidth * dpr;
+            canvas.height = displayHeight * dpr;
+            ctx.scale(dpr, dpr);
+
+            canvas.displayWidth = displayWidth;
+            canvas.displayHeight = displayHeight;
+
+            redrawCanvas();
+        }
+
+        function loadPage(pageNumber) {
+            loader.style.opacity = '1';
+            loader.classList.remove('hidden');
+
+            currentPage = pageNumber;
+            pageSelect.value = currentPage;
+
+            btnPrev.disabled = currentPage === 1;
+            btnNext.disabled = currentPage === TOTAL_PAGES;
+
+            const imageUrl = `${BASE_URL}${currentPage}.webp`;
+
+            if (imageCache[currentPage]) {
+                setupCanvasSize(imageCache[currentPage]);
+                hideLoader();
+            } else {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.src = imageUrl;
+
+                img.onload = () => {
+                    imageCache[currentPage] = img;
+                    setupCanvasSize(img);
+                    hideLoader();
+                };
+
+                img.onerror = () => {
+                    showToast('Không tải được ảnh! Hiển thị trang thay thế.');
+                    // Canvas giả lập nếu ảnh lỗi
+                    const dummyCanvas = document.createElement('canvas');
+                    dummyCanvas.width = 800;
+                    dummyCanvas.height = 1100;
+                    const dCtx = dummyCanvas.getContext('2d');
+                    dCtx.fillStyle = '#1e293b';
+                    dCtx.fillRect(0, 0, 800, 1100);
+                    dCtx.fillStyle = '#94a3b8';
+                    dCtx.font = 'bold 30px sans-serif';
+                    dCtx.textAlign = 'center';
+                    dCtx.fillText(`TÀI LIỆU HỌC TẬP - TRANG ${currentPage}`, 400, 550);
+
+                    const dummyImg = new Image();
+                    dummyImg.src = dummyCanvas.toDataURL();
+                    dummyImg.onload = () => {
+                        imageCache[currentPage] = dummyImg;
+                        setupCanvasSize(dummyImg);
+                        hideLoader();
+                    };
+                };
+            }
+        }
+
+        function hideLoader() {
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.classList.add('hidden'), 300);
+            }, 100);
+        }
+
+        // --- 5. LOGIC VẼ VÀ ĐÁNH DẤU TRÊN CANVAS ---
+        function redrawCanvas() {
+            if (!canvas.displayWidth) return;
+
+            ctx.clearRect(0, 0, canvas.displayWidth, canvas.displayHeight);
+
+            // 1. Vẽ Ảnh Nền
+            const img = imageCache[currentPage];
+            if (img) {
+                ctx.drawImage(img, 0, 0, canvas.displayWidth, canvas.displayHeight);
+            }
+
+            // 2. Vẽ tất cả các đường đã lưu của trang hiện tại
+            const paths = pageDrawings[currentPage] || [];
+            paths.forEach(path => drawPath(path));
+        }
+
+        function drawPath(path) {
+            if (!path.points || path.points.length < 1) return;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            if (path.tool === 'eraser') {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.lineWidth = path.size * 1.5;
+            } else if (path.tool === 'highlight') {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = path.color;
+                ctx.globalAlpha = 0.35; // Trong suốt cho bút nhớ
+                ctx.lineWidth = path.size * 2.5;
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = path.color;
+                ctx.globalAlpha = 1.0;
+                ctx.lineWidth = path.size;
+            }
+
+            const p0 = path.points[0];
+            ctx.moveTo(p0.x * canvas.displayWidth, p0.y * canvas.displayHeight);
+
+            for (let i = 1; i < path.points.length; i++) {
+                const pt = path.points[i];
+                ctx.lineTo(pt.x * canvas.displayWidth, pt.y * canvas.displayHeight);
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function getCanvasCoordinates(e) {
+            const rect = canvas.getBoundingClientRect();
+            let clientX = e.clientX;
+            let clientY = e.clientY;
+
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            }
+
+            // Tính toán tọa độ theo tỉ lệ chuẩn 0->1 để không bị lệch khi Thu phóng (Zoom)
+            const x = (clientX - rect.left) / rect.width;
+            const y = (clientY - rect.top) / rect.height;
+
+            return { x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)) };
+        }
+
+        function startDrawing(e) {
+            if (activeMode !== 'draw' || e.button > 0) return;
+            isDrawing = true;
+
+            const coords = getCanvasCoordinates(e);
+            const newPath = {
+                tool: currentTool,
+                color: currentColor,
+                size: currentSize,
+                points: [coords]
+            };
+
+            pageDrawings[currentPage].push(newPath);
+            redrawCanvas();
+        }
+
+        function draw(e) {
+            if (!isDrawing || activeMode !== 'draw') return;
+
+            const coords = getCanvasCoordinates(e);
+            const paths = pageDrawings[currentPage];
+            if (paths.length > 0) {
+                paths[paths.length - 1].points.push(coords);
+                redrawCanvas();
+            }
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // Sự kiện vẽ
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (activeMode === 'draw' && e.touches.length === 1) {
+                startDrawing(e);
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (activeMode === 'draw' && e.touches.length === 1) {
+                e.preventDefault(); // Chống cuộn màn hình khi đang vẽ
+                draw(e);
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', stopDrawing);
+
+        // --- 6. CÁC NÚT ĐIỀU KHIỂN & BẢNG MÀU ---
+        function setTool(tool) {
+            currentTool = tool;
+            [toolPen, toolHighlight, toolEraser].forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+
+            if (tool === 'pen') toolPen.classList.add('bg-indigo-600', 'text-white');
+            if (tool === 'highlight') toolHighlight.classList.add('bg-indigo-600', 'text-white');
+            if (tool === 'eraser') toolEraser.classList.add('bg-indigo-600', 'text-white');
+        }
+
+        toolPen.addEventListener('click', () => setTool('pen'));
+        toolHighlight.addEventListener('click', () => setTool('highlight'));
+        toolEraser.addEventListener('click', () => setTool('eraser'));
+
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('ring-2', 'ring-white', 'scale-110'));
+                btn.classList.add('ring-2', 'ring-white', 'scale-110');
+                currentColor = btn.getAttribute('data-color');
+                if (currentTool === 'eraser') setTool('pen');
+            });
+        });
+
+        brushSizeInput.addEventListener('input', (e) => {
+            currentSize = parseInt(e.target.value);
+            brushSizeValue.textContent = currentSize;
+        });
+
+        btnUndo.addEventListener('click', () => {
+            if (pageDrawings[currentPage].length > 0) {
+                pageDrawings[currentPage].pop();
+                redrawCanvas();
+            }
+        });
+
+        btnClear.addEventListener('click', () => {
+            if (pageDrawings[currentPage].length > 0) {
+                pageDrawings[currentPage] = [];
+                redrawCanvas();
+                showToast('Đã xóa nét vẽ trang này');
+            }
+        });
+
+        btnExport.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.download = `Document_Trang_${currentPage}.png`;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+            showToast('Đã tải hình ảnh về máy!');
+        });
+
+        // --- 7. CHUYỂN TRANG & PHÍM TẮT PC ---
+        btnPrev.addEventListener('click', () => { if (currentPage > 1) loadPage(currentPage - 1); });
+        btnNext.addEventListener('click', () => { if (currentPage < TOTAL_PAGES) loadPage(currentPage + 1); });
+        pageSelect.addEventListener('change', (e) => loadPage(parseInt(e.target.value)));
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentPage > 1) loadPage(currentPage - 1);
+            if (e.key === 'ArrowRight' && currentPage < TOTAL_PAGES) loadPage(currentPage + 1);
+            if (e.ctrlKey && e.key.toLowerCase() === 'z') btnUndo.click();
+        });
+
+        window.addEventListener('resize', () => {
+            if (imageCache[currentPage]) setupCanvasSize(imageCache[currentPage]);
+        });
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('opacity-100'), 10);
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 2500);
+        }
+
+        // --- BẮT ĐẦU ỨNG DỤNG ---
+        setInteractionMode('draw');
+        setTool('pen');
+        loadPage(1);
+    </script>
+</body>
+</html>
